@@ -1,24 +1,35 @@
-/* App.css or your CSS/SCSS file */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #BBB;
+  z-index: 999;
+  height: 5vh;
+}
+
 #nav-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#nav-list.nav-bar li {
+.nav-bar li {
   display: inline;
-  margin-right: 10px; /* Add spacing between list items */
+  margin-right: 10px;
 }
 
-#nav-list.nav-bar .left {
+.nav-bar .left {
   float: left;
 }
 
-#nav-list.nav-bar .right {
+.nav-bar .right {
   float: right;
 }
 
-#nav-list.nav-bar a {
+.nav-bar a {
   text-decoration: none;
-  color: #000; /* Add your desired text color */
+}
+
+.page-content {
+  padding-top: 3vh;
 }
