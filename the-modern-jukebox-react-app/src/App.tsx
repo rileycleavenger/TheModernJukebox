@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import AppRouter from './AppRouter';
-
+import './variables.css'
 
 function App() {
   return (

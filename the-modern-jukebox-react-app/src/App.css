@@ -1,10 +1,16 @@
+.App {
+  background-color: var(--background-color);
+  height: 100vh;
+}
+
 .navbar-container {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: #BBB;
+  background-color: blue;
   z-index: 999;
-  height: 4.5vh;
+  height: 4.75vh;
+  background-color: var(--primary-color);
 }
 
 #nav-list {
@@ -28,6 +34,7 @@
 
 .nav-bar a {
   text-decoration: none;
+  color: var(--text-color);
 }
 
 .page-content {
