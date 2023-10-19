@@ -1,10 +1,10 @@
 .navbar-container {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   background-color: #BBB;
   z-index: 999;
-  height: 5vh;
+  height: 4.5vh;
 }
 
 #nav-list {
@@ -15,7 +15,7 @@
 
 .nav-bar li {
   display: inline;
-  margin-right: 10px;
+  margin: 10px;
 }
 
 .nav-bar .left {
@@ -31,5 +31,5 @@
 }
 
 .page-content {
-  padding-top: 3vh;
+  margin: 1vh 1vw;
 }
