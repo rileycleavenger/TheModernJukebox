@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .navbar-container {
   position: sticky;
   top: 0;
@@ -38,5 +42,5 @@
 }
 
 .page-content {
-  margin: 1vh 1vw;
+  margin: 0 1vw;
 }
