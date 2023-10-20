@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import AppRouter from './AppRouter';
+import './variables.css'
 
 function App() {
+
+  // function used to made button bold if on the current page
+  const isButtonBold = (path: string) => {
+    return window.location.pathname === path;
+  }
+
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to the ModernJukebox.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className="navbar-container">
+        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+            ☰
+        </button>
+        <ul id="nav-list" className={`nav-bar ${showMobileMenu ? 'mobile-menu' : ''}`}>
+          <li className={`left ${isButtonBold('/music-player') ? 'bold' : ''}`}>
+            <a href="/music-player">Music Player</a>
+          </li>
+          <li className={`left ${isButtonBold('/device-connection') ? 'bold' : ''}`}>
+            <a href="/device-connection">Device Connection</a>
+          </li>
+          <li className={`left ${isButtonBold('/about') ? 'bold' : ''}`}>
+            <a href="/about">About</a>
+          </li>
+          <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`}>
+            <a href="/login">Login</a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="page-content">
+        <AppRouter />
+      </div>
     </div>
   );
 }
