@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css'
+import SpotiftyLogo from '../../assets/images/spotify_logo.svg'; 
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -37,7 +38,7 @@ const Login: React.FC = () => {
               className={`spotify ${isSpotifySelected ? 'selected' : ''}`}
               onClick={() => handleButtonToggle('spotify')}
             >
-              Spotify
+              <img src={SpotiftyLogo} alt="Spotify" />
             </button>
           </div>
           <form>
