@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css'
 import SpotiftyLogo from '../../assets/images/spotify_logo.svg'; 
+import AppleMusicLogo from '../../assets/images/applemusic_logo.svg'; 
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -31,7 +32,7 @@ const Login: React.FC = () => {
               className={`apple ${isAppleSelected ? 'selected' : ''}`}
               onClick={() => handleButtonToggle('apple')}
             >
-              Apple
+              <img src={AppleMusicLogo} alt="Apple" />
             </button>
             <button
               type="button"
