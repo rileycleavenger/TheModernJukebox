@@ -1,0 +1,59 @@
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+  }
+  
+  .login-container {
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    padding: 1%;
+    width: 40vh;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .inner-login-container {
+    height: 80%;
+    width: 90%;
+    padding: 5%;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+  }
+
+  .username-and-pass{
+    margin: 5%;
+    margin-bottom: 10%;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  input {
+    height: 3vh;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: var(--tertiary-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: var(--text-color);
+    color: var(--tertiary-color);
+    border: 1px solid var(--tertiary-color);
+    box-shadow: rgba(255, 255, 255, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  
