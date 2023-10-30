@@ -22,6 +22,18 @@
     border-radius: 10px;
   }
 
+  .apple-and-spotify{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .selected {
+    background-color: var(--text-color);
+    color: var(--tertiary-color);
+    border: 1px solid var(--tertiary-color);
+  }
+
   .username-and-pass{
     margin: 5%;
     margin-bottom: 10%;
@@ -53,6 +65,8 @@
     border: 1px solid var(--text-color);
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
+    font-size: medium;
   }
   
   button:hover {
@@ -60,6 +74,6 @@
     color: var(--tertiary-color);
     border: 1px solid var(--tertiary-color);
     box-shadow: rgba(255, 255, 255, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
   }
   

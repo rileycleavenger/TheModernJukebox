@@ -4,17 +4,42 @@ import './Login.css'
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  const handleButtonToggle = (button: string) => {
+    setSelectedService((prevSelected) => (prevSelected === button ? null : button));
+  };
 
   const handleLogin = () => {
-    // You can add your authentication logic here
+    // Can handle login here based on apple or spotify
+    console.log('Selected Service:', selectedService);
     console.log('Username:', username);
     console.log('Password:', password);
   };
+
+  const isAppleSelected = selectedService === 'apple';
+  const isSpotifySelected = selectedService === 'spotify';
 
   return (
     <div className="page">
       <div className="login-container">
         <div className="inner-login-container">
+          <div className="apple-and-spotify">
+            <button
+              type="button"
+              className={`apple ${isAppleSelected ? 'selected' : ''}`}
+              onClick={() => handleButtonToggle('apple')}
+            >
+              Apple
+            </button>
+            <button
+              type="button"
+              className={`spotify ${isSpotifySelected ? 'selected' : ''}`}
+              onClick={() => handleButtonToggle('spotify')}
+            >
+              Spotify
+            </button>
+          </div>
           <form>
             <div className="username-and-pass">
               <div>
