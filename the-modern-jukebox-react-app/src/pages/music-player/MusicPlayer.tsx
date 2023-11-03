@@ -1,4 +1,6 @@
 import React from 'react';
+import { getTokenFromUrl } from '../../hooks/spotify';
+import { SpotifyApi } from '@spotify/web-api-ts-sdk';
 
 function MusicPlayer() {
   return (
