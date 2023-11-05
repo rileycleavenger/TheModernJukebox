@@ -1,7 +1,7 @@
 import './Login.css'
 import LoginForm from './components/LoginForm/LoginForm';
 
-function Login() {
+function Login(props: any) {
   return (
     <LoginForm />
   );

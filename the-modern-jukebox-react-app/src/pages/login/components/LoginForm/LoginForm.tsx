@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import {useEffect, useState} from 'react';
 import './LoginForm.css'
 import SpotiftyLogo from '../../../../assets/images/spotify_logo.svg'; 
 import AppleMusicLogo from '../../../../assets/images/applemusic_logo.svg'; 
+import { loginURL } from '../../../../hooks/spotify';
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState("");
+  //export currentToken = token;
+  useEffect(()=>{
+    const hash:string = window.location.hash
+    let token = window.sessionStorage.getItem("token")
+    if(!token && hash){
+        token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token"))?.split("=")[1] ?? ""
+        window.location.hash = ""
+        sessionStorage.setItem("token",token)
+        setToken(token)
+    }
+    console.log("token",token)
+},[])
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const handleButtonToggle = (button: string) => {
@@ -61,9 +75,13 @@ const LoginForm: React.FC = () => {
                 />
               </div>
             </div>
-            <button type="button" onClick={handleLogin}>
-              Login
-            </button>
+            <div className="signIn">
+              <div>
+                <a href={loginURL} id="signIn">
+                  Login with Spotify
+                </a>
+              </div>
+            </div>
           </form>
         </div>
       </div>
