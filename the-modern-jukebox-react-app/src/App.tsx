@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import AppRouter from './AppRouter';
 import './variables.css'
+import Login from './pages/login/Login';
 
 function App() {
 
@@ -14,7 +15,6 @@ function App() {
   const toggleMobileMenu = () => {
     setShowMobileMenu(!showMobileMenu);
   }
-
   return (
     <div className="App">
 
@@ -32,8 +32,8 @@ function App() {
           <li className={`left ${isButtonBold('/about') ? 'bold' : ''}`}>
             <a href="/about">About</a>
           </li>
-          <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`}>
-            <a href="/login">Login</a>
+          <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`} >
+            <a href="/login">Login</a>        
           </li>
         </ul>
       </div>
