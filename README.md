@@ -6,6 +6,10 @@
 ![image](https://github.com/rileycleavenger/TheModernJukebox/assets/73538882/d8f6f1e4-c460-4fd4-9944-4bfd59a72c38)
 
 ## Pre-Alpha Build
+## Known Bugs
+- The navbar within the React bar adjusts to be too thin on certain displays, this will be fixed in the next build.
+- The deployed version of the app only lets users search for songs if they are approved within the API, but when configured for localhost they don't need to be added. We need to investigate this further.
+
 ### Software
 #### React App
 The React App opens to a login page. Users can select the API they will be logging into, either Spotify or Apple Music, then input Spotify/Apple Music logins.
