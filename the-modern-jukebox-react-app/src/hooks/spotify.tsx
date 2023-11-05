@@ -3,7 +3,10 @@
 import {useEffect, useState} from 'react';
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
-const redirectURL = "http://localhost:3000/login/"
+//for testing
+//const redirectURL = "http://localhost:3000/login/"
+//for deployment
+const redirectURL = "https://the-modern-jukebox-react-app.vercel.app/login"
 const clientId = "3c6b67b44db2400db60002e9a5e89bb2"
 
 //possible scopes:
