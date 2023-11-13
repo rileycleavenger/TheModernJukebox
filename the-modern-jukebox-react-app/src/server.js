@@ -1,17 +1,31 @@
-// server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors'); // Import the 'cors' module
 
-const WebSocket = require('ws');
+const app = express();
+const port = 8080;
 
-const wss = new WebSocket.Server({ port: 8080 });
+let messages = [];
 
-wss.on('connection', (ws) => {
-  console.log('Connection established');
+app.use(bodyParser.json());
 
-  ws.on('message', (message) => {
-    console.log(`Received: ${message}`);
-    // Handle the incoming message from the client
-  });
+// Enable CORS for all routes
+app.use(cors());
 
-  // Example: Sending a message back to the client
-  ws.send('Hello, client! You are now connected to the WebSocket server.');
+app.get('/messages', (req, res) => {
+  res.json(messages);
+});
+
+app.post('/sendMessage', (req, res) => {
+  const { message } = req.body;
+  messages.push(message);
+
+  // Set the 'Access-Control-Allow-Origin' header to allow requests from any origin
+  res.header('Access-Control-Allow-Origin', '*');
+
+  res.send('Message received successfully!');
+});
+
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
 });
