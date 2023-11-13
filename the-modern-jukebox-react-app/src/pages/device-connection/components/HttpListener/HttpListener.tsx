@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
 const HttpListener: React.FC = () => {
+
+  let receieveUrl = '';
+  if (window.location.origin.includes('localhost')) {
+    // Development environment
+    receieveUrl = 'http://localhost:8080/messages';
+  } else {
+    // Production environment
+    receieveUrl = `${window.location.origin}/messages`;
+  }
+
+  let sendUrl = '';
+  if (window.location.origin.includes('localhost')) {
+    // Development environment
+    sendUrl = 'http://localhost:8080/sendMessage';
+  } else {
+    // Production environment
+    sendUrl = `${window.location.origin}/sendMessage`;
+  }
+
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState('');
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/messages');
+      const response = await fetch(receieveUrl);
       const data = await response.json();
       setMessages(data);
     } catch (error) {
@@ -20,7 +39,7 @@ const HttpListener: React.FC = () => {
 
   const sendMessage = async () => {
     try {
-      await fetch('http://localhost:8080/sendMessage', {
+      await fetch(sendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

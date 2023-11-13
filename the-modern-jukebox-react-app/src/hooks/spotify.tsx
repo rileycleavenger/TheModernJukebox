@@ -6,8 +6,16 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 //for testing
 //const redirectURL = "http://localhost:3000/login/"
 //for deployment
-const redirectURL = "https://the-modern-jukebox-react-app.vercel.app/login"
 const clientId = "3c6b67b44db2400db60002e9a5e89bb2"
+
+let redirectURL = '';
+if (window.location.origin.includes('localhost')) {
+  // Development environment
+  redirectURL = 'http://localhost:3000/login/';
+} else {
+  // Production environment
+  redirectURL = `${window.location.origin}/login`;
+}
 
 //possible scopes:
 //https://developer.spotify.com/documentation/web-api/concepts/scopes
