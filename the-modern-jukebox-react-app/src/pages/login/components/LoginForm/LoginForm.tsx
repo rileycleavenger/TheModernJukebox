@@ -51,38 +51,14 @@ const LoginForm: React.FC = (props) => {
             <button
               type="button"
               className={`spotify ${isSpotifySelected ? 'selected' : ''}`}
-              onClick={() => handleButtonToggle('spotify')}
+              onClick={() => {
+                handleButtonToggle('spotify');
+                window.location.href = loginURL;
+              }}
             >
               <img src={SpotiftyLogo} alt="Spotify" />
             </button>
           </div>
-          <form>
-            <div className="username-and-pass">
-              <div>
-                <label>Username</label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div>
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="signIn">
-              <div>
-                <a href={loginURL} id="signIn">
-                  Login with Spotify
-                </a>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
