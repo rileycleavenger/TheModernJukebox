@@ -5,19 +5,19 @@ const HttpListener: React.FC = () => {
   let receieveUrl = '';
   if (window.location.origin.includes('localhost')) {
     // Development environment
-    receieveUrl = 'http://localhost:8080/messages';
+    receieveUrl = 'http://localhost:8080/api/messages';
   } else {
     // Production environment
-    receieveUrl = `${window.location.origin}/messages`;
+    receieveUrl = `${window.location.origin}/api/messages`;
   }
 
   let sendUrl = '';
   if (window.location.origin.includes('localhost')) {
     // Development environment
-    sendUrl = 'http://localhost:8080/sendMessage';
+    sendUrl = 'http://localhost:8080/api/sendMessage';
   } else {
     // Production environment
-    sendUrl = `${window.location.origin}/sendMessage`;
+    sendUrl = `${window.location.origin}/api/sendMessage`;
   }
 
   const [messages, setMessages] = useState<string[]>([]);

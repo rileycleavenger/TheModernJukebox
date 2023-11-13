@@ -10,11 +10,11 @@ let messages = [];
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/messages', (req, res) => {
+app.get('/api/messages', (req, res) => {
   res.json(messages);
 });
 
-app.post('/sendMessage', (req, res) => {
+app.post('/api/sendMessage', (req, res) => {
   const { message } = req.body;
   messages.push(message);
   res.header('Access-Control-Allow-Origin', '*');
