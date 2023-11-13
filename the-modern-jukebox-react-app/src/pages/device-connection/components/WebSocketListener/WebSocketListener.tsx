@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 const WebSocketListener: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [ws, setWs] = useState<WebSocket | null>(null);
+  const [inputMessage, setInputMessage] = useState('');
 
   useEffect(() => {
     if (ws) {
@@ -27,11 +28,26 @@ const WebSocketListener: React.FC = () => {
     }
   };
 
+  const sendMessage = () => {
+    if (ws && inputMessage.trim() !== '') {
+      ws.send(inputMessage);
+      setInputMessage(''); // Clear the input field after sending
+    }
+  };
+
   return (
     <div>
       <button onClick={toggleConnection}>
         {ws ? 'Disconnect from WebSocket' : 'Connect to WebSocket'}
       </button>
+      <div>
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
       <div>
         {messages.map((message, index) => (
           <p key={index}>{message}</p>
