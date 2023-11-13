@@ -11,6 +11,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/api/messages', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   res.json(messages);
 });
 
