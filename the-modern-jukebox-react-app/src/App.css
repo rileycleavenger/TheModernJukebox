@@ -13,7 +13,7 @@
   width: 100%;
   background-color: blue;
   z-index: 999;
-  height: 4.75vh;
+  height: 5%;
   background-color: var(--primary-color);
 }
 
@@ -61,6 +61,7 @@
     display: block;
     font-size: 24px;
     color: var(--text-color);
+    padding: 1%;
   }
   .nav-bar {
     display: none;
