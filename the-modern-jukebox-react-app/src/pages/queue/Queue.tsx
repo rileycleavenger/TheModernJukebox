@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { clearQueue } from '../../services/SpotifyPostService';
 import { getQueue } from '../../services/SpotifyPostService';
-import { SpotifyObjectForHardware } from '../../types';
+import { SpotifyObjectForHardware, QueueObject } from '../../types';
 import { getTrackFromUri } from '../../hooks/spotify';
 
 function Queue() {
+
+  let psuedoQueue: QueueObject[] = [];
+
   const [queue, setQueue] = useState<SpotifyObjectForHardware[]>([]);
 
   const handleClearQueue = () => {
@@ -16,6 +19,20 @@ function Queue() {
     const queueData = await getQueue(); // Await the getQueue function
     console.log("Returned From Queue", queueData);
     setQueue(queueData); // Update the state variable using setQueue
+
+    // loop through the queue and create the psuedoQueue with each item by using getTrackFromUri
+    queueData.forEach(async (item) => {
+      const trackData = await getTrackFromUri(item.uri);
+      if (trackData) {
+        psuedoQueue.push({
+          userAccessToken: item.userAccessToken,
+          uri: item.uri,
+          trackName: trackData.trackName,
+          trackArtist: trackData.trackArtist,
+          trackCover: trackData.trackCover,
+        });
+      }
+    });
   };
 
   return (
@@ -33,14 +50,14 @@ function Queue() {
           </tr>
         </thead>
         <tbody>
-          {queue.map((item) => (
+          {psuedoQueue.map((item) => (
             <tr>
               <td>{item.userAccessToken}</td>
               <td>{item.uri}</td>
-              <td>{getTrackFromUri(item.uri).trackName}</td>
-              <td>{getTrackFromUri(item.uri).trackArtist}</td>
+              <td>{item.trackName}</td>
+              <td>{item.trackArtist}</td>
               <td>
-                <img src={getTrackFromUri(item.uri).trackCover} alt="Cover" />
+                <img src={item.trackCover} alt="Cover" />
               </td>
             </tr>
           ))}
