@@ -4,6 +4,7 @@ import { SpotifyApi } from '@spotify/web-api-ts-sdk';
 import { SpotifyObjectForHardware } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
 import axios from 'axios';
+import React from 'react';
 
 let token = (sessionStorage.getItem("token")|| "")
 

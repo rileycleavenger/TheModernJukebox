@@ -5,6 +5,7 @@ import About from './pages/about/About';
 import MusicPlayer from './pages/music-player/MusicPlayer';
 import DeviceConnection from './pages/device-connection/DeviceConnection';
 import Login from './pages/login/Login';
+import Queue from './pages/queue/Queue';
 
 function AppRouter(){
 
@@ -17,6 +18,7 @@ function AppRouter(){
                 <Route path="/login" element={<Login />} />
                 <Route path="/device-connection" element={<DeviceConnection />} />
                 <Route path="/music-player" element={<MusicPlayer />} /> 
+                <Route path="/queue" element={<Queue />} />
             </Routes>
         </BrowserRouter>
     )
