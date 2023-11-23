@@ -41,4 +41,37 @@ export const getTokenFromUrl = ()=>{
     //window.localStorage.setItem("token",token)
     return token
 }
+
+export const getTrackFromUri = (uri: string) => {
+  // Extract the track ID from the URI
+  const trackId = uri.split(':')[2];
+
+  // Make an API call to fetch the track details using the track ID
+  const trackDetails = fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+    headers: {
+      Authorization: `Bearer ${getTokenFromUrl()}`, // Assuming you have a function to get the access token
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Extract the required track details from the API response
+      const trackName = data.name;
+      const trackArtist = data.artists[0].name;
+      const trackCover = data.album.images[0].url;
+
+      // Return the track details
+      return {
+        trackName,
+        trackArtist,
+        trackCover,
+      };
+    })
+    .catch((error) => {
+      console.error('Error fetching track details:', error);
+      return null;
+    });
+
+  return trackDetails;
+};
+
 export {}
