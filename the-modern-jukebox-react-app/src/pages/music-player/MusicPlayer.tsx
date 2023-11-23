@@ -1,12 +1,22 @@
 import {useEffect, useState} from 'react';
 import { getTokenFromUrl } from '../../hooks/spotify';
 import { SpotifyApi } from '@spotify/web-api-ts-sdk';
+import { SpotifyObjectForHardware } from '../../types';
 import axios from 'axios';
 
 let token = (sessionStorage.getItem("token")|| "")
 
 function MusicPlayer() {
-  //console.log(sessionStorage.getItem("token"))
+
+  function ExportToQueue(trackUri: string) {
+    // create a variable of type SpotifyObjectForHardware that is made with the uri and the token
+    const queueObject: SpotifyObjectForHardware = {
+      uri: trackUri,
+      userAccessToken: token,
+    };
+    console.log("test", queueObject);
+  }
+
   const [quickSearch, setQuickSearch] = useState("");
   interface s {
     track: {
@@ -84,11 +94,13 @@ function MusicPlayer() {
                 name: '',
                 artistName: '',
                 images:''
+                uri: ''
               }) => {
                   return (
                     <div>
                       <img src={track.images} />
                       <p>{track.name} by {track.artistName}</p>
+                      <button type='submit' onClick={() => ExportToQueue(track.uri)}>Send To Device</button>
                     </div>
                   )
               })}
