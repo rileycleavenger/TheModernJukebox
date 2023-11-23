@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import { getTokenFromUrl } from '../../hooks/spotify';
 import { SpotifyApi } from '@spotify/web-api-ts-sdk';
-import { SpotifyObjectForHardware } from '../../types';
+import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
 import axios from 'axios';
 import React from 'react';
@@ -10,11 +10,14 @@ let token = (sessionStorage.getItem("token")|| "")
 
 function MusicPlayer() {
 
-  function ExportToQueue(trackUri: string) {
-    // create a variable of type SpotifyObjectForHardware that is made with the uri and the token
-    const queueObject: SpotifyObjectForHardware = {
+  function ExportToQueue(trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
+    // create a variable of type QueueObject that is made with the uri and the token
+    const queueObject: QueueObject = {
       uri: trackUri,
       userAccessToken: token,
+      trackName: tackName,
+      trackArtist: trackArtist,
+      trackCover: trackCover,
     };
     console.log("What is Posted:", queueObject);
 
@@ -105,7 +108,7 @@ function MusicPlayer() {
                     <div>
                       <img src={track.images} />
                       <p>{track.name} by {track.artistName}</p>
-                      <button type='submit' onClick={() => ExportToQueue(track.uri)}>Add To Queue</button>
+                      <button type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>Add To Queue</button>
                     </div>
                   )
               })}

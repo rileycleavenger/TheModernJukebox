@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SpotifyObjectForHardware } from '../types';
+import { QueueObject} from '../types';
 
 
 let receieveUrl = '';
@@ -20,12 +20,12 @@ if (window.location.origin.includes('localhost')) {
     sendUrl = `${window.location.origin}/api/addQueue`;
 }
 
-// write a function that returns SpotifyObjectForHardware[] from the queue at the receieveUrl
-export const getQueue = async (): Promise<SpotifyObjectForHardware[]> => {
+// function that returns QueueObject[] from the queue at the receieveUrl
+export const getQueue = async (): Promise<QueueObject[]> => {
     try {
         const response = await fetch(receieveUrl);
         const json = await response.json();
-        return json as SpotifyObjectForHardware[];
+        return json as QueueObject[];
     } catch (error) {
         console.error('Error getting queue:', error);
         return [];
@@ -33,7 +33,7 @@ export const getQueue = async (): Promise<SpotifyObjectForHardware[]> => {
 };
 
 
-export const addToQueue = async (spotifyObject: SpotifyObjectForHardware) => {
+export const addToQueue = async (spotifyObject: QueueObject) => {
     try {
         await fetch(sendUrl, {
             method: 'POST',
