@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { clearQueue } from '../../services/SpotifyPostService';
 import { getQueue } from '../../services/SpotifyPostService';
 import { QueueObject } from '../../types';
-import { getTrackFromUri } from '../../hooks/spotify';
+import './Queue.css';
 
 function Queue() {
 
