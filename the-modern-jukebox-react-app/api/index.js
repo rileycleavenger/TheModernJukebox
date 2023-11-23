@@ -16,6 +16,11 @@ app.get('/api/queue', (req, res) => {
   res.json(messages);
 });
 
+app.delete('/api/queue', (req, res) => {
+  messages = [];
+  res.send('Queue cleared successfully!');
+});
+
 app.post('/api/addQueue', (req, res) => {
   const { message } = req.body;
   messages.push(message);
