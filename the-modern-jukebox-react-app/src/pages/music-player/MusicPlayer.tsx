@@ -105,7 +105,7 @@ function MusicPlayer() {
                     <div>
                       <img src={track.images} />
                       <p>{track.name} by {track.artistName}</p>
-                      <button type='submit' onClick={() => ExportToQueue(track.uri)}>Send To Device</button>
+                      <button type='submit' onClick={() => ExportToQueue(track.uri)}>Add To Queue</button>
                     </div>
                   )
               })}
