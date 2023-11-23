@@ -56,4 +56,19 @@ export const addToQueue = async (spotifyObject: SpotifyObjectForHardware) => {
     }
 };
 
+// function to clear the queue that clears all data stored at receieveUrl
+export const clearQueue = async () => {
+    try {
+        await fetch(receieveUrl, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    } catch (error) {
+        console.error('Error clearing queue:', error);
+    }
+};
+
+
 
