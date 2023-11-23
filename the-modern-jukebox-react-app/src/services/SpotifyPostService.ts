@@ -4,32 +4,33 @@ import { SpotifyObjectForHardware } from '../types';
 
 let receieveUrl = '';
 if (window.location.origin.includes('localhost')) {
-// Development environment
-receieveUrl = 'http://localhost:8080/api/queue';
+    // Development environment
+    receieveUrl = 'http://localhost:8080/api/queue';
 } else {
-// Production environment
-receieveUrl = `${window.location.origin}/api/queue`;
+    // Production environment
+    receieveUrl = `${window.location.origin}/api/queue`;
 }
 
 let sendUrl = '';
 if (window.location.origin.includes('localhost')) {
-// Development environment
-sendUrl = 'http://localhost:8080/api/addQueue';
+    // Development environment
+    sendUrl = 'http://localhost:8080/api/addQueue';
 } else {
-// Production environment
-sendUrl = `${window.location.origin}/api/addQueue`;
+    // Production environment
+    sendUrl = `${window.location.origin}/api/addQueue`;
 }
 
-const [queue, setQueue] = useState<string[]>([]);
+
 
 export const fetchData = async () => {
-try {
-    const response = await fetch(receieveUrl);
-    const data = await response.json();
-    setQueue(data);
-} catch (error) {
-    console.error('Error fetching data:', error);
-}
+    const [queue, setQueue] = useState<string[]>([]);
+    try {
+        const response = await fetch(receieveUrl);
+        const data = await response.json();
+        setQueue(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 };
 
 useEffect(() => {

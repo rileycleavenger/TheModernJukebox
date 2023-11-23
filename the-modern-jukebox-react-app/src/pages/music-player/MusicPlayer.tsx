@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import { getTokenFromUrl } from '../../hooks/spotify';
 import { SpotifyApi } from '@spotify/web-api-ts-sdk';
 import { SpotifyObjectForHardware } from '../../types';
+import { addToQueue } from '../../services/SpotifyPostService';
 import axios from 'axios';
 
 let token = (sessionStorage.getItem("token")|| "")
@@ -15,6 +16,9 @@ function MusicPlayer() {
       userAccessToken: token,
     };
     console.log("What is Posted:", queueObject);
+
+    // post the variable to the hardware
+    addToQueue(queueObject);
   }
 
   const [quickSearch, setQuickSearch] = useState("");
