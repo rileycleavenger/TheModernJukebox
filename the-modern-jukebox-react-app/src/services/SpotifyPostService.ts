@@ -21,21 +21,26 @@ if (window.location.origin.includes('localhost')) {
 }
 
 
-
-export const fetchData = async () => {
+export const useFetchData = () => {
     const [queue, setQueue] = useState<string[]>([]);
-    try {
-        const response = await fetch(receieveUrl);
-        const data = await response.json();
-        setQueue(data);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(receieveUrl);
+                const data = await response.json();
+                setQueue(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return queue;
 };
 
-useEffect(() => {
-fetchData();
-}, []);
 
 export const addToQueue = async (spotifyObject: SpotifyObjectForHardware) => {
     try {
@@ -44,7 +49,7 @@ export const addToQueue = async (spotifyObject: SpotifyObjectForHardware) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(spotifyObject),
+            body: JSON.stringify({ message: spotifyObject }),
         });
     } catch (error) {
         console.error('Error sending message:', error);
