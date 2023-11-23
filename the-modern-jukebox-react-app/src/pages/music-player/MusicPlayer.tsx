@@ -14,7 +14,7 @@ function MusicPlayer() {
       uri: trackUri,
       userAccessToken: token,
     };
-    console.log("test", queueObject);
+    console.log("What is Posted:", queueObject);
   }
 
   const [quickSearch, setQuickSearch] = useState("");
