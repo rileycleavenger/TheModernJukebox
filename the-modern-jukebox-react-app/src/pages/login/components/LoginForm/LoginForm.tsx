@@ -3,6 +3,7 @@ import './LoginForm.css'
 import SpotiftyLogo from '../../../../assets/images/spotify_logo.svg'; 
 import AppleMusicLogo from '../../../../assets/images/applemusic_logo.svg'; 
 import { loginURL } from '../../../../hooks/spotify';
+import React from 'react';
 
 const LoginForm: React.FC = (props) => {
   const [username, setUsername] = useState('');
