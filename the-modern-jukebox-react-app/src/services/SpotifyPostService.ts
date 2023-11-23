@@ -20,25 +20,16 @@ if (window.location.origin.includes('localhost')) {
     sendUrl = `${window.location.origin}/api/addQueue`;
 }
 
-
-export const useFetchData = () => {
-    const [queue, setQueue] = useState<string[]>([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(receieveUrl);
-                const data = await response.json();
-                setQueue(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    return queue;
+// write a function that returns SpotifyObjectForHardware[] from the queue at the receieveUrl
+export const getQueue = async (): Promise<SpotifyObjectForHardware[]> => {
+    try {
+        const response = await fetch(receieveUrl);
+        const json = await response.json();
+        return json as SpotifyObjectForHardware[];
+    } catch (error) {
+        console.error('Error getting queue:', error);
+        return [];
+    }
 };
 
 
