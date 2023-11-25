@@ -32,6 +32,9 @@ function App() {
           <li className={`left ${isButtonBold('/about') ? 'bold' : ''}`}>
             <a href="/about">About</a>
           </li>
+          <li className={`left ${isButtonBold('/queue') ? 'bold' : ''}`}>
+            <a href="/queue">Queue</a>
+          </li>
           <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`} >
             <a href="/login">Login</a>        
           </li>

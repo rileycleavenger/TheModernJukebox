@@ -10,13 +10,18 @@ let messages = [];
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/api/messages', (req, res) => {
+app.get('/api/queue', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   res.json(messages);
 });
 
-app.post('/api/sendMessage', (req, res) => {
+app.delete('/api/queue', (req, res) => {
+  messages = [];
+  res.send('Queue cleared successfully!');
+});
+
+app.post('/api/addQueue', (req, res) => {
   const { message } = req.body;
   messages.push(message);
   res.header('Access-Control-Allow-Origin', '*');

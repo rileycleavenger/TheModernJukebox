@@ -1,0 +1,13 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th,
+td {
+    width: 25%; /* Adjust the width as per your requirement */
+    padding: 10px;
+    text-align: left;
+    /* wrap content */
+    word-wrap: break-word;
+}
