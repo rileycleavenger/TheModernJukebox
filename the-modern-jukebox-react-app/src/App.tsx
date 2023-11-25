@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import './App.css';
 import AppRouter from './AppRouter';
 import './variables.css'
-import Login from './pages/login/Login';
-
+import Navbar from './pages/navbar';
+import { SelectedPage } from './assets/variables/availablepages';
+import MusicPlayer from './pages/music-player/MusicPlayer';
+import About from './pages/about';
+import ConnectDevice from './pages/connectDevice';
 function App() {
-
+{/*
   // function used to made button bold if on the current page
   const isButtonBold = (path: string) => {
     return window.location.pathname === path;
@@ -15,35 +17,24 @@ function App() {
   const toggleMobileMenu = () => {
     setShowMobileMenu(!showMobileMenu);
   }
+*/}
+
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.LandingPage)
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
   return (
-    <div className="App">
-
-      <div className="navbar-container">
-        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
-            ☰
-        </button>
-        <ul id="nav-list" className={`nav-bar ${showMobileMenu ? 'mobile-menu' : ''}`}>
-          <li className={`left ${isButtonBold('/music-player') ? 'bold' : ''}`}>
-            <a href="/music-player">Music Player</a>
-          </li>
-          <li className={`left ${isButtonBold('/device-connection') ? 'bold' : ''}`}>
-            <a href="/device-connection">Device Connection</a>
-          </li>
-          <li className={`left ${isButtonBold('/about') ? 'bold' : ''}`}>
-            <a href="/about">About</a>
-          </li>
-          <li className={`left ${isButtonBold('/queue') ? 'bold' : ''}`}>
-            <a href="/queue">Queue</a>
-          </li>
-          <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`} >
-            <a href="/login">Login</a>        
-          </li>
-        </ul>
-      </div>
-
-      <div className="page-content">
-        <AppRouter />
-      </div>
+    <div className="App bg-gray-50">
+      <Navbar 
+        isTopOfPage={isTopOfPage}
+        selectedPage={selectedPage}
+        setSelectedPage={setSelectedPage}
+      />
+      <About setSelectedPage={setSelectedPage} />
+      <ConnectDevice setSelectedPage={setSelectedPage} />
+      {/*
+      <DeviceConnection setSelectedPage={setSelectedPage} />
+      <MusicPlayer setSelectedPage={setSelectedPage} />
+      <About setSelectedPage={setSelectedPage} />
+      */}
     </div>
   );
 }
