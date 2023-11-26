@@ -46,7 +46,6 @@ const About = ({ setSelectedPage }: Props) => {
             by providing access to their personal music libraries within the same device.
             The Music Player page allows logged in users to search for songs and add them to the queue.
             The Queue page allows logged in users to see the queue and clear it, if necessary.
-            TBD: The Device Connection page will allow logged in users to connect to the hardware.
             Developers: Blake Budd, Riley Cleavenger, Alexa Cole, Rafaela Ferreira, and Robert Noble
             </p>
           </motion.div>

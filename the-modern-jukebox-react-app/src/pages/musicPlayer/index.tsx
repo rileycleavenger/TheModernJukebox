@@ -107,7 +107,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
        {!token &&
           <div>
           <div>
-          <p className="text-lg mt-30">
+          <p className="text-lg mt-28">
             The Music Player page allows you to search for your favorite songs and queue them.
             To gain access to this page, please sign with Spotify.
           </p>
