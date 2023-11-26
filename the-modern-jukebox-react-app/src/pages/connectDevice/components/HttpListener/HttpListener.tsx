@@ -39,7 +39,7 @@ const HttpListener: React.FC = () => {
     <div>
       <div className="flex items-center gap-8">
         <input
-          className="rounded-md bg-primary-300 px-10 py-2 border-white"
+          className="rounded-md bg-gray-100 px-10 py-2 text-black"
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}

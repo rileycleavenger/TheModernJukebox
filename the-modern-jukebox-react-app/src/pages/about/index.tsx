@@ -3,6 +3,7 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import { SelectedPage } from '../../assets/variables/availablepages';
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -32,10 +33,12 @@ const About = ({ setSelectedPage }: Props) => {
               visible: { opacity: 1, x: 0 },
             }}
           >
-            <div className="relative">
-              <div className="mt-8 text-lg">
+            <div className="flex items-center gap-8">
+              <SparklesIcon className="h-6 w-6 text-white" />
+              <p className="text-lg">
                 About the Project
-              </div>
+              </p>
+              <SparklesIcon className="h-6 w-6 text-white" />
             </div>
 
             <p className="mt-8 text-md">

@@ -38,7 +38,7 @@ const ConnectDevice = ({ setSelectedPage }: Props) => {
               in everyone's screen and they will also be shared with our Modern Jukebox device.
             </p>
             </div>
-            <div className="mt-24">
+            <div className="mt-24 ml-32">
               <HttpListener />
             </div>  
           </motion.div>

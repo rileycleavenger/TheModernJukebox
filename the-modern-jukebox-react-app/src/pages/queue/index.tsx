@@ -57,8 +57,15 @@ const Queue = ({ setSelectedPage }: Props) => {
       }
       {token &&
       <div> 
-        <button onClick={handleClearQueue}>Clear Queue</button>
-        <button onClick={handleGetQueue}>Get Queue</button>
+        <div className="flex items-center justify-stretch gap-6">
+        <button
+        className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
+        onClick={handleClearQueue}>Clear Queue</button>
+        <button
+        className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
+        onClick={handleGetQueue}>Get Queue</button>
+        </div>
+        <div>
         <table>
           <thead>
             <tr>
@@ -83,6 +90,7 @@ const Queue = ({ setSelectedPage }: Props) => {
             ))}
           </tbody> 
         </table>
+        </div>
       </div>
       }
     </div>

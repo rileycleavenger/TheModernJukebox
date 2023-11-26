@@ -10,11 +10,11 @@ import { SelectedPage } from '../../assets/variables/availablepages';
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
+import { SparklesIcon } from "@heroicons/react/24/solid";
+
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
-
-
 
 const MusicPlayer = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -59,6 +59,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
       },
       params:{
         q:quickSearch,
+        limit:6,
         type: "track"
       }
     }) 
@@ -94,7 +95,6 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
       );
       
   }
-  console.log(token);
   console.log(songs);
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
@@ -107,7 +107,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
        {!token &&
           <div>
           <div>
-          <p className="text-lg mt-24">
+          <p className="text-lg mt-30">
             The Music Player page allows you to search for your favorite songs and queue them.
             To gain access to this page, please sign with Spotify.
           </p>
@@ -120,12 +120,24 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
           </div>
           </div>
         }
-        {token &&             
+        {token &&   
+          <div className="mt-16">    
+          <div className="flex items-center gap-2">
+            <SparklesIcon className="h-6 w-6 text-white" />
+            <p className="text-lg">
+              Search and queue your favorite songs
+            </p>
+            <SparklesIcon className="h-6 w-6 text-white" />
+          </div>  
+          <div className="mt-10">    
           <form onSubmit={searchSongs}>
-            <input type='text' onChange={e => setQuickSearch(e.target.value)} />
-            <button type='submit'>Search</button>
-            <div className="flex flex-col">
-            <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">  
+            <div className="flex items-center gap-8">
+            <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' onChange={e => setQuickSearch(e.target.value)} />
+            <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
+            type='submit'>Search</button>
+            </div>
+            <div className="flex flex-col mt-8">
+            <div className="grid gap-4 grid-cols-6">  
             {songs.map((track: {
                 name: '',
                 artistName: '',
@@ -133,20 +145,24 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
                 uri: ''
               }) => {
                   return (
-                        <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-                            <img src={track.images} />
-                            <p>
-                                {track.name} by {track.artistName}
-                            </p>
-                            <button type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>
-                                Add To Queue
-                            </button>
+                        <div>
+                          <img src={track.images} />
+                          <p>
+                            {track.name} by {track.artistName}
+                          </p>
+                          <button  className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700"
+                          type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>
+                          Add To Queue
+                          </button>
                         </div>
+
                   )
               })}
             </div>
             </div>
           </form>
+          </div>
+          </div>
 
         }
       </div>
