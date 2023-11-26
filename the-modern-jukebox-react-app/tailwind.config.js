@@ -7,16 +7,35 @@ module.exports = {
         "gray-20": "#F8F4EB",
         "gray-50": "#EFE6E6",
         "gray-100": "#DFCCCC",
+        //periwinkle
+        "gray-200": "#AEB8FE",
+        //periwinkle
+        "gray-300": "#D7DBFF",
         "gray-500": "#5E0000",
-        "primary-100": "#FFE1E0",
-        "primary-300": "#FFA6A3",
-        "primary-500": "#FF6B66",
-        "secondary-400": "#FFCD5B",
-        "secondary-500": "#FFC132",
+        // black
+        "primary-100": "#240A09",
+        // off black
+        "secondary-100": "#210812",
+        // light purple
+        "primary-200": "#A582BC",
+        // dark purple 
+        "primary-300": "#8653A0",
+        // dark dark purple
+        "secondary-300": "#3B3561",
+        // light orange 
+        "primary-400": "#F9A217",
+        // dark orange
+        "primary-500": "#EF7A20",
+        // light red
+        "primary-600": "#FFCD5B",
+        // off light red
+        "secondary-600": "#E15151",
+        // dark red
+        "primary-700": "#D32425",
       },
       backgroundImage: (theme) => ({
         "gradient-yellowred":
-          "linear-gradient(90deg, #FF616A 0%, #FFC837 100%)",
+          "linear-gradient(90deg, #8653A0 0%, #240A09 100%)",
         "mobile-home": "url('./assets/HomePageGraphic.png')",
       }),
       fontFamily: {
@@ -24,10 +43,6 @@ module.exports = {
         montserrat: ["Montserrat", "sans-serif"],
       },
       content: {
-        evolvetext: "url('./assets/EvolveText.png')",
-        abstractwaves: "url('./assets/AbstractWaves.png')",
-        sparkles: "url('./assets/Sparkles.png')",
-        circles: "url('./assets/Circles.png')",
       },
     },
     screens: {

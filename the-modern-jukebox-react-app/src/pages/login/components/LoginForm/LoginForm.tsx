@@ -18,8 +18,8 @@ const LoginForm: React.FC = (props) => {
         window.location.hash = ""
         sessionStorage.setItem("token",token)
         setToken(token)
+        console.log("token",token)
     }
-    console.log("token",token)
 },[])
   const [selectedService, setSelectedService] = useState<string | null>(null);
 

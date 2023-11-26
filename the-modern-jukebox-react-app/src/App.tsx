@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import AppRouter from './AppRouter';
+import React, { useEffect, useState } from 'react';
 import './variables.css'
 import Navbar from './pages/navbar';
 import { SelectedPage } from './assets/variables/availablepages';
-import MusicPlayer from './pages/music-player/MusicPlayer';
+import MusicPlayer from './pages/musicPlayer';
 import About from './pages/about';
 import ConnectDevice from './pages/connectDevice';
+import Home from './pages/home';
 function App() {
 {/*
   // function used to made button bold if on the current page
@@ -18,8 +18,18 @@ function App() {
     setShowMobileMenu(!showMobileMenu);
   }
 */}
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setSelectedPage(SelectedPage.Home);
+      }
+      setIsTopOfPage(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.LandingPage)
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home)
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
   return (
     <div className="App bg-gray-50">
@@ -28,8 +38,10 @@ function App() {
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}
       />
-      <About setSelectedPage={setSelectedPage} />
+      <Home setSelectedPage={setSelectedPage} />
       <ConnectDevice setSelectedPage={setSelectedPage} />
+      <MusicPlayer setSelectedPage={setSelectedPage} />
+      <About setSelectedPage={setSelectedPage} />
       {/*
       <DeviceConnection setSelectedPage={setSelectedPage} />
       <MusicPlayer setSelectedPage={setSelectedPage} />

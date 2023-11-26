@@ -1,6 +1,6 @@
 export enum SelectedPage {
-  LandingPage = "landing-page",
-  ConnectDevice = "connect-device",
-  MusicPlayer = "music-player",
+  Home = "home",
+  ConnectDevice = "connectdevice",
+  MusicPlayer = "musicplayer",
   About = "about",
 }

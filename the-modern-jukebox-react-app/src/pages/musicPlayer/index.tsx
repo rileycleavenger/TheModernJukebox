@@ -5,10 +5,19 @@ import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
 import axios from 'axios';
 import React from 'react';
+import useMediaQuery from '../../hooks/useMediaQuery';
+import { SelectedPage } from '../../assets/variables/availablepages';
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import { motion } from "framer-motion";
+
+type Props = {
+  setSelectedPage: (value: SelectedPage) => void;
+};
 
 let token = (sessionStorage.getItem("token")|| "")
 
-function MusicPlayer() {
+const MusicPlayer = ({ setSelectedPage }: Props) => {
+  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
 
   function ExportToQueue(trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
     // create a variable of type QueueObject that is made with the uri and the token
@@ -88,6 +97,7 @@ function MusicPlayer() {
   console.log(token);
   console.log(songs);
   return (
+    <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
     <div>
       <div>
        {!token &&
@@ -118,6 +128,7 @@ function MusicPlayer() {
         }
       </div>
     </div>
+    </section>
   );
 }
 

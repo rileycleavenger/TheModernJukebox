@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "./Link";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { SelectedPage } from "../../assets/variables/availablepages";
+import jukebox from "../../assets/images/jukebox.png";
 import { loginURL } from "../../hooks/spotify";
 type Props = {
   isTopOfPage: boolean;
@@ -15,7 +16,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
-  const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow";
+  const navbarBackground = isTopOfPage ? "" : "bg-primary-300 drop-shadow";
 
   return (
     <nav>
@@ -24,16 +25,11 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
       >
         <div className={`${flexBetween} mx-auto w-5/6`}>
           <div className={`${flexBetween} w-full gap-16`}>
-            {/* LEFT SIDE */}
-            {/*
-            <img alt="logo" src={Logo} />
-            */}
-            {/* RIGHT SIDE */}
             {isAboveMediumScreens ? (
               <div className={`${flexBetween} w-full`}>
                 <div className={`${flexBetween} gap-8 text-sm`}>
                   <Link
-                    page="Landing Page"
+                    page="Home"
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                   />
@@ -86,7 +82,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
           {/* MENU ITEMS */}
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
             <Link
-              page="Landing Page"
+              page="Home"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />

@@ -12,10 +12,10 @@ const clientId = "3c6b67b44db2400db60002e9a5e89bb2"
 let redirectURL = '';
 if (window.location.origin.includes('localhost')) {
   // Development environment
-  redirectURL = 'http://localhost:3000/about/';
+  redirectURL = 'http://localhost:3000/home/';
 } else {
   // Production environment
-  redirectURL = `${window.location.origin}/about`;
+  redirectURL = `${window.location.origin}/home`;
 }
 
 //possible scopes:
