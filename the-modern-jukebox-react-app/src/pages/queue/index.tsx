@@ -32,7 +32,6 @@ const Queue = ({ setSelectedPage }: Props) => {
 
   return (
     <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
-      {/* IMAGE AND MAIN HEADER */}
       <motion.div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
         onViewportEnter={() => setSelectedPage(SelectedPage.Queue)}
@@ -73,6 +72,7 @@ const Queue = ({ setSelectedPage }: Props) => {
               <th>Uri</th>
               <th>Name</th>
               <th>Artist</th>
+              <th>Duration</th>
               <th>Cover</th>
             </tr>
           </thead>
@@ -83,6 +83,7 @@ const Queue = ({ setSelectedPage }: Props) => {
                 <td>{item.uri}</td>
                 <td>{item.trackName}</td>
                 <td>{item.trackArtist}</td>
+                <td>{item.duration}</td>
                 <td>
                   <img src={item.trackCover} alt="Cover" />
                 </td>

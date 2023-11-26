@@ -19,11 +19,12 @@ type Props = {
 const MusicPlayer = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   let token = (sessionStorage.getItem("token")|| "")
-  function ExportToQueue(trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
+  function ExportToQueue(duration_ms: string, trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
     // create a variable of type QueueObject that is made with the uri and the token
     const queueObject: QueueObject = {
       uri: trackUri,
       userAccessToken: token,
+      duration: duration_ms,
       trackName: tackName,
       trackArtist: trackArtist,
       trackCover: trackCover,
@@ -39,6 +40,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     track: {
       name: "";
       uri: "";
+      duration_ms:"";
       album:{
         name: "";
         images: [
@@ -69,6 +71,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
         (track: {
           name: "";
           uri: "";
+          duration_ms:"";
           album:{
             name: "";
             artists: [
@@ -86,6 +89,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
           return {
             name: track.name,
             uri: track.uri,
+            duration_ms: track.duration_ms,
             images: track.album.images[0].url,
             albumName: track.album.name,
             artistName: track.album.artists[0].name,
@@ -140,6 +144,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
             <div className="grid gap-4 grid-cols-6">  
             {songs.map((track: {
                 name: '',
+                duration_ms: '',
                 artistName: '',
                 images:''
                 uri: ''
@@ -151,7 +156,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
                             {track.name} by {track.artistName}
                           </p>
                           <button  className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700"
-                          type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>
+                          type='submit' onClick={() => ExportToQueue(track.duration_ms,track.uri, track.name, track.artistName, track.images)}>
                           Add To Queue
                           </button>
                         </div>
