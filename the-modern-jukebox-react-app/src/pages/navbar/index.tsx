@@ -97,6 +97,11 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />
+            <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
+              onClick={() => window.location.href = loginURL}
+            >
+            Sign In
+            </button>
           </div>
         </div>
       )}
