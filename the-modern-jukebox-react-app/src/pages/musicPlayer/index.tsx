@@ -14,11 +14,11 @@ type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
 
-let token = (sessionStorage.getItem("token")|| "")
+
 
 const MusicPlayer = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-
+  let token = (sessionStorage.getItem("token")|| "")
   function ExportToQueue(trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
     // create a variable of type QueueObject that is made with the uri and the token
     const queueObject: QueueObject = {

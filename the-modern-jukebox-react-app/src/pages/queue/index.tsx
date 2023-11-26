@@ -11,10 +11,10 @@ import locked from "../../assets/images/locked.png";
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
-let token = (sessionStorage.getItem("token")|| "")
+
 const Queue = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-
+  let token = (sessionStorage.getItem("token")|| "")
   let psuedoQueue: QueueObject[] = [];
 
   const [queue, setQueue] = useState<QueueObject[]>([]);
