@@ -1,49 +1,33 @@
-import React, { useState } from 'react';
-import './App.css';
-import AppRouter from './AppRouter';
+import React, { useEffect, useState } from 'react';
 import './variables.css'
-import Login from './pages/login/Login';
-
+import Navbar from './pages/navbar';
+import { SelectedPage } from './assets/variables/availablepages';
+import MusicPlayer from './pages/musicPlayer';
+import About from './pages/about';
+import Home from './pages/home';
+import Queue from './pages/queue';
 function App() {
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setSelectedPage(SelectedPage.Home);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // function used to made button bold if on the current page
-  const isButtonBold = (path: string) => {
-    return window.location.pathname === path;
-  }
-
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const toggleMobileMenu = () => {
-    setShowMobileMenu(!showMobileMenu);
-  }
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home)
   return (
-    <div className="App">
-
-      <div className="navbar-container">
-        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
-            ☰
-        </button>
-        <ul id="nav-list" className={`nav-bar ${showMobileMenu ? 'mobile-menu' : ''}`}>
-          <li className={`left ${isButtonBold('/music-player') ? 'bold' : ''}`}>
-            <a href="/music-player">Music Player</a>
-          </li>
-          <li className={`left ${isButtonBold('/device-connection') ? 'bold' : ''}`}>
-            <a href="/device-connection">Device Connection</a>
-          </li>
-          <li className={`left ${isButtonBold('/about') ? 'bold' : ''}`}>
-            <a href="/about">About</a>
-          </li>
-          <li className={`left ${isButtonBold('/queue') ? 'bold' : ''}`}>
-            <a href="/queue">Queue</a>
-          </li>
-          <li className={`right ${isButtonBold('/login') ? 'bold' : ''}`} >
-            <a href="/login">Login</a>        
-          </li>
-        </ul>
-      </div>
-
-      <div className="page-content">
-        <AppRouter />
-      </div>
+    <div className="App bg-primary-100">
+      <Navbar 
+        selectedPage={selectedPage}
+        setSelectedPage={setSelectedPage}
+      />
+      <Home setSelectedPage={setSelectedPage} />
+      <MusicPlayer setSelectedPage={setSelectedPage} />
+      <Queue setSelectedPage={setSelectedPage} />
+      <About setSelectedPage={setSelectedPage} />
     </div>
   );
 }
