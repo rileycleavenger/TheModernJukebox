@@ -9,7 +9,7 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import { SelectedPage } from '../../assets/variables/availablepages';
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
-
+import locked from "../../assets/images/locked.png";
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
@@ -98,16 +98,34 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
   console.log(songs);
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
+    <motion.div
+        className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
+        onViewportEnter={() => setSelectedPage(SelectedPage.MusicPlayer)}
+    >
     <div>
       <div>
        {!token &&
-          <h1>This is the music player page! To gain access to this page, please login.</h1>
+          <div>
+          <div>
+          <p className="text-lg mt-24">
+            The Music Player page allows you to search for your favorite songs and queue them.
+            To gain access to this page, please sign with Spotify.
+          </p>
+          </div>
+          <div
+          className="flex basis-full justify-center z-10
+              mt-32 justify-items-end"
+          >
+          <img alt="locked" src={locked} />
+          </div>
+          </div>
         }
-        {token &&
+        {token &&             
           <form onSubmit={searchSongs}>
             <input type='text' onChange={e => setQuickSearch(e.target.value)} />
             <button type='submit'>Search</button>
-            <div>
+            <div className="flex flex-col">
+            <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">  
             {songs.map((track: {
                 name: '',
                 artistName: '',
@@ -115,19 +133,25 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
                 uri: ''
               }) => {
                   return (
-                    <div>
-                      <img src={track.images} />
-                      <p>{track.name} by {track.artistName}</p>
-                      <button type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>Add To Queue</button>
-                    </div>
+                        <div className="flex flex-wrap sm:justify-start justify-center gap-8">
+                            <img src={track.images} />
+                            <p>
+                                {track.name} by {track.artistName}
+                            </p>
+                            <button type='submit' onClick={() => ExportToQueue(track.uri, track.name, track.artistName, track.images)}>
+                                Add To Queue
+                            </button>
+                        </div>
                   )
               })}
+            </div>
             </div>
           </form>
 
         }
       </div>
     </div>
+    </motion.div>
     </section>
   );
 }

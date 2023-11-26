@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { SelectedPage } from "../../assets/variables/availablepages";
 import jukebox from "../../assets/images/jukebox.png";
 import jukeboxTitle from "../../assets/images/jukeboxTitle.png";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -54,10 +54,9 @@ const Home = ({ setSelectedPage }: Props) => {
                 <img alt="title" src={jukeboxTitle} />
             </div>
 
-            <p className="mt-8 text-sm">
-              Unrivaled Gym. Unparalleled Training Fitness Classes. World Class
-              Studios to get the Body Shapes That you Dream of.. Get Your Dream
-              Body Now.
+            <p className="mt-8 text-md text-center">
+              Our Web App allows you to connect to our Modern Jukebox device, where you and your friends
+              can select and queue songs to be played on the device. Explore our pages below, or login to get started.
             </p>
           </motion.div>
 

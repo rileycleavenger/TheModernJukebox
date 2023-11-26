@@ -3,7 +3,7 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import { SelectedPage } from '../../assets/variables/availablepages';
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
-
+import HttpListener from './components/HttpListener/HttpListener';
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
@@ -12,7 +12,7 @@ const ConnectDevice = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
 
   return (
-    <section id="connectdevice" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0">
+    <section id="connectdevice" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
       {/* IMAGE AND MAIN HEADER */}
       <motion.div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
@@ -33,14 +33,14 @@ const ConnectDevice = ({ setSelectedPage }: Props) => {
             }}
           >
             <div className="relative">
-              <div className="mt-8 text-lg">
-                Welcome to the Modern Jukebox
-              </div>
-            </div>
-
-            <p className="mt-8 text-sm">
-            This is the device connection page!
+            <p className="text-lg">
+              The Device Connection page allows you to add messages that will be viewed
+              in everyone's screen and they will also be shared with our Modern Jukebox device.
             </p>
+            </div>
+            <div className="mt-24">
+              <HttpListener />
+            </div>  
           </motion.div>
         </div>
 

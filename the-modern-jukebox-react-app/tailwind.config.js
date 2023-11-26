@@ -4,14 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "gray-20": "#F8F4EB",
-        "gray-50": "#EFE6E6",
-        "gray-100": "#DFCCCC",
+        "gray-100": "#aab9c0",
         //periwinkle
         "gray-200": "#AEB8FE",
         //periwinkle
         "gray-300": "#D7DBFF",
-        "gray-500": "#5E0000",
         // black
         "primary-100": "#240A09",
         // off black
@@ -33,11 +30,6 @@ module.exports = {
         // dark red
         "primary-700": "#D32425",
       },
-      backgroundImage: (theme) => ({
-        "gradient-yellowred":
-          "linear-gradient(90deg, #8653A0 0%, #240A09 100%)",
-        "mobile-home": "url('./assets/HomePageGraphic.png')",
-      }),
       fontFamily: {
         dmsans: ["DM Sans", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],

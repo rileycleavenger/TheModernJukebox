@@ -12,7 +12,7 @@ const About = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
 
   return (
-    <section id="about" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0">
+    <section id="about" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
       {/* IMAGE AND MAIN HEADER */}
       <motion.div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
@@ -34,15 +34,15 @@ const About = ({ setSelectedPage }: Props) => {
           >
             <div className="relative">
               <div className="mt-8 text-lg">
-                Welcome to the Modern Jukebox
+                About the Project
               </div>
             </div>
 
-            <p className="mt-8 text-sm">
+            <p className="mt-8 text-md">
             The purpose of this project is to give users the ability to collaboratively share music
-            through providing access to their personal music libraries within the same device.
-            The Music Player page allows logged in users to search for songs. TBD: Select and queue songs
-            The Login page allows users to log in with Spotify. TBD: Apple Music
+            by providing access to their personal music libraries within the same device.
+            The Music Player page allows logged in users to search for songs and add them to the queue.
+            The Queue page allows logged in users to see the queue and clear it, if necessary.
             TBD: The Device Connection page will allow logged in users to connect to the hardware.
             Developers: Blake Budd, Riley Cleavenger, Alexa Cole, Rafaela Ferreira, and Robert Noble
             </p>
