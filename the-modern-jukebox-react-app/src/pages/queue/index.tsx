@@ -68,8 +68,6 @@ const Queue = ({ setSelectedPage }: Props) => {
         <table>
           <thead>
             <tr>
-              <th>User Token</th>
-              <th>Uri</th>
               <th>Name</th>
               <th>Artist</th>
               <th>Duration</th>
@@ -79,8 +77,6 @@ const Queue = ({ setSelectedPage }: Props) => {
           <tbody>
             {queue.map((item) => (
               <tr>
-                <td>{item.userAccessToken}</td>
-                <td>{item.uri}</td>
                 <td>{item.trackName}</td>
                 <td>{item.trackArtist}</td>
                 <td>{item.duration}</td>
