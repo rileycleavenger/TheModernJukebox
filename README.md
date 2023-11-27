@@ -19,4 +19,4 @@ The music queue is an integral part to our project and in this milestone we were
 We also took this time to completelty redesign the software interface to not only make it prettier, but more user friendly as well. Now our webapp is one static page and the navigation bar buttons will take the user to the respective section of the page. The navigation bar buttons themselves will be highlighted based on where on the page the user is if they decide to scroll themselves. Furthermore, users will also be locked out of other features until signing in.
 
 ## Design Prototype - Hardware
-See the [README.md file](https://github.com/rileycleavenger/TheModernJukebox/blob/main/hardware_src/README.md)https://github.com/rileycleavenger/TheModernJukebox/blob/main/hardware_src/README.md in hardware_src
+See the [README.md file](https://github.com/rileycleavenger/TheModernJukebox/blob/main/hardware_src/README.md) in hardware_src
