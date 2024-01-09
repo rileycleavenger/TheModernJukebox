@@ -5,6 +5,7 @@ import Link from "./Link";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { SelectedPage } from "../../assets/variables/availablepages";
 import { loginURL } from "../../hooks/spotify";
+import { searchShazam } from "../../hooks/shazam";
 
 type Props = {
   selectedPage: SelectedPage;
@@ -19,6 +20,7 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
 
   return (
     <nav>
+      <button onClick={() => searchShazam("Tyler")}>Test Button</button>
       <div
         className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
       >
