@@ -12,6 +12,14 @@ import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
+import { useRef } from "react";
+
+
+// define an inputRef variable
+const inputRef = React.createRef<HTMLInputElement>();
+
+// define a variable of type any
+let shazamSearchResults: any = [];
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -36,8 +44,30 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     addToQueue(queueObject);
   }
 
-  function FindSpotifyUri(trackName: string, trackArtist: string) : string{
+  function FormatTrack(track: any): any {
+    return {
+      track: {
+        name: track.name,
+        uri: track.uri,
+        duration_ms: track.duration_ms,
+        album: {
+          name: track.album.name,
+          images: [
+            {
+              url: track.album.images[0].url,
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  function FindSpotifyUriAndExport(trackName: string, trackArtist: string) {
     
+    // search spotify using the trackName and trackArtist
+    const track = FormatTrack(searchSongs(trackName + " " + trackArtist))
+
+    ExportToQueue(track.duration_ms,track.uri, track.name, track.artistName, track.images)
   }
 
   const [quickSearch, setQuickSearch] = useState("");
@@ -105,7 +135,6 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
       
   }
 
-  console.log(songs);
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
     <motion.div
@@ -139,15 +168,15 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
             </p>
             <SparklesIcon className="h-6 w-6 text-white" />
           </div>  
-          <div className="mt-10">    
-          <form onSubmit={() => searchShazam(quickSearch)}>
+          <div className="mt-10">  
+          <form>
             <div className="flex items-center gap-8">
-              <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' onChange={e => setQuickSearch(e.target.value)} />
-              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit'>Search</button>
+              <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' ref={inputRef} />
+              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={() => shazamSearchResults = searchShazam(inputRef.current?.value)}>Search</button>
             </div>
             <div className="flex flex-col mt-8">
               <div className="grid gap-4 grid-cols-6">
-                {songs.map((track: {
+                {Array.isArray(shazamSearchResults) && shazamSearchResults.map((track: {
                   track: {
                     title: string;
                     subtitle: string;
@@ -162,7 +191,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
                       <p>
                         {track.track.title} by {track.track.subtitle}
                       </p>
-                      <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type='submit' onClick={() => FindSpotifyUri(track.track.title, track.track.subtitle)}>
+                      <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type='submit' onClick={() => FindSpotifyUriAndExport(track.track.title, track.track.subtitle)}>
                         Add To Queue
                       </button>
                     </div>
