@@ -40,13 +40,12 @@ const About = ({ setSelectedPage }: Props) => {
               </p>
               <SparklesIcon className="h-6 w-6 text-white" />
             </div>
-
             <p className="mt-8 text-md">
-            The purpose of this project is to give users the ability to collaboratively share music
-            by providing access to their personal music libraries within the same device.
-            The Music Player page allows logged in users to search for songs and add them to the queue.
-            The Queue page allows logged in users to see the queue and clear it, if necessary.
-            Developers: Blake Budd, Riley Cleavenger, Alexa Cole, Rafaela Ferreira, and Robert Noble
+              The purpose of this project is to give users the ability to collaboratively share music
+              by providing access to their personal music libraries within the same device.
+              The Music Player page allows logged in users to search for songs and add them to the queue.
+              The Queue page allows logged in users to see the queue and clear it, if necessary.
+              Developers: Blake Budd, Riley Cleavenger, Alexa Cole, Rafaela Ferreira, and Robert Noble
             </p>
           </motion.div>
         </div>
