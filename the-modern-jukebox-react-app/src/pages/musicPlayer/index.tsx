@@ -1,13 +1,8 @@
-import {useEffect, useState, useRef} from 'react';
-import { getTokenFromUrl } from '../../hooks/spotify';
-import { SpotifyApi } from '@spotify/web-api-ts-sdk';
+import { useState, useRef} from 'react';
 import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
-import axios from 'axios';
-import React from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { SelectedPage } from '../../assets/variables/availablepages';
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
@@ -19,6 +14,8 @@ type Props = {
 };
 
 const MusicPlayer = ({ setSelectedPage }: Props) => {
+
+  // basic component setu[]
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   let token = (sessionStorage.getItem("token")|| "")
 
@@ -64,8 +61,10 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
 
   // function to call search
   const handleSearch = async () => {
+    
     // verify there is data in the textbox
     if (inputRef.current && typeof inputRef.current !== "undefined") {
+      
       // set search results var
       const results = await searchShazam(inputRef.current.value);
       setShazamSearchResults(results);
@@ -86,71 +85,6 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     const trackToQueue = FormatTrack(spotifySearchResult)
     ExportToQueue(trackToQueue.duration_ms, trackToQueue.uri, trackToQueue.name, trackToQueue.artistName, trackToQueue.images)
   };
-
-  const [quickSearch, setQuickSearch] = useState("");
-  interface s {
-    track: {
-      name: "";
-      uri: "";
-      duration_ms:"";
-      album:{
-        name: "";
-        images: [
-          {
-            url: "";
-          }
-        ];
-      };
-    };
-   }
-  const [songs, setSongs] = useState([]);
-  
-  const searchSongs = async (e: any) => {
-    e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/search",{
-      headers:{
-        Authorization:`Bearer ${token}`
-      },
-      params:{
-        q:quickSearch,
-        limit:6,
-        type: "track"
-      }
-    }) 
-    console.log(data);
-    setSongs(
-      data.tracks.items.map(
-        (track: {
-          name: "";
-          uri: "";
-          duration_ms:"";
-          album:{
-            name: "";
-            artists: [
-              {
-                name: "";
-              }
-            ];
-            images: [
-              {
-                url: "";
-              }
-            ];
-          };
-        }) => {
-          return {
-            name: track.name,
-            uri: track.uri,
-            duration_ms: track.duration_ms,
-            images: track.album.images[0].url,
-            albumName: track.album.name,
-            artistName: track.album.artists[0].name,
-          };
-        }
-      )|| {}
-      );
-      
-  }
 
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
