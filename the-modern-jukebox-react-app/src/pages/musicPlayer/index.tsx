@@ -13,18 +13,6 @@ import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 
-
-const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
-const inputRef = useRef<HTMLInputElement>(null);
-
-const handleSearch = async () => {
-  if (inputRef.current && typeof inputRef.current !== "undefined") {
-    const results = await searchShazam(inputRef.current.value);
-    setShazamSearchResults(results);
-  }
-};
-
-
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
@@ -47,6 +35,16 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     // post the variable to the hardware
     addToQueue(queueObject);
   }
+
+  const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSearch = async () => {
+    if (inputRef.current && typeof inputRef.current !== "undefined") {
+      const results = await searchShazam(inputRef.current.value);
+      setShazamSearchResults(results);
+    }
+  };
 
   function FormatTrack(track: any): any {
     return {
