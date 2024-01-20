@@ -85,8 +85,10 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
   // get user token
   let token = sessionStorage.getItem("token") || "";
 
+  console.log("token", token)
+
   // define req url
-  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`remaster track:${trackName} artist:${trackArtist}`)}&type=track`;
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${trackName} artist:${trackArtist}`)}&type=track`;
 
   // define options
   const options = {
