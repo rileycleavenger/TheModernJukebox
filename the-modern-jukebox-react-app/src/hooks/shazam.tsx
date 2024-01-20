@@ -25,7 +25,7 @@ export async function searchShazam(searchTerm: string): Promise<any[]> {
         // get the response data
         const responseData = await response.json();
         const tracks = responseData.tracks.hits.map((hit: any) => hit.track);
-        console.log('Shazam search results:', tracks);
+        // console.log('Shazam search results:', tracks);
         return tracks;
 
     } catch (error) {

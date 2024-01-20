@@ -30,7 +30,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
       trackArtist: trackArtist,
       trackCover: trackCover,
     };
-    console.log("What is Posted:", queueObject);
+    // console.log("What is Posted:", queueObject);
 
     // post the variable to the hardware
     addToQueue(queueObject);

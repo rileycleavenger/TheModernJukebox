@@ -103,7 +103,7 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
     // get the response data
     const responseData = await response.json();
     const track = responseData.tracks.items[0];
-    console.log('Spotify search result:', track);
+    // console.log('Spotify search result:', track);
     return track;
   } catch (error) {
     // log any errors
