@@ -85,8 +85,6 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
   // get user token
   let token = sessionStorage.getItem("token") || "";
 
-  console.log("token", token)
-
   // define req url
   const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${trackName} artist:${trackArtist}`)}&type=track`;
 
@@ -104,9 +102,9 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
 
     // get the response data
     const responseData = await response.json();
-    const tracks = responseData.tracks.hits.map((hit: any) => hit.track);
-    console.log('Spotify search results:', tracks);
-    return tracks;
+    const track = responseData.tracks.items[0];
+    console.log('Spotify search result:', track);
+    return [track];
   } catch (error) {
     // log any errors
     console.error('Error during Spotify search:', error);
