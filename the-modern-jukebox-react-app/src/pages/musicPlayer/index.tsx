@@ -1,4 +1,4 @@
-import { useState, useRef} from 'react';
+import { useState, useRef, useEffect} from 'react';
 import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
 import useMediaQuery from '../../hooks/useMediaQuery';
@@ -36,25 +36,6 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     addToQueue(queueObject);
   }
 
-  // function used to format an item as a queue item
-  function FormatTrack(track: any): any {
-    return {
-      track: {
-        name: track.name,
-        uri: track.uri,
-        duration_ms: track.duration_ms,
-        album: {
-          name: track.album.name,
-          images: [
-            {
-              url: track.album.images[0].url,
-            },
-          ],
-        },
-      },
-    };
-  }
-
   // useState setup for the Shazam search
   const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -72,18 +53,26 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
   };
 
   // useState setup for Spotify search
-  const [spotifySearchResult, setSpotifySearchResult] = useState<any[]>([]);
+  const [spotifySearchResult, setSpotifySearchResult] = useState<any>();
+
+  // useEffect to format the track when spotifySearchResult changes
+  useEffect(() => {
+    if (spotifySearchResult) {
+      ExportToQueue(
+        spotifySearchResult.duration_ms,
+        spotifySearchResult.uri,
+        spotifySearchResult.name,
+        spotifySearchResult.artists[0].name,
+        spotifySearchResult.album.images[0]
+      );
+    }
+  }, [spotifySearchResult]);
 
   // function to call spotify search
   const FindSpotifyUriAndExport = async (trackName: string, trackArtist: string) => {
-
     // search for song
     const result = await searchSpotify(trackName, trackArtist);
     setSpotifySearchResult(result);
-    
-    // format the track then queue it
-    const trackToQueue = FormatTrack(spotifySearchResult)
-    ExportToQueue(trackToQueue.duration_ms, trackToQueue.uri, trackToQueue.name, trackToQueue.artistName, trackToQueue.images)
   };
 
   return (
