@@ -77,7 +77,7 @@ export const getTrackFromUri = async (uri: string) => {
   }
 };
 
-export async function searchSpotify(trackName: string, trackArtist: string): Promise<any[]> {
+export async function searchSpotify(trackName: string, trackArtist: string): Promise<any> {
   if (!trackName && !trackArtist) {
     return [];
   }
@@ -104,7 +104,7 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
     const responseData = await response.json();
     const track = responseData.tracks.items[0];
     console.log('Spotify search result:', track);
-    return [track];
+    return track;
   } catch (error) {
     // log any errors
     console.error('Error during Spotify search:', error);

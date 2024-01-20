@@ -61,21 +61,30 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
   // useState setup for the Shazam search
   const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // function to call search
   const handleSearch = async () => {
+    // verify there is data in the textbox
     if (inputRef.current && typeof inputRef.current !== "undefined") {
+      // set search results var
       const results = await searchShazam(inputRef.current.value);
       setShazamSearchResults(results);
     }
   };
 
   // useState setup for Spotify search
-  const [spotifySearchResults, setSpotifySearchResults] = useState<any[]>([]);
+  const [spotifySearchResult, setSpotifySearchResult] = useState<any[]>([]);
+
+  // function to call spotify search
   const FindSpotifyUriAndExport = async (trackName: string, trackArtist: string) => {
-    const results = await searchSpotify(trackName, trackArtist);
-    setSpotifySearchResults(results);
+
+    // search for song
+    const result = await searchSpotify(trackName, trackArtist);
+    setSpotifySearchResult(result);
     
-    const trackToQueue = FormatTrack(spotifySearchResults[0])
-    ExportToQueue(trackToQueue.duration_ms,trackToQueue.uri, trackToQueue.name, trackToQueue.artistName, trackToQueue.images)
+    // format the track then queue it
+    const trackToQueue = FormatTrack(spotifySearchResult)
+    ExportToQueue(trackToQueue.duration_ms, trackToQueue.uri, trackToQueue.name, trackToQueue.artistName, trackToQueue.images)
   };
 
   const [quickSearch, setQuickSearch] = useState("");
