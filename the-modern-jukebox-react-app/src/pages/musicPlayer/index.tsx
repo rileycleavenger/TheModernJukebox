@@ -63,7 +63,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
         spotifySearchResult.uri,
         spotifySearchResult.name,
         spotifySearchResult.artists[0].name,
-        spotifySearchResult.album.images[0]
+        spotifySearchResult.album.images[0].url
       );
     }
   }, [spotifySearchResult]);
