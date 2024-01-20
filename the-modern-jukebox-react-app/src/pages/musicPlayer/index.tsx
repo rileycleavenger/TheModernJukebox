@@ -122,9 +122,11 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
                     <p>
                       {track.title} by {track.subtitle}
                     </p>
-                    <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.title, track.subtitle)}>
-                      Add To Queue
-                    </button>
+                    {token && (
+                      <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.title, track.subtitle)}>
+                        Add To Queue
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>

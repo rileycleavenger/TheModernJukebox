@@ -77,6 +77,7 @@ export const getTrackFromUri = async (uri: string) => {
   }
 };
 
+// function used to make a GET req to spotify for searching
 export async function searchSpotify(trackName: string, trackArtist: string): Promise<any> {
   if (!trackName && !trackArtist) {
     return [];
