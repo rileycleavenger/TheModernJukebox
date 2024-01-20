@@ -3,7 +3,6 @@ export async function searchShazam(searchTerm?: string): Promise<any[]> {
     if(!searchTerm) {
         return [];
     }
-    
     const url = `https://shazam.p.rapidapi.com/search?term=${encodeURIComponent(searchTerm)}&locale=en-US&offset=0&limit=5`;
 
     // options for the fetch request

@@ -172,31 +172,21 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
           <form>
             <div className="flex items-center gap-8">
               <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' ref={inputRef} />
-              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={() => shazamSearchResults = searchShazam(inputRef.current?.value)}>Search</button>
+              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={() => console.log(shazamSearchResults = searchShazam(inputRef.current?.value))}>Search</button>
             </div>
             <div className="flex flex-col mt-8">
               <div className="grid gap-4 grid-cols-6">
-                {Array.isArray(shazamSearchResults) && shazamSearchResults.map((track: {
-                  track: {
-                    title: string;
-                    subtitle: string;
-                    images: {
-                      coverart: string;
-                    };
-                  };
-                }) => {
-                  return (
-                    <div>
-                      <img src={track.track.images.coverart} alt={track.track.title} />
-                      <p>
-                        {track.track.title} by {track.track.subtitle}
-                      </p>
-                      <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type='submit' onClick={() => FindSpotifyUriAndExport(track.track.title, track.track.subtitle)}>
-                        Add To Queue
-                      </button>
-                    </div>
-                  );
-                })}
+                {shazamSearchResults.map((track: any) => (
+                  <div key={track.track.id}>
+                    <img src={track.track.images.coverart} alt={track.track.title} />
+                    <p>
+                      {track.track.title} by {track.track.subtitle}
+                    </p>
+                    <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.track.title, track.track.subtitle)}>
+                      Add To Queue
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </form>
