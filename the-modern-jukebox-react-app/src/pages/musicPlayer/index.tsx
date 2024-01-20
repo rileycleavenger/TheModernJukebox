@@ -176,15 +176,15 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
               <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' ref={inputRef} />
               <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={handleSearch}>Search</button>
             </div>
-            <div className="flex flex-col mt-8">
+            <div className="flex flex-col mt-8"> 
               <div className="grid gap-4 grid-cols-6">
                 {shazamSearchResults.map((track: any) => (
-                  <div key={track.track.id}>
-                    <img src={track.track.images.coverart} alt={track.track.title} />
+                  <div key={track.id}>
+                    <img src={track.images.coverart} alt={track.title} />
                     <p>
-                      {track.track.title} by {track.track.subtitle}
+                      {track.title} by {track.subtitle}
                     </p>
-                    <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.track.title, track.track.subtitle)}>
+                    <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.title, track.subtitle)}>
                       Add To Queue
                     </button>
                   </div>
