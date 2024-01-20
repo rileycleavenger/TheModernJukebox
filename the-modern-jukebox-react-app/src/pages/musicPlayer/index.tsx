@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import { getTokenFromUrl } from '../../hooks/spotify';
 import { SpotifyApi } from '@spotify/web-api-ts-sdk';
 import { QueueObject } from '../../types';
@@ -12,14 +12,18 @@ import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
-import { useRef } from "react";
 
 
-// define an inputRef variable
-const inputRef = React.createRef<HTMLInputElement>();
+const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
+const inputRef = useRef<HTMLInputElement>(null);
 
-// define a variable of type any
-let shazamSearchResults: any = [];
+const handleSearch = async () => {
+  if (inputRef.current && typeof inputRef.current !== "undefined") {
+    const results = await searchShazam(inputRef.current.value);
+    setShazamSearchResults(results);
+  }
+};
+
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -165,14 +169,14 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
             <SparklesIcon className="h-6 w-6 text-white" />
             <p className="text-lg">
               Search and queue your favorite songs
-            </p>
+            </p> 
             <SparklesIcon className="h-6 w-6 text-white" />
           </div>  
           <div className="mt-10">  
           <form>
             <div className="flex items-center gap-8">
               <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' ref={inputRef} />
-              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={() => console.log(shazamSearchResults = searchShazam(inputRef.current?.value))}>Search</button>
+              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={handleSearch}>Search</button>
             </div>
             <div className="flex flex-col mt-8">
               <div className="grid gap-4 grid-cols-6">

@@ -1,5 +1,5 @@
 // function to search Shazam for a song
-export async function searchShazam(searchTerm?: string): Promise<any[]> {
+export async function searchShazam(searchTerm: string): Promise<any[]> {
     if(!searchTerm) {
         return [];
     }
