@@ -77,4 +77,58 @@ export const getTrackFromUri = async (uri: string) => {
   }
 };
 
+export async function searchSpotify(searchTerm: string): Promise<any[]> {
+  if(!searchTerm) {
+      return [];
+  }
+
+  // get user token
+  let token = (sessionStorage.getItem("token")|| "")
+
+  // get data with axios
+  const {data} = await axios.get("https://api.spotify.com/v1/search",{
+      headers:{
+        Authorization:`Bearer ${token}`
+      },
+      params:{
+        q:searchTerm,
+        limit:6,
+        type: "track"
+      }
+  })
+
+  const mappedData = data.tracks.items.map(
+    (track: {
+      name: "";
+      uri: "";
+      duration_ms: "";
+      album: {
+        name: "";
+        artists: [
+          {
+            name: "";
+          }
+        ];
+        images: [
+          {
+            url: "";
+          }
+        ];
+      };
+    }) => {
+      return {
+        name: track.name,
+        uri: track.uri,
+        duration_ms: track.duration_ms,
+        images: track.album.images[0].url,
+        albumName: track.album.name,
+        artistName: track.album.artists[0].name,
+      };
+    }
+  ) || {};
+
+  return mappedData;
+
+}
+
 export {}

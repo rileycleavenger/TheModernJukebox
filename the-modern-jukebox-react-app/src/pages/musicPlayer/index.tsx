@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
+import { searchSpotify } from '../../hooks/spotify';
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -20,6 +21,8 @@ type Props = {
 const MusicPlayer = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   let token = (sessionStorage.getItem("token")|| "")
+
+  // function used to export to queue for the hardware
   function ExportToQueue(duration_ms: string, trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
     // create a variable of type QueueObject that is made with the uri and the token
     const queueObject: QueueObject = {
@@ -36,16 +39,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     addToQueue(queueObject);
   }
 
-  const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleSearch = async () => {
-    if (inputRef.current && typeof inputRef.current !== "undefined") {
-      const results = await searchShazam(inputRef.current.value);
-      setShazamSearchResults(results);
-    }
-  };
-
+  // function used to format an item as a queue item
   function FormatTrack(track: any): any {
     return {
       track: {
@@ -64,13 +58,25 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
     };
   }
 
-  function FindSpotifyUriAndExport(trackName: string, trackArtist: string) {
-    
-    // search spotify using the trackName and trackArtist
-    const track = FormatTrack(searchSongs(trackName + " " + trackArtist))
+  // useState setup for the Shazam search
+  const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleSearch = async () => {
+    if (inputRef.current && typeof inputRef.current !== "undefined") {
+      const results = await searchShazam(inputRef.current.value);
+      setShazamSearchResults(results);
+    }
+  };
 
-    ExportToQueue(track.duration_ms,track.uri, track.name, track.artistName, track.images)
-  }
+  // useState setup for Spotify search
+  const [spotifySearchResults, setSpotifySearchResults] = useState<any[]>([]);
+  const FindSpotifyUriAndExport = async (trackName: string, trackArtist: string) => {
+    const results = await searchSpotify(trackName + " " + trackArtist);
+    setSpotifySearchResults(results);
+    
+    const trackToQueue = FormatTrack(spotifySearchResults[0])
+    ExportToQueue(trackToQueue.duration_ms,trackToQueue.uri, trackToQueue.name, trackToQueue.artistName, trackToQueue.images)
+  };
 
   const [quickSearch, setQuickSearch] = useState("");
   interface s {
