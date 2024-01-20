@@ -71,7 +71,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
   // useState setup for Spotify search
   const [spotifySearchResults, setSpotifySearchResults] = useState<any[]>([]);
   const FindSpotifyUriAndExport = async (trackName: string, trackArtist: string) => {
-    const results = await searchSpotify(trackName + " " + trackArtist);
+    const results = await searchSpotify(trackName, trackArtist);
     setSpotifySearchResults(results);
     
     const trackToQueue = FormatTrack(spotifySearchResults[0])

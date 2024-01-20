@@ -77,58 +77,39 @@ export const getTrackFromUri = async (uri: string) => {
   }
 };
 
-export async function searchSpotify(searchTerm: string): Promise<any[]> {
-  if(!searchTerm) {
-      return [];
+export async function searchSpotify(trackName: string, trackArtist: string): Promise<any[]> {
+  if (!trackName && !trackArtist) {
+    return [];
   }
 
   // get user token
-  let token = (sessionStorage.getItem("token")|| "")
+  let token = sessionStorage.getItem("token") || "";
 
-  // get data with axios
-  const {data} = await axios.get("https://api.spotify.com/v1/search",{
-      headers:{
-        Authorization:`Bearer ${token}`
-      },
-      params:{
-        q:searchTerm,
-        limit:6,
-        type: "track"
-      }
-  })
+  // define req url
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`remaster track:${trackName} artist:${trackArtist}`)}&type=track`;
 
-  const mappedData = data.tracks.items.map(
-    (track: {
-      name: "";
-      uri: "";
-      duration_ms: "";
-      album: {
-        name: "";
-        artists: [
-          {
-            name: "";
-          }
-        ];
-        images: [
-          {
-            url: "";
-          }
-        ];
-      };
-    }) => {
-      return {
-        name: track.name,
-        uri: track.uri,
-        duration_ms: track.duration_ms,
-        images: track.album.images[0].url,
-        albumName: track.album.name,
-        artistName: track.album.artists[0].name,
-      };
-    }
-  ) || {};
+  // define options
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-  return mappedData;
+  try {
+    // make the fetch request
+    const response = await fetch(url, options);
 
+    // get the response data
+    const responseData = await response.json();
+    const tracks = responseData.tracks.hits.map((hit: any) => hit.track);
+    console.log('Spotify search results:', tracks);
+    return tracks;
+  } catch (error) {
+    // log any errors
+    console.error('Error during Spotify search:', error);
+    return [];
+  }
 }
 
 export {}
