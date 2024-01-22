@@ -153,12 +153,19 @@ function MusicPlayer () {
                       }}
                       style={{
                         cursor: 'pointer',
-                        animation: isAudioPlaying && audio?.src === track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none'
+                        animation: isAudioPlaying && audio?.src === track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
+                        margin: '20px',
                       }}
                     />
 
-                    <p>
-                      {track.title} by {track.subtitle}
+                    <p
+                      style={{
+                        margin: '20px'
+                      }}
+                    >
+                      <strong>{track.title}</strong>
+                      <br />
+                      {track.subtitle}
                     </p>
                     {token && (
                       <button 
@@ -167,6 +174,10 @@ function MusicPlayer () {
                         onClick={(event) => {
                           event.preventDefault();
                           FindSpotifyUriAndExport(track.title, track.subtitle);
+                        }}
+                        style={{
+                          marginLeft: '20px',
+                          marginRight: '20px',
                         }}
                       >
                         Add To Queue
