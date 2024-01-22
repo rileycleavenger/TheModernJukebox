@@ -2,15 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { SelectedPage } from "../../assets/variables/availablepages";
 import { loginURL } from "../../hooks/spotify";
 
-type Props = {
-  selectedPage: SelectedPage;
-  setSelectedPage: (value: SelectedPage) => void;
-};
-
-const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
+function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
@@ -27,63 +21,37 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
               <div className={`${flexBetween} w-full`}>
                 <div className={`${flexBetween} gap-8 text-sm`}>
                 <a
-                className={`${selectedPage === "home" ? "text-primary-400 font-bold" : ""}
+                className={`${"home" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href={`#${"home"}`}
-                onClick={() => setSelectedPage(SelectedPage.Home)}
+                href="home"
                 >
                   Home
                 </a> 
                 <a
-                className={`${selectedPage === "musicplayer" ? "text-primary-400 font-bold" : ""}
+                className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href={`#${"musicplayer"}`}
-                onClick={() => setSelectedPage(SelectedPage.MusicPlayer)}
+                href="musicplayer"
                 >
                   Music Player
                 </a> 
                 <a
-                className={`${selectedPage === "queue" ? "text-primary-400 font-bold" : ""}
+                className={`${"queue" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href={`#${"queue"}`}
-                onClick={() => setSelectedPage(SelectedPage.Queue)}
+                href="queue"
                 >
                   Queue
                 </a> 
                 <a
-                className={`${selectedPage === "about" ? "text-primary-400 font-bold" : ""}
+                className={`${"about" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href={`#${"about"}`}
-                onClick={() => setSelectedPage(SelectedPage.About)}
+                href="about"
                 >
                   About
                 </a> 
-              {/*
-                  <Link
-                    page="Home"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Music Player"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Queue"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="About"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                */}
                 </div>
                 <div className={`${flexBetween} gap-8`}>
                   <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
