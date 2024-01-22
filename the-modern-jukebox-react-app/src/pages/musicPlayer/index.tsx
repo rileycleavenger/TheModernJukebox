@@ -137,10 +137,13 @@ function MusicPlayer () {
                       src={track.images.coverart}
                       alt={track.title}
                       onClick={() => {
-                        if (isAudioPlaying) {
+                        if (isAudioPlaying && audio?.src === track.hub.actions[1].uri) {
                           audio?.pause();
                           setIsAudioPlaying(false);
                         } else {
+                          if (audio) {
+                            audio.pause();
+                          }
                           const newAudio = new Audio(track.hub.actions[1].uri);
                           newAudio.play();
                           setAudio(newAudio);
