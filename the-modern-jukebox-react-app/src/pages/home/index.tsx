@@ -13,6 +13,15 @@ type Props = {
 const Home = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   const [token, setToken] = useState("");
+  useEffect(() => {
+     if (isAboveMediumScreens) {
+      document.body.style.overflow = "hidden";
+      console.log("HEYWHATSUP");
+      return () => {
+        document.body.style.overflow = "auto";
+      };}
+    
+  }, []); 
   useEffect(()=>{
     const hash:string = window.location.hash
     let token = window.sessionStorage.getItem("token")
@@ -26,7 +35,7 @@ const Home = ({ setSelectedPage }: Props) => {
 },[])
   return (
     <section id="home" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
-      {/* IMAGE AND MAIN HEADER */}
+      
       <motion.div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
         onViewportEnter={() => setSelectedPage(SelectedPage.Home)}

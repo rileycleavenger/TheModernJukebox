@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { SelectedPage } from '../../assets/variables/availablepages';
 import AnchorLink from "react-anchor-link-smooth-scroll";
@@ -11,7 +11,14 @@ type Props = {
 
 const About = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-
+   useEffect(() => {
+    if (isAboveMediumScreens) {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  } 
+  }, []);
   return (
     <section id="about" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
       {/* IMAGE AND MAIN HEADER */}

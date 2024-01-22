@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { clearQueue } from '../../services/SpotifyPostService';
 import { getQueue } from '../../services/SpotifyPostService';
 import { QueueObject } from '../../types';
@@ -55,7 +55,7 @@ const Queue = ({ setSelectedPage }: Props) => {
         </div>
       }
       {token &&
-      <div> 
+      <div className='tableContainer'> 
         <div className="flex items-center justify-stretch gap-6">
         <button
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
@@ -64,8 +64,7 @@ const Queue = ({ setSelectedPage }: Props) => {
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
         onClick={handleGetQueue}>Get Queue</button>
         </div>
-        <div>
-        <table>
+        <table className='queueTable'>
           <thead>
             <tr>
               <th>Name</th>
@@ -81,13 +80,12 @@ const Queue = ({ setSelectedPage }: Props) => {
                 <td>{item.trackArtist}</td>
                 <td>{item.duration}</td>
                 <td>
-                  <img src={item.trackCover} alt="Cover" />
+                  <img height={60} src={item.trackCover} alt="Cover" />
                 </td>
               </tr>
             ))}
           </tbody> 
         </table>
-        </div>
       </div>
       }
     </div>

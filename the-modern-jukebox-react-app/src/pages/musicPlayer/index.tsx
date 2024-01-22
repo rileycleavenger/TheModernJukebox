@@ -18,6 +18,13 @@ type Props = {
 
 const MusicPlayer = ({ setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+  useEffect(() => {
+    if (isAboveMediumScreens) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };}
+  }, []); 
   let token = (sessionStorage.getItem("token")|| "")
   function ExportToQueue(duration_ms: string, trackUri: string, tackName: string, trackArtist: string, trackCover: string) {
     // create a variable of type QueueObject that is made with the uri and the token
