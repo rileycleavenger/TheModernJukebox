@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "./Link";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -17,6 +17,29 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if(token)
+    {
+      setIsLoggedIn(true);
+    }
+    else
+    {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    // selectedPage={"Home"};
+    // setSelectedPage={setSelectedPage};
+    // setSelectedPage={"Home"};
+
+    setIsLoggedIn(false);
+  };
+
   return (
     <nav>
       <div
@@ -26,6 +49,7 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
           <div className={`${flexBetween} w-full gap-16`}>
             {isAboveMediumScreens ? (
               <div className={`${flexBetween} w-full`}>
+                {isLoggedIn && (
                 <div className={`${flexBetween} gap-8 text-sm`}>
                   <Link
                     page="Home"
@@ -48,12 +72,21 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
                     setSelectedPage={setSelectedPage}
                   />
                 </div>
+                )}
                 <div className={`${flexBetween} gap-8`}>
+                  {isLoggedIn && (
+                    <button className="rounded-md bg-primary-500 px-4 py-2 hover:bg-primary-700" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  )}
+                  
+                  {!isLoggedIn && (
                   <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
                   onClick={() => window.location.href = loginURL}
                   >
                     Sign In with Spotify
                   </button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -77,31 +110,40 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
             </button>
           </div>
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
+          {isLoggedIn && (
             <Link
               page="Home"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
-            />
+            />)}
+            {isLoggedIn && (
             <Link
               page="Music Player"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
-            />
+            />)}
+            {isLoggedIn && (
             <Link
               page="Queue"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
-            />
+            />)}
+            {isLoggedIn && (
             <Link
               page="About"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
-            />
+            />)}
+            {isLoggedIn && (
+            <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700" onClick={handleLogout}>
+              Logout
+            </button>)}
+            {!isLoggedIn && (
             <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
               onClick={() => window.location.href = loginURL}
             >
             Sign In
-            </button>
+            </button>)}
           </div>
         </div>
       )}
