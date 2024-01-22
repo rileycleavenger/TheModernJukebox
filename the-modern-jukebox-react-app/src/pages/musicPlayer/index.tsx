@@ -7,6 +7,7 @@ import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
+import './index.css';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -150,7 +151,10 @@ function MusicPlayer () {
                           setIsAudioPlaying(true);
                         }
                       }}
-                      style={{ cursor: 'pointer' }}
+                      style={{
+                        cursor: 'pointer',
+                        animation: isAudioPlaying && audio?.src === track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none'
+                      }}
                     />
 
                     <p>
