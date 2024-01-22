@@ -150,6 +150,7 @@ function MusicPlayer () {
                           setIsAudioPlaying(true);
                         }
                       }}
+                      style={{ cursor: 'pointer' }}
                     />
 
                     <p>
