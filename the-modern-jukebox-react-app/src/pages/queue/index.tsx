@@ -80,7 +80,7 @@ const Queue = ({ setSelectedPage }: Props) => {
                 <td>{item.trackArtist}</td>
                 <td>{item.duration}</td>
                 <td>
-                  <img height={60} src={item.trackCover} alt="Cover" />
+                  <img src={item.trackCover} alt="Cover" />
                 </td>
               </tr>
             ))}
