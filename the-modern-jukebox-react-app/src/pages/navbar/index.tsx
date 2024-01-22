@@ -82,7 +82,38 @@ function Navbar () {
             </button>
           </div>
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-            
+          <a
+                className={`${"home" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="home"
+                >
+                  Home
+                </a> 
+                <a
+                className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="musicplayer"
+                >
+                  Music Player
+                </a> 
+                <a
+                className={`${"queue" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="queue"
+                >
+                  Queue
+                </a> 
+                <a
+                className={`${"about" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="about"
+                >
+                  About
+                </a> 
             <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
               onClick={() => window.location.href = loginURL}
             >
