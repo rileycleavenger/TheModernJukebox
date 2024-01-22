@@ -2,21 +2,21 @@ import { useState, useRef, useEffect} from 'react';
 import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/SpotifyPostService';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { SelectedPage } from '../../assets/variables/availablepages';
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
 
-type Props = {
-  setSelectedPage: (value: SelectedPage) => void;
-};
-
-const MusicPlayer = ({ setSelectedPage }: Props) => {
-
-  // basic component setu[]
+function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+  useEffect(() => {
+    if (isAboveMediumScreens) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };}
+  }, []); 
   let token = (sessionStorage.getItem("token")|| "")
 
   // function used to export to queue for the hardware
@@ -77,14 +77,13 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
 
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
-    <motion.div
+    <div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
-        onViewportEnter={() => setSelectedPage(SelectedPage.MusicPlayer)}
     >
     <div>
       <div>
        {!token &&
-          <div>
+          <div className='px-40'>
           <div>
           <p className="text-lg mt-28">
             The Music Player page allows you to search for your favorite songs and queue them.
@@ -100,7 +99,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
           </div>
         }
         {token &&   
-          <div className="mt-16">    
+          <div className="mt-16 px-40">    
           <div className="flex items-center gap-2">
             <SparklesIcon className="h-6 w-6 text-white" />
             <p className="text-lg">
@@ -138,7 +137,7 @@ const MusicPlayer = ({ setSelectedPage }: Props) => {
         }
       </div>
     </div>
-    </motion.div>
+    </div>
     </section>
   );
 }

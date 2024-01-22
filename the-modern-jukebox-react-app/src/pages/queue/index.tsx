@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { clearQueue } from '../../services/SpotifyPostService';
 import { getQueue } from '../../services/SpotifyPostService';
 import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { SelectedPage } from '../../assets/variables/availablepages';
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
-type Props = {
-  setSelectedPage: (value: SelectedPage) => void;
-};
 
-const Queue = ({ setSelectedPage }: Props) => {
+function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   let token = (sessionStorage.getItem("token")|| "")
   let psuedoQueue: QueueObject[] = [];
@@ -31,15 +26,15 @@ const Queue = ({ setSelectedPage }: Props) => {
   };
 
   return (
-    <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
-      <motion.div
+    <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0"
+    >
+      <div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
-        onViewportEnter={() => setSelectedPage(SelectedPage.Queue)}
       >
 
     <div>
       {!token &&
-        <div>
+        <div className='px-40'>
          <div>
           <p className="text-lg mt-24">
             The Queue page allows you to view your queued songs and clear the list.
@@ -55,8 +50,10 @@ const Queue = ({ setSelectedPage }: Props) => {
         </div>
       }
       {token &&
-      <div> 
-        <div className="flex items-center justify-stretch gap-6">
+      <div className='py-16'> 
+        <div 
+        className="flex items-center justify-stretch gap-6"
+        >
         <button
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
         onClick={handleClearQueue}>Clear Queue</button>
@@ -64,8 +61,7 @@ const Queue = ({ setSelectedPage }: Props) => {
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
         onClick={handleGetQueue}>Get Queue</button>
         </div>
-        <div>
-        <table>
+        <table className='queueTable'>
           <thead>
             <tr>
               <th>Name</th>
@@ -87,11 +83,10 @@ const Queue = ({ setSelectedPage }: Props) => {
             ))}
           </tbody> 
         </table>
-        </div>
       </div>
       }
     </div>
-    </motion.div>
+    </div>
     </section>
   );
 }
