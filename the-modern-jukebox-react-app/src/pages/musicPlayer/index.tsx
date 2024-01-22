@@ -77,6 +77,10 @@ function MusicPlayer () {
     setSpotifySearchResult(result);
   };
 
+  // useState setup for audio previews
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
     <div
@@ -127,8 +131,24 @@ function MusicPlayer () {
             <div className="flex flex-col mt-8"> 
               <div className="grid gap-4 grid-cols-6">
                 {shazamSearchResults.map((track: any) => (
+
                   <div key={track.key}>
-                    <img src={track.images.coverart} alt={track.title} />
+                    <img
+                      src={track.images.coverart}
+                      alt={track.title}
+                      onClick={() => {
+                        if (isAudioPlaying) {
+                          audio?.pause();
+                          setIsAudioPlaying(false);
+                        } else {
+                          const newAudio = new Audio(track.hub.actions[1].uri);
+                          newAudio.play();
+                          setAudio(newAudio);
+                          setIsAudioPlaying(true);
+                        }
+                      }}
+                    />
+
                     <p>
                       {track.title} by {track.subtitle}
                     </p>
