@@ -7,6 +7,7 @@ import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
+import './index.css';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -77,6 +78,10 @@ function MusicPlayer () {
     setSpotifySearchResult(result);
   };
 
+  // useState setup for audio previews
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
     <div
@@ -127,10 +132,40 @@ function MusicPlayer () {
             <div className="flex flex-col mt-8"> 
               <div className="grid gap-4 grid-cols-6">
                 {shazamSearchResults.map((track: any) => (
+
                   <div key={track.key}>
-                    <img src={track.images.coverart} alt={track.title} />
-                    <p>
-                      {track.title} by {track.subtitle}
+                    <img
+                      src={track.images.coverart}
+                      alt={track.title}
+                      onClick={() => {
+                        if (isAudioPlaying && audio?.src === track.hub.actions[1].uri) {
+                          audio?.pause();
+                          setIsAudioPlaying(false);
+                        } else {
+                          if (audio) {
+                            audio.pause();
+                          }
+                          const newAudio = new Audio(track.hub.actions[1].uri);
+                          newAudio.play();
+                          setAudio(newAudio);
+                          setIsAudioPlaying(true);
+                        }
+                      }}
+                      style={{
+                        cursor: 'pointer',
+                        animation: isAudioPlaying && audio?.src === track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
+                        margin: '20px',
+                      }}
+                    />
+
+                    <p
+                      style={{
+                        margin: '20px'
+                      }}
+                    >
+                      <strong>{track.title}</strong>
+                      <br />
+                      {track.subtitle}
                     </p>
                     {token && (
                       <button 
@@ -139,6 +174,10 @@ function MusicPlayer () {
                         onClick={(event) => {
                           event.preventDefault();
                           FindSpotifyUriAndExport(track.title, track.subtitle);
+                        }}
+                        style={{
+                          marginLeft: '20px',
+                          marginRight: '20px',
                         }}
                       >
                         Add To Queue
