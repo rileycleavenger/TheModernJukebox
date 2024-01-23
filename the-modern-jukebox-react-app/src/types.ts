@@ -6,3 +6,10 @@ export type QueueObject = {
     trackArtist: string;
     trackCover: string;
 }
+
+export type Controls = {
+    play: boolean;
+    pause: boolean;
+    next: boolean;
+    previous: boolean;
+}

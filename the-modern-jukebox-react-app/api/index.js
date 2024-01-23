@@ -7,6 +7,7 @@ const port = process.env.PORT || 8080; // Use the assigned port or default to 80
 
 let queueMessages = [];
 let playingMessages = [];
+let controlsMessages = [];
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -34,7 +35,11 @@ app.post('/api/addQueue', (req, res) => {
 app.get('/api/playing', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.json(playingMessages);
+  if (playingMessages.length > 0) {
+    res.json(playingMessages[0]);
+  } else {
+    res.json(null);
+  }
 });
 
 app.delete('/api/playing', (req, res) => {
@@ -44,7 +49,30 @@ app.delete('/api/playing', (req, res) => {
 
 app.post('/api/addPlaying', (req, res) => {
   const { message } = req.body;
-  playingMessages.push(message);
+  playingMessages = [message]; // Replace the existing playing message with the new one
+  res.header('Access-Control-Allow-Origin', '*');
+  res.send('Message received successfully!');
+});
+
+// endpoint to get the control inputs
+app.get('/api/controls', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  if (controlsMessages.length > 0) {
+    res.json(controlsMessages[0]);
+  } else {
+    res.json(null);
+  }
+});
+
+app.delete('/api/controls', (req, res) => {
+  controlsMessages = [];
+  res.send('Controls cleared successfully!');
+});
+
+app.post('/api/addControls', (req, res) => {
+  const { message } = req.body;
+  controlsMessages = [message]; // Replace the existing controls message with the new one
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
