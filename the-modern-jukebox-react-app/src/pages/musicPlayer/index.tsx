@@ -8,6 +8,7 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
 import './index.css';
+import { addToPlaying } from '../../services/PlayingPostService';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -34,6 +35,7 @@ function MusicPlayer () {
     // console.log("What is Posted:", queueObject);
 
     // post the variable to the hardware
+    addToPlaying(queueObject);
     addToQueue(queueObject);
   }
 

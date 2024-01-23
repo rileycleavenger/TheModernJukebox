@@ -5,26 +5,27 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8080; // Use the assigned port or default to 8080
 
-let messages = [];
+let queueMessages = [];
+let playingMessages = [];
 
 app.use(bodyParser.json());
 app.use(cors());
 
-// ednpoint to get the queue
+// endpoint to get the queue
 app.get('/api/queue', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.json(messages);
+  res.json(queueMessages);
 });
 
 app.delete('/api/queue', (req, res) => {
-  messages = [];
+  queueMessages = [];
   res.send('Queue cleared successfully!');
 });
 
 app.post('/api/addQueue', (req, res) => {
   const { message } = req.body;
-  messages.push(message);
+  queueMessages.push(message);
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
@@ -33,17 +34,17 @@ app.post('/api/addQueue', (req, res) => {
 app.get('/api/playing', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.json(messages);
+  res.json(playingMessages);
 });
 
 app.delete('/api/playing', (req, res) => {
-  messages = [];
-  res.send('Queue cleared successfully!');
+  playingMessages = [];
+  res.send('Playing cleared successfully!');
 });
 
 app.post('/api/addPlaying', (req, res) => {
   const { message } = req.body;
-  messages.push(message);
+  playingMessages.push(message);
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
