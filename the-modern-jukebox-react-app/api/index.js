@@ -28,6 +28,13 @@ app.post('/api/addQueue', (req, res) => {
   res.send('Message received successfully!');
 });
 
+// endpoint to get the current playing song
+app.get('/api/playing', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.json(messages);
+});
+
 app.listen(port, () => {
   console.log(`Server listening at port ${port}`);
 });

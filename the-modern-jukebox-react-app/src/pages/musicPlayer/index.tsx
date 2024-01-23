@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect} from 'react';
 import { QueueObject } from '../../types';
-import { addToQueue } from '../../services/SpotifyPostService';
+import { addToQueue } from '../../services/QueuePostService';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
