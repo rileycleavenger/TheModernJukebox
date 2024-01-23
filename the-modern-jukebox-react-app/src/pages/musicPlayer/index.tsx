@@ -7,6 +7,7 @@ import locked from "../../assets/images/locked.png";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
+import './index.css';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -45,6 +46,8 @@ function MusicPlayer () {
     
     // verify there is data in the textbox
     if (inputRef.current && typeof inputRef.current !== "undefined") {
+
+      console.log("searching for:", inputRef.current.value);
       
       // set search results var
       const results = await searchShazam(inputRef.current.value);
@@ -74,6 +77,10 @@ function MusicPlayer () {
     const result = await searchSpotify(trackName, trackArtist);
     setSpotifySearchResult(result);
   };
+
+  // useState setup for audio previews
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
@@ -111,18 +118,68 @@ function MusicPlayer () {
           <form>
             <div className="flex items-center gap-8">
               <input className="rounded-md bg-gray-100 px-10 py-2 text-black" type='text' ref={inputRef} />
-              <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" type='submit' onClick={handleSearch}>Search</button>
+              <button 
+                className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700" 
+                type="submit" 
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleSearch();
+                }}
+              >
+                Search
+              </button>            
             </div>
             <div className="flex flex-col mt-8"> 
               <div className="grid gap-4 grid-cols-6">
                 {shazamSearchResults.map((track: any) => (
-                  <div key={track.id}>
-                    <img src={track.images.coverart} alt={track.title} />
-                    <p>
-                      {track.title} by {track.subtitle}
+
+                  <div key={track.key}>
+                    <img
+                      src={track.images.coverart}
+                      alt={track.title}
+                      onClick={() => {
+                        if (isAudioPlaying && audio?.src === track.hub.actions[1].uri) {
+                          audio?.pause();
+                          setIsAudioPlaying(false);
+                        } else {
+                          if (audio) {
+                            audio.pause();
+                          }
+                          const newAudio = new Audio(track.hub.actions[1].uri);
+                          newAudio.play();
+                          setAudio(newAudio);
+                          setIsAudioPlaying(true);
+                        }
+                      }}
+                      style={{
+                        cursor: 'pointer',
+                        animation: isAudioPlaying && audio?.src === track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
+                        margin: '20px',
+                      }}
+                    />
+
+                    <p
+                      style={{
+                        margin: '20px'
+                      }}
+                    >
+                      <strong>{track.title}</strong>
+                      <br />
+                      {track.subtitle}
                     </p>
                     {token && (
-                      <button className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" type="submit" onClick={() => FindSpotifyUriAndExport(track.title, track.subtitle)}>
+                      <button 
+                        className="rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700" 
+                        type="submit" 
+                        onClick={(event) => {
+                          event.preventDefault();
+                          FindSpotifyUriAndExport(track.title, track.subtitle);
+                        }}
+                        style={{
+                          marginLeft: '20px',
+                          marginRight: '20px',
+                        }}
+                      >
                         Add To Queue
                       </button>
                     )}
