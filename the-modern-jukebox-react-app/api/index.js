@@ -10,6 +10,7 @@ let messages = [];
 app.use(bodyParser.json());
 app.use(cors());
 
+// ednpoint to get the queue
 app.get('/api/queue', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
@@ -35,6 +36,19 @@ app.get('/api/playing', (req, res) => {
   res.json(messages);
 });
 
+app.delete('/api/playing', (req, res) => {
+  messages = [];
+  res.send('Queue cleared successfully!');
+});
+
+app.post('/api/addPlaying', (req, res) => {
+  const { message } = req.body;
+  messages.push(message);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.send('Message received successfully!');
+});
+
+// listening on 8080 port
 app.listen(port, () => {
   console.log(`Server listening at port ${port}`);
 });
