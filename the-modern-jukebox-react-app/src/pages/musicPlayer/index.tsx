@@ -35,7 +35,6 @@ function MusicPlayer () {
     // console.log("What is Posted:", queueObject);
 
     // post the variable to the hardware
-    addToPlaying(queueObject);
     addToQueue(queueObject);
   }
 
