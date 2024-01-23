@@ -12,10 +12,10 @@ const clientId = "3c6b67b44db2400db60002e9a5e89bb2"
 let redirectURL = '';
 if (window.location.origin.includes('localhost')) {
   // Development environment
-  redirectURL = 'http://localhost:3000/home/';
+  redirectURL = 'http://localhost:3000';
 } else {
   // Production environment
-  redirectURL = `${window.location.origin}/home`;
+  redirectURL = `${window.location.origin}`;
 }
 
 //possible scopes:
@@ -76,5 +76,41 @@ export const getTrackFromUri = async (uri: string) => {
     return null;
   }
 };
+
+// function used to make a GET req to spotify for searching
+export async function searchSpotify(trackName: string, trackArtist: string): Promise<any> {
+  if (!trackName && !trackArtist) {
+    return [];
+  }
+
+  // get user token
+  let token = sessionStorage.getItem("token") || "";
+
+  // define req url
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${trackName} artist:${trackArtist}`)}&type=track`;
+
+  // define options
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    // make the fetch request
+    const response = await fetch(url, options);
+
+    // get the response data
+    const responseData = await response.json();
+    const track = responseData.tracks.items[0];
+    // console.log('Spotify search result:', track);
+    return track;
+  } catch (error) {
+    // log any errors
+    console.error('Error during Spotify search:', error);
+    return [];
+  }
+}
 
 export {}

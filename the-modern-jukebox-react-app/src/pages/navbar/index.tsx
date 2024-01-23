@@ -1,17 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import Link from "./Link";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { SelectedPage } from "../../assets/variables/availablepages";
 import { loginURL } from "../../hooks/spotify";
 
-type Props = {
-  selectedPage: SelectedPage;
-  setSelectedPage: (value: SelectedPage) => void;
-};
-
-const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
+function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
@@ -51,26 +44,38 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
               <div className={`${flexBetween} w-full`}>
                 {isLoggedIn && (
                 <div className={`${flexBetween} gap-8 text-sm`}>
-                  <Link
-                    page="Home"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Music Player"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Queue"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="About"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
+                <a
+                className={`${"home" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="home"
+                >
+                  Home
+                </a> 
+                <a
+                className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="musicplayer"
+                >
+                  Music Player
+                </a> 
+                <a
+                className={`${"queue" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="queue"
+                >
+                  Queue
+                </a> 
+                <a
+                className={`${"about" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="about"
+                >
+                  About
+                </a> 
                 </div>
                 )}
                 <div className={`${flexBetween} gap-8`}>
