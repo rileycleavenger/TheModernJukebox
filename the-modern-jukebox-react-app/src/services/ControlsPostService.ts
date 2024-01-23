@@ -1,52 +1,52 @@
-import { QueueObject } from '../types';
+import { Controls } from '../types';
 
 let receieveUrl = '';
 if (window.location.origin.includes('localhost')) {
     // Development environment
-    receieveUrl = 'http://localhost:8080/api/queue';
+    receieveUrl = 'http://localhost:8080/api/controls';
 } else {
     // Production environment
-    receieveUrl = `${window.location.origin}/api/queue`;
+    receieveUrl = `${window.location.origin}/api/controls`;
 }
 
 let sendUrl = '';
 if (window.location.origin.includes('localhost')) {
     // Development environment
-    sendUrl = 'http://localhost:8080/api/addQueue';
+    sendUrl = 'http://localhost:8080/api/addControls';
 } else {
     // Production environment
-    sendUrl = `${window.location.origin}/api/addQueue`;
+    sendUrl = `${window.location.origin}/api/addControls`;
 }
 
-// function that returns QueueObject[] from the queue at the receieveUrl
-export const getQueue = async (): Promise<QueueObject[]> => {
+// function that returns Controls for the controls at the receieveUrl
+export const getControls = async (): Promise<Controls> => {
     try {
         const response = await fetch(receieveUrl);
         const json = await response.json();
-        return json as QueueObject[];
-    } catch (error) {
-        console.error('Error getting queue:', error);
-        return [];
+        return json as Controls;
+    } catch (error) { 
+        console.error('Error getting controls:', error);
+        return {} as Controls;
     }
 };
 
-
-export const addToQueue = async (spotifyObject: QueueObject) => {
+// function to make new control input
+export const addToControls = async (controlInput: Controls) => {
     try {
         await fetch(sendUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: spotifyObject }),
+            body: JSON.stringify({ message: controlInput }),
         });
     } catch (error) {
         console.error('Error sending message:', error);
     }
 };
 
-// function to clear the queue that clears all data stored at receieveUrl
-export const clearQueue = async () => {
+// function to clear the current control inpput
+export const clearControls = async () => {
     try {
         await fetch(receieveUrl, {
             method: 'DELETE',
@@ -55,7 +55,7 @@ export const clearQueue = async () => {
             },
         });
     } catch (error) {
-        console.error('Error clearing queue:', error);
+        console.error('Error clearing now playing:', error);
     }
 };
 

@@ -1,4 +1,4 @@
-import { QueueObject} from '../types';
+import { QueueObject } from '../types';
 
 
 let receieveUrl = '';
