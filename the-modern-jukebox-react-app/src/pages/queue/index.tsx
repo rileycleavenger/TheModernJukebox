@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { clearQueue } from '../../services/SpotifyPostService';
-import { getQueue } from '../../services/SpotifyPostService';
+import { clearQueue } from '../../services/QueuePostService';
+import { getQueue } from '../../services/QueuePostService';
 import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
