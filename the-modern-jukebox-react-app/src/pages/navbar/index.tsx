@@ -12,6 +12,8 @@ function Navbar () {
 
   return (
     <nav>
+      {window.sessionStorage.getItem("loginType") !== null &&
+      <div>
       <div
         className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
       >
@@ -24,7 +26,7 @@ function Navbar () {
                 className={`${"home" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href="home"
+                href={`${window.location.origin}/home`}
                 >
                   Home
                 </a> 
@@ -32,7 +34,7 @@ function Navbar () {
                 className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href="musicplayer"
+                href={`${window.location.origin}/musicplayer`}
                 >
                   Music Player
                 </a> 
@@ -40,7 +42,7 @@ function Navbar () {
                 className={`${"queue" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href="queue"
+                href={`${window.location.origin}/queue`}
                 >
                   Queue
                 </a> 
@@ -48,7 +50,7 @@ function Navbar () {
                 className={`${"about" ? "text-primary-400 font-bold" : ""}
                 transition duration-500 hover:text-gray-200
                 `}
-                href="about"
+                href={`${window.location.origin}/about`}
                 >
                   About
                 </a> 
@@ -122,6 +124,8 @@ function Navbar () {
           </div>
         </div>
       )}
+      </div>
+      }
     </nav>
   );
 };
