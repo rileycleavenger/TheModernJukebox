@@ -4,7 +4,6 @@ import { getQueue } from '../../services/QueuePostService';
 import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
 
 function Queue () {
