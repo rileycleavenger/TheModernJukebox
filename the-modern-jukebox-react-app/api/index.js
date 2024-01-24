@@ -85,7 +85,7 @@ app.get('/api/sessions', (req, res) => {
   res.json(activeSessions);
 });
 
-app.delete('/api/session', (req, res) => {
+app.delete('/api/sessions', (req, res) => {
   activeSessions = [];
   res.send('sessions cleared successfully!');
 });
