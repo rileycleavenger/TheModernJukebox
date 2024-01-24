@@ -24,6 +24,10 @@ function Queue () {
     setQueue(queueData); // Update the state variable using setQueue
   };
 
+  useEffect(() => {
+    handleGetQueue();
+  }, []);
+
   return (
     <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0"
     >
@@ -58,7 +62,7 @@ function Queue () {
         onClick={handleClearQueue}>Clear Queue</button>
         <button
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-        onClick={handleGetQueue}>Get Queue</button>
+        onClick={handleGetQueue}>Refresh Queue</button>
         </div>
         <table className='queueTable'>
           <thead>
