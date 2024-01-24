@@ -8,6 +8,7 @@ const port = process.env.PORT || 8080; // Use the assigned port or default to 80
 let queueMessages = [];
 let playingMessages = [];
 let controlsMessages = [];
+let activeSessions = [];
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -73,6 +74,25 @@ app.delete('/api/controls', (req, res) => {
 app.post('/api/addControls', (req, res) => {
   const { message } = req.body;
   controlsMessages = [message]; // Replace the existing controls message with the new one
+  res.header('Access-Control-Allow-Origin', '*');
+  res.send('Message received successfully!');
+});
+
+// endpoint to keep track of sessions and tokens
+app.get('/api/sessions', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.json(activeSessions);
+});
+
+app.delete('/api/session', (req, res) => {
+  activeSessions = [];
+  res.send('sessions cleared successfully!');
+});
+
+app.post('/api/addSession', (req, res) => {
+  const { message } = req.body;
+  activeSessions.push(message);
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
