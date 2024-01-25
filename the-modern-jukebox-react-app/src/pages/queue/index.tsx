@@ -29,16 +29,14 @@ function Queue () {
     handleGetQueue();
   }, []);
 
-  const styles = {
-    itemContainer: {
-      overflowX: 'scroll',
-      display: 'flex',
-      width: '900px', // Adjust this value to fit three items
-    },
-    item: {
-      width: '300px', // Adjust this value to fit one item
-      flexShrink: 0, // Prevent items from shrinking
-    },
+  const [buttonText, setButtonText] = useState('');
+
+  const handleMouseEnter = (text: string) => {
+    setButtonText(text);
+  };
+
+  const handleMouseLeave = () => {
+    setButtonText('');
   };
 
   return (
@@ -67,15 +65,22 @@ function Queue () {
         className="buttonsContainer"
         >
           <button
-          onClick={handleClearQueue}
-          className='queueButton'>
+            onClick={handleClearQueue}
+            className='queueButton'
+            onMouseEnter={() => handleMouseEnter('Clear the Queue')}
+            onMouseLeave={handleMouseLeave}
+          >
             <FaTrash className="icon-large"></FaTrash>
           </button>
           <button
-          onClick={handleGetQueue}
-          className='queueButton'>
+            onClick={handleGetQueue}
+            className='queueButton'
+            onMouseEnter={() => handleMouseEnter('Update the Queue')}
+            onMouseLeave={handleMouseLeave}
+          >
             <FaSync className="icon-large"></FaSync>
           </button>
+          <p className="queueButtonText">{buttonText}</p>
         </div>
         <div className="queueContainer">
           <div className="itemContainerWrapper">

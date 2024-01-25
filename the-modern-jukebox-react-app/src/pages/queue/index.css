@@ -18,6 +18,10 @@
     color: #e07b00;
 }
 
+.queueButtonText{
+    margin: 10px;
+}
+
 .icon-large{
     font-size: 30px;
 }
@@ -74,6 +78,16 @@
 }
 
 @media (max-width: 768px) {
+
+    .buttonsContainer {
+        margin-top: 0;
+        justify-content: center;
+    }
+
+    .queueButtonText {
+        display: none;
+    }
+
     .queueContainer {
         display: flex;
         align-items: center;
