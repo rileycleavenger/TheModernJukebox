@@ -11,7 +11,7 @@ import './index.css';
 import { addToPlaying } from '../../services/PlayingPostService';
 
 function MusicPlayer () {
-  const isAboveMediumScreens = useMediaQuery("(min-width:768px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   useEffect(() => {
     if (isAboveMediumScreens) {
       document.body.style.overflow = "hidden";

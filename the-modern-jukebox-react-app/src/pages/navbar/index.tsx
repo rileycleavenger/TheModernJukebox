@@ -1,14 +1,34 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
+import { getPlaying } from "../../services/PlayingPostService";
+import { QueueObject } from "../../types";
+import "./index.css";
 
 function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
+
+  const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentSong = async () => {
+      const song = await getPlaying();
+      setCurrentSong(song);
+    };
+
+    // Call once immediately
+    fetchCurrentSong();
+
+    // Then set up interval to poll every 10 seconds
+    const intervalId = setInterval(fetchCurrentSong, 10000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <nav>
@@ -56,11 +76,15 @@ function Navbar () {
                 </a> 
                 </div>
                 <div className={`${flexBetween} gap-8`}>
-                  <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-                  onClick={() => window.location.href = loginURL}
-                  >
-                    Sign In with Spotify
-                  </button>
+                  {currentSong &&
+                  <div className="nowPlayingWrapper">
+                    <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="nowPlayingText">
+                      <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                      <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                    </div>
+                  </div>
+                  }
                 </div>
               </div>
             ) : (
@@ -116,12 +140,17 @@ function Navbar () {
                 >
                   About
                 </a> 
-            <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
-              onClick={() => window.location.href = loginURL}
-            >
-            Sign In
-            </button>
+            
           </div>
+          {currentSong &&
+          <div className="nowPlayingWrapper">
+            <img src={currentSong ? currentSong.trackCover : ''} className="nowPlayingAlbumArt" />
+            <div className="nowPlayingText">
+              <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+              <p>{currentSong ? currentSong.trackArtist : ''}</p>
+            </div>
+          </div>
+          }   
         </div>
       )}
       </div>
