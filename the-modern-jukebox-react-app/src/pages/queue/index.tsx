@@ -31,10 +31,10 @@ function Queue () {
   // functions for navigating the queue
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const handlePreviousItem = () => {
-    setCurrentItemIndex((prevIndex) => prevIndex - 1);
+    setCurrentItemIndex((prevIndex) => prevIndex - 3);
   };
   const handleNextItem = () => {
-    setCurrentItemIndex((prevIndex) => prevIndex + 1);
+    setCurrentItemIndex((prevIndex) => prevIndex + 3);
   };
 
   return (
