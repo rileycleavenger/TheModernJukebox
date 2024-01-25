@@ -78,8 +78,8 @@ function Queue () {
             {queue.slice(currentItemIndex, currentItemIndex + 3).map((item, index) => (
               <div key={index} className="item">
                 <img className="coverart" src={item.trackCover} alt="Cover" />
-                <div><strong>{item.trackName}</strong></div>
-                <div>{item.trackArtist}</div>
+                <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}><strong>{item.trackName}</strong></div>
+                <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
               </div>
             ))}
           </div>
