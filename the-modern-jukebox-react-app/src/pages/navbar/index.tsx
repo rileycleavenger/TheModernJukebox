@@ -4,7 +4,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
 import { getPlaying } from "../../services/PlayingPostService";
 import { QueueObject } from "../../types";
-import Queue from "../queue";
+import "./index.css";
 
 function Navbar () {
   const flexBetween = "flex items-center justify-between";
@@ -77,7 +77,11 @@ function Navbar () {
                 </div>
                 <div className={`${flexBetween} gap-8`}>
                   <div className="nowPlayingWrapper">
-                  Now playing: {currentSong ? currentSong.trackName : 'No song playing'}
+                    <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="nowPlayingText">
+                      <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                      <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -24,6 +24,7 @@ export const getPlaying = async (): Promise<QueueObject> => {
     try {
         const response = await fetch(receieveUrl);
         const json = await response.json();
+        console.log('getPlaying response:', json)
         return json as QueueObject;
     } catch (error) { 
         console.error('Error getting currently playing:', error);
