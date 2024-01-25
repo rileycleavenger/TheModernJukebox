@@ -5,6 +5,7 @@ import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import locked from "../../assets/images/locked.png";
+import { FaTrash, FaSync } from 'react-icons/fa';
 
 function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -66,11 +67,15 @@ function Queue () {
         className="buttonsContainer"
         >
           <button
-          className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-          onClick={handleClearQueue}>Clear Queue</button>
+          onClick={handleClearQueue}
+          className='queueButton'>
+            <FaTrash className="icon-large"></FaTrash>
+          </button>
           <button
-          className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-          onClick={handleGetQueue}>Refresh Queue</button>
+          onClick={handleGetQueue}
+          className='queueButton'>
+            <FaSync className="icon-large"></FaSync>
+          </button>
         </div>
         <div className="queueContainer">
           <div className="itemContainerWrapper">
