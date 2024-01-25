@@ -112,6 +112,11 @@
         width: 100%;
     }
 
+    .timesIcon{
+        position: absolute;
+        top: 3%;
+    }
+
     .itemContainer {
         display: flex;
         flex-direction: column;
