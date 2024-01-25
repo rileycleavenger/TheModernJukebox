@@ -5,6 +5,7 @@ import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import locked from "../../assets/images/locked.png";
 import { FaTrash, FaSync, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -63,7 +64,7 @@ function Queue () {
          </div>
         </div>
       }
-      {token &&
+      {token && queue.length > 0 &&
       <div className='py-16'> 
         <div 
         className="buttonsContainer"
@@ -111,6 +112,13 @@ function Queue () {
           </div>
         </div>
       </div>
+      }
+      {token && queue.length === 0 &&
+        <div className='px-40'>
+          <p className="text-lg mt-24">
+            Add some songs to the queue from the <Link to="/MusicPlayer"><strong className="text-blue-500">Music Player</strong></Link> page!
+          </p>
+        </div>
       }
     </section>
   );
