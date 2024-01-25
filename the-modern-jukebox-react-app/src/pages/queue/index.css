@@ -169,6 +169,14 @@
     .py-16{
         width: 100%;
     }
+    .px-40{
+        width: 100%;
+        margin: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 0;
+    }
+
     .mobileContainer{
         width: 100%;
     }

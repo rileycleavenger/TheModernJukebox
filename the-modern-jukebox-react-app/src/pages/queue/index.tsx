@@ -116,7 +116,7 @@ function Queue () {
       {token && queue.length === 0 &&
         <div className='px-40'>
           <p className="text-lg mt-24">
-            Add some songs to the queue from the <Link to="/MusicPlayer"><strong className="text-blue-500">Music Player</strong></Link> page!
+            Nothing is in the queue at this time, add some songs to the queue from the <Link to="/MusicPlayer"><strong className="text-blue-500">Music Player</strong></Link> page!
           </p>
         </div>
       }
