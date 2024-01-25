@@ -8,7 +8,7 @@ import { FaTrash, FaSync, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function Queue () {
-  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width:768px)");
   let token = (sessionStorage.getItem("token")|| "")
   let psuedoQueue: QueueObject[] = [];
 

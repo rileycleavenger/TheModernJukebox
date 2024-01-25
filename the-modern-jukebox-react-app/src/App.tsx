@@ -4,18 +4,9 @@ import MusicPlayer from './pages/musicPlayer';
 import About from './pages/about';
 import Home from './pages/home';
 import Queue from './pages/queue';
-import useMediaQuery from './hooks/useMediaQuery';
 import {BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 function App() {
-  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const toggleMobileMenu = () => {
-    setShowMobileMenu(!showMobileMenu);
-  }
-  
-
   return (
     <div className="relative flex  bg-primary-100">
     <Navbar />

@@ -7,7 +7,7 @@ import { loginURL } from "../../hooks/spotify";
 function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
 
   return (
