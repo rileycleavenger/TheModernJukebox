@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { clearQueue } from '../../services/QueuePostService';
-import { getQueue } from '../../services/QueuePostService';
+import { clearQueue, getQueue, removeSong } from '../../services/QueuePostService';
 import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
@@ -23,6 +22,11 @@ function Queue () {
     const queueData = await getQueue(); // Await the getQueue function
     console.log("Returned From Queue", queueData);
     setQueue(queueData); // Update the state variable using setQueue
+  };
+
+  const handleRemoveSong = async (item: QueueObject) => {
+    await removeSong(item); // Call removeSong function with the item
+    handleGetQueue(); // Call handleGetQueue to update the queue
   };
 
   useEffect(() => {
@@ -92,7 +96,14 @@ function Queue () {
                   style={{ marginLeft: index === 0 ? 0 : undefined }}
                 >
                   <div className="coverartContainer">
-                    <img className="coverart" src={item.trackCover} alt="Cover" />
+                    <div className="coverartContainer">
+                      <img
+                        onClick={() => handleRemoveSong(item)}
+                        className="coverart"
+                        src={item.trackCover}
+                        alt="Cover"
+                      />
+                    </div>
                   </div>
                   <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                     <strong>{item.trackName}</strong>

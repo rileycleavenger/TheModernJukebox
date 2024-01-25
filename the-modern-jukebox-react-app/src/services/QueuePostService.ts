@@ -1,3 +1,4 @@
+import { get } from 'http';
 import { QueueObject } from '../types';
 
 let receieveUrl = '';
@@ -30,7 +31,7 @@ export const getQueue = async (): Promise<QueueObject[]> => {
     }
 };
 
-
+// function to add to the queue that sends a QueueObject to the sendUrl
 export const addToQueue = async (spotifyObject: QueueObject) => {
     try {
         await fetch(sendUrl, {
@@ -58,6 +59,29 @@ export const clearQueue = async () => {
         console.error('Error clearing queue:', error);
     }
 };
+
+// function to remove a song from the queue based on QueueObject.uri
+export const removeSong = async (item: QueueObject) => {
+    try {
+        let newQueue: QueueObject[] = []
+    await getQueue().then((queue) => {
+            queue.forEach((song) => {
+                if (song.uri != item.uri) {
+                    newQueue.push(song)
+                }
+            });
+        });
+        await clearQueue();
+        for (let i = 0; i < newQueue.length; i++) {
+            await addToQueue(newQueue[i])
+        }
+    } catch (error) {
+        console.error('Error removing song:', error);
+    }
+};
+
+
+
 
 
 
