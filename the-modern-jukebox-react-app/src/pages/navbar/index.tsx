@@ -76,6 +76,7 @@ function Navbar () {
                 </a> 
                 </div>
                 <div className={`${flexBetween} gap-8`}>
+                  {currentSong &&
                   <div className="nowPlayingWrapper">
                     <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
                     <div className="nowPlayingText">
@@ -83,6 +84,7 @@ function Navbar () {
                       <p>{currentSong ? currentSong.trackArtist : ''}</p>
                     </div>
                   </div>
+                  }
                 </div>
               </div>
             ) : (
@@ -140,13 +142,15 @@ function Navbar () {
                 </a> 
             
           </div>
+          {currentSong &&
           <div className="nowPlayingWrapper">
-              <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
-              <div className="nowPlayingText">
-                <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
-                <p>{currentSong ? currentSong.trackArtist : ''}</p>
-              </div>
+            <img src={currentSong ? currentSong.trackCover : ''} className="nowPlayingAlbumArt" />
+            <div className="nowPlayingText">
+              <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+              <p>{currentSong ? currentSong.trackArtist : ''}</p>
             </div>
+          </div>
+          }   
         </div>
       )}
       </div>
