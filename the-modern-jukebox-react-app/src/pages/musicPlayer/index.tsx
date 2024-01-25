@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect} from 'react';
 import { QueueObject } from '../../types';
-import { addToQueue } from '../../services/SpotifyPostService';
+import { addToQueue } from '../../services/QueuePostService';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { motion } from "framer-motion";
 import locked from "../../assets/images/locked.png";
@@ -8,6 +8,7 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { searchShazam } from '../../hooks/shazam';
 import { searchSpotify } from '../../hooks/spotify';
 import './index.css';
+import { addToPlaying } from '../../services/PlayingPostService';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
