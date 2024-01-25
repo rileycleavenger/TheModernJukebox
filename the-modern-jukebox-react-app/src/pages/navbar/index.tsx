@@ -138,12 +138,15 @@ function Navbar () {
                 >
                   About
                 </a> 
-            <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
-              onClick={() => window.location.href = loginURL}
-            >
-            Sign In
-            </button>
+            
           </div>
+          <div className="nowPlayingWrapper">
+              <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+              <div className="nowPlayingText">
+                <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                <p>{currentSong ? currentSong.trackArtist : ''}</p>
+              </div>
+            </div>
         </div>
       )}
       </div>
