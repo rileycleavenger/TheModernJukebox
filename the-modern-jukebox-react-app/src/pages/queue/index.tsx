@@ -88,7 +88,7 @@ function Queue () {
         </div>
         <div className="queueContainer">
           <div className="itemContainerWrapper">
-            <div className="itemContainer" style={{ overflowX: 'scroll', display: 'flex' }}>
+            <div className="itemContainer">
               {queue.map((item, index) => (
                 <div
                   key={index}
