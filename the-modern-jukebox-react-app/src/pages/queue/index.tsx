@@ -28,13 +28,16 @@ function Queue () {
     handleGetQueue();
   }, []);
 
-  // functions for navigating the queue
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const handlePreviousItem = () => {
-    setCurrentItemIndex((prevIndex) => prevIndex - 1);
-  };
-  const handleNextItem = () => {
-    setCurrentItemIndex((prevIndex) => prevIndex + 1);
+  const styles = {
+    itemContainer: {
+      overflowX: 'scroll',
+      display: 'flex',
+      width: '900px', // Adjust this value to fit three items
+    },
+    item: {
+      width: '300px', // Adjust this value to fit one item
+      flexShrink: 0, // Prevent items from shrinking
+    },
   };
 
   return (
@@ -74,25 +77,14 @@ function Queue () {
         onClick={handleGetQueue}>Refresh Queue</button>
         </div>
         <div className="queueContainer">
-          <div className="itemContainer">
-            {queue.slice(currentItemIndex, currentItemIndex + 3).map((item, index) => (
+          <div className="itemContainer" style={{ overflowX: 'scroll', display: 'flex' }}>
+            {queue.map((item, index) => (
               <div key={index} className="item">
                 <img className="coverart" src={item.trackCover} alt="Cover" />
                 <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}><strong>{item.trackName}</strong></div>
                 <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
               </div>
             ))}
-          </div>
-          <div className="arrowButtons">
-            <button onClick={handlePreviousItem} disabled={currentItemIndex === 0}>
-              Previous
-            </button>
-            <button
-              onClick={handleNextItem}
-              disabled={currentItemIndex >= queue.length - 3}
-            >
-              Next
-            </button>
           </div>
         </div>
       </div>

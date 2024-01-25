@@ -1,18 +1,3 @@
-table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-
-th,
-td {
-    width: 25%; /* Adjust the width as per your requirement */
-    padding: 10px;
-    text-align: left;
-    /* wrap content */
-    word-wrap: break-word;
-}
-
 .queueContainer{
     display: flex;
     flex-direction: column;
@@ -45,6 +30,12 @@ td {
 }
 
 .coverart:hover{
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.8);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.99);
     transform: translateY(-10px);
+}
+
+.item{
+    width: 400px;
+    flex-shrink: 0;
+    margin-left: 50px;
 }
