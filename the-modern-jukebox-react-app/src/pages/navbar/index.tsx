@@ -1,14 +1,34 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
+import { getPlaying } from "../../services/PlayingPostService";
+import { QueueObject } from "../../types";
+import Queue from "../queue";
 
 function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
+
+  const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentSong = async () => {
+      const song = await getPlaying();
+      setCurrentSong(song);
+    };
+
+    // Call once immediately
+    fetchCurrentSong();
+
+    // Then set up interval to poll every 10 seconds
+    const intervalId = setInterval(fetchCurrentSong, 10000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <nav>
@@ -56,11 +76,9 @@ function Navbar () {
                 </a> 
                 </div>
                 <div className={`${flexBetween} gap-8`}>
-                  <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-                  onClick={() => window.location.href = loginURL}
-                  >
-                    Sign In with Spotify
-                  </button>
+                  <div className="nowPlayingWrapper">
+                  Now playing: {currentSong ? currentSong.trackName : 'No song playing'}
+                  </div>
                 </div>
               </div>
             ) : (
