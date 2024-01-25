@@ -4,7 +4,7 @@ import { QueueObject } from '../../types';
 import './index.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import locked from "../../assets/images/locked.png";
-import { FaTrash, FaSync } from 'react-icons/fa';
+import { FaTrash, FaSync, FaTimes } from 'react-icons/fa';
 
 function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
@@ -95,20 +95,16 @@ function Queue () {
                   className={`item ${index === 0 ? 'firstItem' : ''}`}
                   style={{ marginLeft: index === 0 ? 0 : undefined }}
                 >
-                  <div className="coverartContainer">
+                  <div className="itemWrapper">
                     <div className="coverartContainer">
-                      <img
-                        onClick={() => handleRemoveSong(item)}
-                        className="coverart"
-                        src={item.trackCover}
-                        alt="Cover"
-                      />
+                      <FaTimes className="timesIcon" onClick={() => handleRemoveSong(item)} />
+                      <img className="coverart" src={item.trackCover} alt="Cover" />
                     </div>
+                    <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
+                      <strong>{item.trackName}</strong>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
                   </div>
-                  <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
-                    <strong>{item.trackName}</strong>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
                 </div>
               ))}
             </div>
