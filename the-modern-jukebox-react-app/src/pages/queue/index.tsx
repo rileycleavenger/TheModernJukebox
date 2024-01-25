@@ -28,6 +28,15 @@ function Queue () {
     handleGetQueue();
   }, []);
 
+  // functions for navigating the queue
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const handlePreviousItem = () => {
+    setCurrentItemIndex((prevIndex) => prevIndex - 1);
+  };
+  const handleNextItem = () => {
+    setCurrentItemIndex((prevIndex) => prevIndex + 1);
+  };
+
   return (
     <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0"
     >
@@ -64,28 +73,28 @@ function Queue () {
         className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
         onClick={handleGetQueue}>Refresh Queue</button>
         </div>
-        <table className='queueTable'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Artist</th>
-              <th>Duration</th>
-              <th>Cover</th>
-            </tr>
-          </thead>
-          <tbody>
-            {queue.map((item) => (
-              <tr>
-                <td>{item.trackName}</td>
-                <td>{item.trackArtist}</td>
-                <td>{item.duration}</td>
-                <td>
-                  <img src={item.trackCover} alt="Cover" />
-                </td>
-              </tr>
+        <div className="queueContainer">
+          <div className="itemContainer">
+            {queue.slice(currentItemIndex, currentItemIndex + 3).map((item, index) => (
+              <div key={index} className="item">
+                <img className="coverart" src={item.trackCover} alt="Cover" />
+                <div><strong>{item.trackName}</strong></div>
+                <div>{item.trackArtist}</div>
+              </div>
             ))}
-          </tbody> 
-        </table>
+          </div>
+          <div className="arrowButtons">
+            <button onClick={handlePreviousItem} disabled={currentItemIndex === 0}>
+              Previous
+            </button>
+            <button
+              onClick={handleNextItem}
+              disabled={currentItemIndex >= queue.length - 3}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
       }
     </div>
