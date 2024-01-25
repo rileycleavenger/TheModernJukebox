@@ -43,9 +43,6 @@ function Queue () {
   return (
     <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0"
     >
-      <div
-        className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
-      >
 
     <div>
       {!token &&
@@ -77,19 +74,28 @@ function Queue () {
         onClick={handleGetQueue}>Refresh Queue</button>
         </div>
         <div className="queueContainer">
-          <div className="itemContainer" style={{ overflowX: 'scroll', display: 'flex' }}>
-            {queue.map((item, index) => (
-              <div key={index} className="item">
-                <img className="coverart" src={item.trackCover} alt="Cover" />
-                <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}><strong>{item.trackName}</strong></div>
-                <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
-              </div>
-            ))}
+          <div className="itemContainerWrapper">
+            <div className="itemContainer" style={{ overflowX: 'scroll', display: 'flex' }}>
+              {queue.map((item, index) => (
+                <div
+                  key={index}
+                  className={`item ${index === 0 ? 'firstItem' : ''}`}
+                  style={{ marginLeft: index === 0 ? 0 : undefined }}
+                >
+                  <div className="coverartContainer">
+                    <img className="coverart" src={item.trackCover} alt="Cover" />
+                  </div>
+                  <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
+                    <strong>{item.trackName}</strong>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>{item.trackArtist}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
       }
-    </div>
     </div>
     </section>
   );
