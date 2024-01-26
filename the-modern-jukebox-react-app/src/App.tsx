@@ -1,33 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import './variables.css'
 import Navbar from './pages/navbar';
-import { SelectedPage } from './assets/variables/availablepages';
 import MusicPlayer from './pages/musicPlayer';
 import About from './pages/about';
 import Home from './pages/home';
 import Queue from './pages/queue';
-function App() {
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setSelectedPage(SelectedPage.Home);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+import {BrowserRouter, Routes, Route } from "react-router-dom";
 
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home)
+function App() {
   return (
-    <div className="App bg-primary-100">
-      <Navbar 
-        selectedPage={selectedPage}
-        setSelectedPage={setSelectedPage}
+    <div className="relative flex  bg-primary-100">
+    <Navbar />
+    <BrowserRouter>
+    <Routes>
+      <Route
+       path =""
+       element={<Home/>}
+       />
+      <Route
+        path="home"
+        element={<Home />} 
       />
-      <Home setSelectedPage={setSelectedPage} />
-      <MusicPlayer setSelectedPage={setSelectedPage} />
-      <Queue setSelectedPage={setSelectedPage} />
-      <About setSelectedPage={setSelectedPage} />
+      <Route
+        path="musicplayer"
+        element={<MusicPlayer />}
+      />
+      <Route
+        path="queue"
+        element={<Queue />}
+      />
+      <Route
+        path="about"
+        element={<About />}
+      />
+    </Routes>
+    </BrowserRouter>
     </div>
   );
 }

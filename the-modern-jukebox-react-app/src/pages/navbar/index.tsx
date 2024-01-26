@@ -1,24 +1,39 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import Link from "./Link";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { SelectedPage } from "../../assets/variables/availablepages";
 import { loginURL } from "../../hooks/spotify";
+import { getPlaying } from "../../services/PlayingPostService";
+import { QueueObject } from "../../types";
+import "./index.css";
 
-type Props = {
-  selectedPage: SelectedPage;
-  setSelectedPage: (value: SelectedPage) => void;
-};
-
-const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
+function Navbar () {
   const flexBetween = "flex items-center justify-between";
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
+
+  const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentSong = async () => {
+      const song = await getPlaying();
+      setCurrentSong(song);
+    };
+
+    // Call once immediately
+    fetchCurrentSong();
+
+    // Then set up interval to poll every 10 seconds
+    const intervalId = setInterval(fetchCurrentSong, 10000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <nav>
+      {window.sessionStorage.getItem("loginType") !== null &&
+      <div>
       <div
         className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
       >
@@ -27,33 +42,49 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
             {isAboveMediumScreens ? (
               <div className={`${flexBetween} w-full`}>
                 <div className={`${flexBetween} gap-8 text-sm`}>
-                  <Link
-                    page="Home"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Music Player"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="Queue"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="About"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
+                <a
+                className={`${"home" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href={`${window.location.origin}/home`}
+                >
+                  Home
+                </a> 
+                <a
+                className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href={`${window.location.origin}/musicplayer`}
+                >
+                  Music Player
+                </a> 
+                <a
+                className={`${"queue" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href={`${window.location.origin}/queue`}
+                >
+                  Queue
+                </a> 
+                <a
+                className={`${"about" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href={`${window.location.origin}/about`}
+                >
+                  About
+                </a> 
                 </div>
                 <div className={`${flexBetween} gap-8`}>
-                  <button className="rounded-md bg-primary-500 px-10 py-2 hover:bg-primary-700"
-                  onClick={() => window.location.href = loginURL}
-                  >
-                    Sign In with Spotify
-                  </button>
+                  {currentSong &&
+                  <div className="nowPlayingWrapper">
+                    <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="nowPlayingText">
+                      <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                      <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                    </div>
+                  </div>
+                  }
                 </div>
               </div>
             ) : (
@@ -77,34 +108,53 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
             </button>
           </div>
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-            <Link
-              page="Home"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="Music Player"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="Queue"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="About"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <button className="mr-16 rounded-md bg-primary-500 px-0 py-2 hover:bg-primary-700"
-              onClick={() => window.location.href = loginURL}
-            >
-            Sign In
-            </button>
+          <a
+                className={`${"home" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="home"
+                >
+                  Home
+                </a> 
+                <a
+                className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="musicplayer"
+                >
+                  Music Player
+                </a> 
+                <a
+                className={`${"queue" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="queue"
+                >
+                  Queue
+                </a> 
+                <a
+                className={`${"about" ? "text-primary-400 font-bold" : ""}
+                transition duration-500 hover:text-gray-200
+                `}
+                href="about"
+                >
+                  About
+                </a> 
+            
           </div>
+          {currentSong &&
+          <div className="nowPlayingWrapper">
+            <img src={currentSong ? currentSong.trackCover : ''} className="nowPlayingAlbumArt" />
+            <div className="nowPlayingText">
+              <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+              <p>{currentSong ? currentSong.trackArtist : ''}</p>
+            </div>
+          </div>
+          }   
         </div>
       )}
+      </div>
+      }
     </nav>
   );
 };

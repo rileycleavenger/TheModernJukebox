@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { QueueObject} from '../types';
+import { QueueObject } from '../types';
 
 
 let receieveUrl = '';
 if (window.location.origin.includes('localhost')) {
     // Development environment
-    receieveUrl = 'http://localhost:8080/api/queue';
+    receieveUrl = 'http://localhost:8080/api/playing';
 } else {
     // Production environment
-    receieveUrl = `${window.location.origin}/api/queue`;
+    receieveUrl = `${window.location.origin}/api/playing`;
 }
 
 let sendUrl = '';
 if (window.location.origin.includes('localhost')) {
     // Development environment
-    sendUrl = 'http://localhost:8080/api/addQueue';
+    sendUrl = 'http://localhost:8080/api/addPlaying';
 } else {
     // Production environment
-    sendUrl = `${window.location.origin}/api/addQueue`;
+    sendUrl = `${window.location.origin}/api/addPlaying`;
 }
 
-// function that returns QueueObject[] from the queue at the receieveUrl
-export const getQueue = async (): Promise<QueueObject[]> => {
+// function that returns QueueObject for the song now playing at the receieveUrl
+export const getPlaying = async (): Promise<QueueObject> => {
     try {
         const response = await fetch(receieveUrl);
         const json = await response.json();
-        return json as QueueObject[];
-    } catch (error) {
-        console.error('Error getting queue:', error);
-        return [];
+        console.log('getPlaying response:', json)
+        return json as QueueObject;
+    } catch (error) { 
+        console.error('Error getting currently playing:', error);
+        return {} as QueueObject;
     }
 };
 
 
-export const addToQueue = async (spotifyObject: QueueObject) => {
+export const addToPlaying = async (spotifyObject: QueueObject) => {
     try {
         await fetch(sendUrl, {
             method: 'POST',
@@ -47,8 +47,8 @@ export const addToQueue = async (spotifyObject: QueueObject) => {
     }
 };
 
-// function to clear the queue that clears all data stored at receieveUrl
-export const clearQueue = async () => {
+// function to clear the currently playing song
+export const clearPlaying = async () => {
     try {
         await fetch(receieveUrl, {
             method: 'DELETE',
@@ -57,7 +57,7 @@ export const clearQueue = async () => {
             },
         });
     } catch (error) {
-        console.error('Error clearing queue:', error);
+        console.error('Error clearing now playing:', error);
     }
 };
 
