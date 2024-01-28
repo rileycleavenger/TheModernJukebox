@@ -221,20 +221,20 @@ function MusicPlayer () {
                 <img
                   src={track.album.images[0].url}
                   alt={track.name}
-                  onClick={() => {
-                    if (isAudioPlaying && audio?.src ===  track.hub.actions[1].uri) {
-                      audio?.pause();
-                      setIsAudioPlaying(false);
-                    } else {
-                      if (audio) {
-                        audio.pause();
-                      }
-                      const newAudio = new Audio( track.hub.actions[1].uri);
-                      newAudio.play();
-                      setAudio(newAudio);
-                      setIsAudioPlaying(true);
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (isAudioPlaying && audio?.src ===  track.hub.actions[1].uri) {
+                  //     audio?.pause();
+                  //     setIsAudioPlaying(false);
+                  //   } else {
+                  //     if (audio) {
+                  //       audio.pause();
+                  //     }
+                  //     const newAudio = new Audio( track.hub.actions[1].uri);
+                  //     newAudio.play();
+                  //     setAudio(newAudio);
+                  //     setIsAudioPlaying(true);
+                  //   }
+                  // }}
                   style={{
                     cursor: 'pointer',
                     animation: isAudioPlaying && audio?.src ===  track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
