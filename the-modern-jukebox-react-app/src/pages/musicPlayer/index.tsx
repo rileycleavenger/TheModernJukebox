@@ -222,19 +222,25 @@ function MusicPlayer () {
                     src={track.album.images[0].url}
                     alt={track.name}
                     onClick={() => {
-                      if (isAudioPlaying && audio?.src === track.preview_url) {
-                        audio?.pause();
-                        setIsAudioPlaying(false);
-                      } else {
-                        if (audio) {
-                          audio.pause();
+                        if(track.preview_url === null){
+                          alert("Sorry, this song does not have a preview available.");
+                          return;
                         }
-                        const newAudio = new Audio(track.preview_url);
-                        newAudio.play();
-                        setAudio(newAudio);
-                        setIsAudioPlaying(true);
-                      }
-                    }}
+                        else{
+                          if (isAudioPlaying && audio?.src === track.preview_url) {
+                            audio?.pause();
+                            setIsAudioPlaying(false);
+                          } else {
+                            if (audio) {
+                              audio.pause();
+                            }
+                            const newAudio = new Audio(track.preview_url);
+                            newAudio.play();
+                            setAudio(newAudio);
+                            setIsAudioPlaying(true);
+                          }
+                        }
+                    }} 
                     style={{
                       cursor: 'pointer',
                       animation: isAudioPlaying && audio?.src === track.preview_url ? 'pop 0.4s infinite alternate' : 'none',
