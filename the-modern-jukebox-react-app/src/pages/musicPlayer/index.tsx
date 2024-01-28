@@ -251,7 +251,7 @@ function MusicPlayer () {
                   type="submit" 
                   onClick={(event) => {
                     event.preventDefault();
-                    FindSpotifyUriAndExport(track.name, track.artists[0].name);
+                    ExportToQueue(track.duration_ms, track.uri, track.name, track.artists[0].name, track.album.images[0].url)
                   }}
                   style={{ marginLeft: '20px', marginRight: '20px' }}
                 >
