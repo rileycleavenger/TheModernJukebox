@@ -113,4 +113,66 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
   }
 }
 
+export async function getSpotifyGenres(): Promise<string[]> {
+  // Get user token from session storage
+  const token = sessionStorage.getItem("token") || "";
+
+  // Construct the request URL
+  const url = 'https://api.spotify.com/v1/recommendations/available-genre-seeds';
+
+  // Define request options
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    // Make the fetch request
+    const response = await fetch(url, options);
+
+    // Parse the response JSON
+    const responseData = await response.json();
+
+    // Extract and return genres
+    return responseData.genres || [];
+  } catch (error) {
+    // Log any errors
+    console.error('Error fetching Spotify genres:', error);
+    return [];
+  }
+}
+
+export async function getRecommendationsByGenres(seedGenres: string[]): Promise<any[]> {
+  // Get user token from session storage
+  const token = sessionStorage.getItem("token") || "";
+
+  // Construct the request URL
+  const url = `https://api.spotify.com/v1/recommendations?seed_genres=${seedGenres.join(',')}`;
+
+  // Define request options
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    // Make the fetch request
+    const response = await fetch(url, options);
+
+    // Parse the response JSON
+    const responseData = await response.json();
+
+    // Extract and return recommendations
+    return responseData.tracks || [];
+  } catch (error) {
+    // Log any errors
+    console.error('Error fetching recommendations:', error);
+    return [];
+  }
+}
+
 export {}
