@@ -218,29 +218,29 @@ function MusicPlayer () {
           <div className="grid gap-4 grid-cols-6">
             {recommendations.map((track: any, index: number) => (
               <div key={index} className="flex flex-col items-center">
-                <img
-                  src={track.album.images[0].url}
-                  alt={track.name}
-                  // onClick={() => {
-                  //   if (isAudioPlaying && audio?.src ===  track.hub.actions[1].uri) {
-                  //     audio?.pause();
-                  //     setIsAudioPlaying(false);
-                  //   } else {
-                  //     if (audio) {
-                  //       audio.pause();
-                  //     }
-                  //     const newAudio = new Audio( track.hub.actions[1].uri);
-                  //     newAudio.play();
-                  //     setAudio(newAudio);
-                  //     setIsAudioPlaying(true);
-                  //   }
-                  // }}
-                  style={{
-                    cursor: 'pointer',
-                    animation: isAudioPlaying && audio?.src ===  track.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
-                    margin: '20px',
-                  }}
-                />
+                  <img
+                    src={track.album.images[0].url}
+                    alt={track.name}
+                    onClick={() => {
+                      if (isAudioPlaying && audio?.src === track.preview_url) {
+                        audio?.pause();
+                        setIsAudioPlaying(false);
+                      } else {
+                        if (audio) {
+                          audio.pause();
+                        }
+                        const newAudio = new Audio(track.preview_url);
+                        newAudio.play();
+                        setAudio(newAudio);
+                        setIsAudioPlaying(true);
+                      }
+                    }}
+                    style={{
+                      cursor: 'pointer',
+                      animation: isAudioPlaying && audio?.src === track.preview_url ? 'pop 0.4s infinite alternate' : 'none',
+                      margin: '20px',
+                    }}
+                  />
                 <p style={{ margin: '20px' }}>
                   <strong>{track.name}</strong>
                   <br />
@@ -259,7 +259,7 @@ function MusicPlayer () {
                 </button>
               </div>
             ))}
-          </div>
+          </div> 
         </div>
       )}
     </div>
