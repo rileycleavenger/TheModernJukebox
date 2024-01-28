@@ -1,5 +1,14 @@
 Instructions to run the back-end on the raspberry pi.
 
+As of this build, the necessary includes are not in the bash script (although, in the future they will be)
+As of right now, it is necessary to run the following commands to install the necessary packages:
+- sudo apt-get install python3-pip
+- sudo pip install opencv-contrib-python
+- sudo apt-get -y install curl && curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
+- pip install spotipy
+- sudo apt-get install libsfml-dev
+
+
 Open terminal, navigate to testing directory.
 Give permissions to modern_jukebox3.sh using: chmod +x modern_jukebox3.sh
 run modern_jukebox3.sh using: ./modern_jukebox3.sh
