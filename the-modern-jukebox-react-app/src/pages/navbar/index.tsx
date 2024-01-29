@@ -44,7 +44,7 @@ function Navbar () {
                 <div className={`${flexBetween} gap-8 text-sm`}>
                 <a
                 className={`${"home" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/home`}
                 >
@@ -52,7 +52,7 @@ function Navbar () {
                 </a> 
                 <a
                 className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/musicplayer`}
                 >
@@ -60,21 +60,28 @@ function Navbar () {
                 </a> 
                 <a
                 className={`${"queue" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/queue`}
                 >
                   Queue
                 </a> 
                 <a
-                className={`${"about" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
-                `}
-                href={`${window.location.origin}/about`}
+                  className={`${"about" ? "text-primary-400 font-bold" : ""}
+                  transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
+                  `}
+                  href={`${window.location.origin}/about`}
                 >
                   About
                 </a> 
+                <div className={`${flexBetween} justify-center sessionID`}>
+                  <p>
+                    <strong>Session ID: </strong> 
+                    {window.sessionStorage.getItem("code")}
+                  </p>
                 </div>
+                </div>
+                
                 <div className={`${flexBetween} gap-8`}>
                   {currentSong &&
                   <div className="nowPlayingWrapper">
