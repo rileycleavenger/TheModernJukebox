@@ -41,5 +41,9 @@
         width: 100px;
         margin-bottom: 10px;
     }
+
+    .sessionID{
+        margin-right: 0;
+    }
 }
 

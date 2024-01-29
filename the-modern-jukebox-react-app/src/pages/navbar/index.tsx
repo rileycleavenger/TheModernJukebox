@@ -100,6 +100,15 @@ function Navbar () {
               >
                 <Bars3Icon className="h-6 w-6 text-white" />
               </button>
+              
+            )}
+            {!isAboveMediumScreens && (
+            <div className={`${flexBetween} justify-center sessionID`}>
+              <p>
+                <strong>Session ID: &nbsp;</strong> 
+                {window.sessionStorage.getItem("code")}
+              </p>
+            </div>
             )}
           </div>
         </div>
@@ -113,6 +122,7 @@ function Navbar () {
               <XMarkIcon className="h-6 w-6 text-gray-100" />
             </button>
           </div>
+          
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
           <a
                 className={`${"home" ? "text-primary-400 font-bold" : ""}
