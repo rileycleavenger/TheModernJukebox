@@ -16,6 +16,12 @@
     flex-direction: column;
 }
 
+.sessionIDNoSong{
+    margin-right: 22vw;
+    display: flex;
+    flex-direction: column;
+}
+
 .sessionIDTop{
     display: flex;
     flex-direction: row;
