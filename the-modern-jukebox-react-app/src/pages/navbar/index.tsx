@@ -4,6 +4,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
 import { getPlaying } from "../../services/PlayingPostService";
 import { QueueObject } from "../../types";
+import { FaCompactDisc } from 'react-icons/fa';
 import "./index.css";
 
 function Navbar () {
@@ -13,6 +14,24 @@ function Navbar () {
   const navbarBackground = "bg-primary-300 drop-shadow";
 
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
+
+  const [buttonText, setButtonText] = useState('');
+
+  const handleMouseEnter = (text: string) => {
+    setButtonText(text);
+  };
+
+  const handleMouseLeave = () => {
+    setButtonText('');
+  };
+
+  function sessionReset(){
+    // clear all local storage
+    window.sessionStorage.clear();
+
+    // redirect to home page
+    window.location.href = `${window.location.origin}/home`;
+  }
 
   useEffect(() => {
     const fetchCurrentSong = async () => {
@@ -35,7 +54,7 @@ function Navbar () {
       {window.sessionStorage.getItem("loginType") !== null &&
       <div>
       <div
-        className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
+        className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-4`}
       >
         <div className={`${flexBetween} mx-auto w-5/6`}>
           <div className={`${flexBetween} w-full gap-16`}>
@@ -44,7 +63,7 @@ function Navbar () {
                 <div className={`${flexBetween} gap-8 text-sm`}>
                 <a
                 className={`${"home" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/home`}
                 >
@@ -52,7 +71,7 @@ function Navbar () {
                 </a> 
                 <a
                 className={`${"musicplayer" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/musicplayer`}
                 >
@@ -60,21 +79,77 @@ function Navbar () {
                 </a> 
                 <a
                 className={`${"queue" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
+                transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
                 `}
                 href={`${window.location.origin}/queue`}
                 >
                   Queue
                 </a> 
                 <a
-                className={`${"about" ? "text-primary-400 font-bold" : ""}
-                transition duration-500 hover:text-gray-200
-                `}
-                href={`${window.location.origin}/about`}
+                  className={`${"about" ? "text-primary-400 font-bold" : ""}
+                  transition duration-500 hover:text-gray-200 hover:transform hover:-translate-y-1
+                  `}
+                  href={`${window.location.origin}/about`}
                 >
                   About
                 </a> 
                 </div>
+                {currentSong && (
+                <div className={`${flexBetween} justify-center sessionID`}>
+                  <div className="sessionIDTop">
+                    <div
+                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
+                      onMouseLeave={handleMouseLeave}
+                      style={{paddingBottom: '5px' }}
+                    >
+                      <FaCompactDisc
+                        style={{ margin: '4px', marginRight: '8px' }}
+                        className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform"
+                        onClick={sessionReset}
+                      />
+                    </div>
+                    <p>
+                      <strong>Session ID: </strong> 
+                      {window.sessionStorage.getItem("code")}
+                    </p>
+                  </div>
+                  <div className="sessionIDBottom">
+                    <p 
+                      className="sessionIDHoverText"
+                      style={{ fontSize: '12px'}}
+                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
+                      onMouseLeave={handleMouseLeave}>{buttonText}</p>
+                  </div>
+                </div>
+                )}
+                {!currentSong && (
+                <div className={`${flexBetween} sessionIDNoSong`}>
+                  <div className="sessionIDTop">
+                    <div
+                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
+                      onMouseLeave={handleMouseLeave}
+                      style={{paddingBottom: '5px' }}
+                    >
+                      <FaCompactDisc
+                        style={{ margin: '4px', marginRight: '8px' }}
+                        className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform"
+                        onClick={sessionReset}
+                      />
+                    </div>
+                    <p>
+                      <strong>Session ID: </strong> 
+                      {window.sessionStorage.getItem("code")}
+                    </p>
+                  </div>
+                  <div className="sessionIDBottom">
+                    <p 
+                      className="sessionIDHoverText"
+                      style={{ fontSize: '12px'}}
+                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
+                      onMouseLeave={handleMouseLeave}>{buttonText}</p>
+                  </div>
+                </div>
+                )}
                 <div className={`${flexBetween} gap-8`}>
                   {currentSong &&
                   <div className="nowPlayingWrapper">
@@ -94,6 +169,34 @@ function Navbar () {
               >
                 <Bars3Icon className="h-6 w-6 text-white" />
               </button>
+              
+            )}
+            {!isAboveMediumScreens && (
+            <div className={`${flexBetween} justify-center sessionID`}>
+            <div className="sessionIDTop">
+              <div
+                style={{paddingBottom: '5px' }}
+              >
+                <FaCompactDisc
+                  style={{ margin: '4px', marginRight: '8px' }}
+                  className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform"
+                  onClick={sessionReset}
+                />
+              </div>
+              <p
+              onClick={() => handleMouseEnter('tap the disc to create or join a new session')}>
+                <strong>Session ID: &nbsp;</strong> 
+                {window.sessionStorage.getItem("code")}
+              </p>
+            </div>
+            <div className="sessionIDBottom">
+              <p 
+                className="sessionIDHoverText"
+                style={{ fontSize: '10px'}}>
+                  {buttonText}
+              </p>
+            </div>
+          </div>
             )}
           </div>
         </div>
@@ -107,6 +210,7 @@ function Navbar () {
               <XMarkIcon className="h-6 w-6 text-gray-100" />
             </button>
           </div>
+          
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
           <a
                 className={`${"home" ? "text-primary-400 font-bold" : ""}

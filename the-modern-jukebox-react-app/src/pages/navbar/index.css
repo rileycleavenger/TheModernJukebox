@@ -10,6 +10,36 @@
         animation: pop 0.9s infinite; /* Add this line */
 }
 
+.sessionID{
+    margin-right: 6vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.sessionIDNoSong{
+    margin-right: 22vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.sessionIDTop{
+    display: flex;
+    flex-direction: row;
+}
+
+.sessionIDHoverText{
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 @keyframes pop {
         0% {
             transform: scale(1);
@@ -36,6 +66,10 @@
         height: 100px;
         width: 100px;
         margin-bottom: 10px;
+    }
+
+    .sessionID{
+        margin-right: 0;
     }
 }
 
