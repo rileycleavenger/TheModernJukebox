@@ -17,7 +17,7 @@ function Navbar () {
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
   const [buttonText, setButtonText] = useState('');
   let current: QueueObject | null = null;
-  let nowPlayingTextWidth = 0;
+  let nowPlayingTextWidth = 0.0;
 
   const changeControlsAnimation = () => {
     if(areControlsDisplayed) {
@@ -151,6 +151,10 @@ function Navbar () {
       // set width of right of cover back to 100% if new song
       const rightOfCover = document.querySelector('.rightOfCover');
       if(rightOfCover && (current?.trackName !== song.trackName)) {
+        // reset to title
+        setControlsDisplayed(false);
+
+        // set the style of rightOfCover to width:100%
         rightOfCover.setAttribute('style', 'width:100%');
         console.log(current?.trackName, song.trackName, "newSong")
       }
