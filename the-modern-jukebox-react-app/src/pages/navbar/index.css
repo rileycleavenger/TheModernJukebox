@@ -86,5 +86,10 @@
     .sessionID{
         margin-right: 0;
     }
+
+    .nowPlayingControls{
+        margin-top: 15px;
+        transform: scale(2);
+    }
 }
 
