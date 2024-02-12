@@ -18,6 +18,13 @@ function Navbar () {
   const [buttonText, setButtonText] = useState('');
 
   const playSong = async () => {
+
+    // set the style of nowPlayingAlbumArt to move
+    const albumArt = document.querySelector('.nowPlayingAlbumArt');
+    if(albumArt) {
+      albumArt.setAttribute('style', 'animation:pop 0.9s infinite');
+    }
+
     // new controls object where play is true
     const controls: Controls = {
       play: true,
@@ -30,6 +37,13 @@ function Navbar () {
   }
 
   const pauseSong = async () => {
+
+    // set the style of nowPlayingAlbumArt to animation:none
+    const albumArt = document.querySelector('.nowPlayingAlbumArt');
+    if(albumArt) {
+      albumArt.setAttribute('style', 'animation:none');
+    }
+
     // new controls object where pause is true
     const controls: Controls = {
       play: false,
@@ -211,8 +225,8 @@ function Navbar () {
                     {areControlsDisplayed &&
                     <div className="nowPlayingControls">
                       <FaBackward className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
-                      <FaPause className=" transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginRight: '0'}}/>
-                      <FaPlay className="transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '2px'}}/>
+                      <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginRight: '0'}}/>
+                      <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '2px'}}/>
                       <FaForward className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
                     </div>
                     }
