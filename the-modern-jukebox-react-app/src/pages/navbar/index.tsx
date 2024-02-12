@@ -16,6 +16,54 @@ function Navbar () {
   const [areControlsDisplayed, setControlsDisplayed] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
   const [buttonText, setButtonText] = useState('');
+  let nowPlayingTextWidth = 0;
+
+  const changeControlsAnimation = () => {
+    if(areControlsDisplayed) {
+      
+      // set controls animation
+      const controls = document.querySelector('.nowPlayingControls');
+      if(controls) {
+        controls.setAttribute('style', 'animation:slideOut 0.9s');
+      }
+
+      // set the style of controlsIcon to animation fadeOut
+      const controlsIcon = document.querySelectorAll('.controlsIcon');
+      if(controlsIcon) {
+        controlsIcon.forEach((icon) => {
+          icon.setAttribute('style', 'animation:fadeOut 1.5s');
+        });
+      }
+
+      // wait for animation to finish before setting controls to be displayed
+      setTimeout(() => {
+        setControlsDisplayed(false);
+      }, 900);
+
+    } else {
+
+      // get width from nowPlayingText
+      const nowPlayingText = document.querySelector('.nowPlayingText');
+      if(nowPlayingText) {
+        nowPlayingTextWidth = nowPlayingText.clientWidth;
+        console.log('width:', nowPlayingTextWidth);
+        const rightOfCover = document.querySelector('.rightOfCover');
+        if(rightOfCover) {
+          rightOfCover.setAttribute('style', `width:${nowPlayingTextWidth}px`);
+        }
+      }
+
+      // set the style of nowPlayText to animation slideOut
+      if(nowPlayingText) {
+        nowPlayingText.setAttribute('style', 'animation:slideOut 0.9s, fadeOut 1.5s');
+      }
+
+      // wait for animation to finish before setting controls to be displayed
+      setTimeout(() => {
+        setControlsDisplayed(true);
+      }, 900);
+    }
+  }
 
   const playSong = async () => {
 
@@ -215,21 +263,23 @@ function Navbar () {
                 <div className={`${flexBetween} gap-8`}>
                   {currentSong &&
                   <div className="nowPlayingWrapper">
-                    <img onClick={() => setControlsDisplayed(!areControlsDisplayed)} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
-                    {!areControlsDisplayed &&
-                    <div className="nowPlayingText">
-                      <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
-                      <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                    <img onClick={changeControlsAnimation} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="rightOfCover">
+                      {!areControlsDisplayed &&
+                      <div id="nowPlayingText" className="nowPlayingText">
+                        <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                        <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                      </div>
+                      }
+                      {areControlsDisplayed &&
+                      <div id="nowPlayingControls" className="nowPlayingControls">
+                        <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
+                        <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
+                        <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
+                        <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
+                      </div>
+                      }
                     </div>
-                    }
-                    {areControlsDisplayed &&
-                    <div className="nowPlayingControls">
-                      <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
-                      <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
-                      <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
-                      <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
-                    </div>
-                    }
                   </div>
                   }
                 </div>
@@ -320,7 +370,7 @@ function Navbar () {
           </div>
           {currentSong &&
           <div className="nowPlayingWrapper">
-            <img src={currentSong ? currentSong.trackCover : ''} className="nowPlayingAlbumArt" />
+            <img src={currentSong ? currentSong.trackCover : ''} onClick={() => setControlsDisplayed(!areControlsDisplayed)} className="nowPlayingAlbumArt" />
 
             {!areControlsDisplayed &&
             <div className="nowPlayingText">

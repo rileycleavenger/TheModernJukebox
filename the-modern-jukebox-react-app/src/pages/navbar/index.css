@@ -8,17 +8,67 @@
     height: 50px;
     margin-right: 20px;
     animation: pop 0.9s infinite; /* Add this line */
+    z-index: 1;
 }
 
-.nowPlayingControls{
+.rightOfCover {
+    display: flex;
+    flex-direction: column;
+}
+
+.nowPlayingText {
+    animation: slideIn 0.9s, fadeIn 1.5s;
+    width: 100%; /* This will make sure that the text takes up the full width of the parent container */
+}
+
+.nowPlayingControls {
     display: flex;
     flex-direction: row;
     height: 50px;
     align-items: center;
+    animation: slideIn 0.9s;
+    width: 100%; /* This will make sure that the controls take up the full width of the parent container */
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-150%);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .controlsIcon{
     cursor: pointer;
+    animation: fadeIn 1.5s;
 }
 
 .controlsIcon:hover{
@@ -90,6 +140,18 @@
     .nowPlayingControls{
         margin-top: 15px;
         transform: scale(2);
+        animation: none;
+        justify-content: center;
+        align-items: center;
     }
+
+    .nowPlayingText{
+        margin-top: 15px;
+        animation: fadeIn 1.5s;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
 }
 
