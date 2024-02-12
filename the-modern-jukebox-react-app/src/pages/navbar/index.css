@@ -77,9 +77,13 @@
     transform: scale(1.1);
 }
 
-.sessionID{
-    margin-right: 6vw;
+.sessionID {
     display: flex;
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
 }
 
