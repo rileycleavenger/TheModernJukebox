@@ -12,13 +12,12 @@
 }
 
 .rightOfCover {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .nowPlayingText {
-    animation: slideIn 0.9s, fadeIn 1.5s;
-    width: 100%; /* This will make sure that the text takes up the full width of the parent container */
+    animation: fadeIn 1s;
+    width: 100%;
 }
 
 .nowPlayingControls {
@@ -32,7 +31,7 @@
 
 @keyframes slideIn {
     0% {
-        transform: translateX(-150%);
+        transform: translateX(-60%);
     }
     100% {
         transform: translateX(0);
@@ -44,7 +43,7 @@
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-150%);
+        transform: translateX(-60%);
     }
 }
 

@@ -16,6 +16,7 @@ function Navbar () {
   const [areControlsDisplayed, setControlsDisplayed] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
   const [buttonText, setButtonText] = useState('');
+  let current: QueueObject | null = null;
   let nowPlayingTextWidth = 0;
 
   const changeControlsAnimation = () => {
@@ -55,7 +56,7 @@ function Navbar () {
 
       // set the style of nowPlayText to animation slideOut
       if(nowPlayingText) {
-        nowPlayingText.setAttribute('style', 'animation:slideOut 0.9s, fadeOut 1.5s');
+        nowPlayingText.setAttribute('style', 'animation:fadeOut 1.5s');
       }
 
       // wait for animation to finish before setting controls to be displayed
@@ -146,7 +147,15 @@ function Navbar () {
   useEffect(() => {
     const fetchCurrentSong = async () => {
       const song = await getPlaying();
+
+      // set width of right of cover back to 100% if new song
+      const rightOfCover = document.querySelector('.rightOfCover');
+      if(rightOfCover && (current?.trackName !== song.trackName)) {
+        rightOfCover.setAttribute('style', 'width:100%');
+        console.log(current?.trackName, song.trackName, "newSong")
+      }
       setCurrentSong(song);
+      current = song;
     };
 
     // Call once immediately
