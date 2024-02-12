@@ -3,8 +3,9 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
 import { getPlaying } from "../../services/PlayingPostService";
-import { QueueObject } from "../../types";
-import { FaCompactDisc } from 'react-icons/fa';
+import { QueueObject, Controls } from "../../types";
+import { FaCompactDisc, FaPause, FaPlay, FaBackward, FaForward} from 'react-icons/fa';
+import { addToControls } from "../../services/ControlsPostService";
 import "./index.css";
 
 function Navbar () {
@@ -12,10 +13,120 @@ function Navbar () {
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
-
+  const [areControlsDisplayed, setControlsDisplayed] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
-
   const [buttonText, setButtonText] = useState('');
+  let current: QueueObject | null = null;
+  let nowPlayingTextWidth = 0.0;
+
+  const changeControlsAnimation = () => {
+    if(areControlsDisplayed) {
+      
+      // set controls animation
+      const controls = document.querySelector('.nowPlayingControls');
+      if(controls) {
+        controls.setAttribute('style', 'animation:slideOut 0.9s');
+      }
+
+      // set the style of controlsIcon to animation fadeOut
+      const controlsIcon = document.querySelectorAll('.controlsIcon');
+      if(controlsIcon) {
+        controlsIcon.forEach((icon) => {
+          icon.setAttribute('style', 'animation:fadeOut 1.5s');
+        });
+      }
+
+      // wait for animation to finish before setting controls to be displayed
+      setTimeout(() => {
+        setControlsDisplayed(false);
+      }, 900);
+
+    } else {
+
+      // get width from nowPlayingText
+      const nowPlayingText = document.querySelector('.nowPlayingText');
+      if(nowPlayingText) {
+        nowPlayingTextWidth = nowPlayingText.clientWidth;
+        console.log('width:', nowPlayingTextWidth);
+        const rightOfCover = document.querySelector('.rightOfCover');
+        if(rightOfCover) {
+          rightOfCover.setAttribute('style', `width:${nowPlayingTextWidth}px`);
+        }
+      }
+
+      // set the style of nowPlayText to animation slideOut
+      if(nowPlayingText) {
+        nowPlayingText.setAttribute('style', 'animation:fadeOut 1.5s');
+      }
+
+      // wait for animation to finish before setting controls to be displayed
+      setTimeout(() => {
+        setControlsDisplayed(true);
+      }, 900);
+    }
+  }
+
+  const playSong = async () => {
+
+    // set the style of nowPlayingAlbumArt to move
+    const albumArt = document.querySelector('.nowPlayingAlbumArt');
+    if(albumArt) {
+      albumArt.setAttribute('style', 'animation:pop 0.9s infinite');
+    }
+
+    // new controls object where play is true
+    const controls: Controls = {
+      play: true,
+      pause: false,
+      next: false,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const pauseSong = async () => {
+
+    // set the style of nowPlayingAlbumArt to animation:none
+    const albumArt = document.querySelector('.nowPlayingAlbumArt');
+    if(albumArt) {
+      albumArt.setAttribute('style', 'animation:none');
+    }
+
+    // new controls object where pause is true
+    const controls: Controls = {
+      play: false,
+      pause: true,
+      next: false,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const nextSong = async () => {
+    // new controls object where next is true
+    const controls: Controls = {
+      play: false,
+      pause: false,
+      next: true,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const previousSong = async () => {
+    // new controls object where previous is true
+    const controls: Controls = {
+      play: false,
+      pause: false,
+      next: false,
+      previous: true,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
 
   const handleMouseEnter = (text: string) => {
     setButtonText(text);
@@ -36,7 +147,19 @@ function Navbar () {
   useEffect(() => {
     const fetchCurrentSong = async () => {
       const song = await getPlaying();
+
+      // set width of right of cover back to 100% if new song
+      const rightOfCover = document.querySelector('.rightOfCover');
+      if(rightOfCover && (current?.trackName !== song.trackName)) {
+        // reset to title
+        setControlsDisplayed(false);
+
+        // set the style of rightOfCover to width:100%
+        rightOfCover.setAttribute('style', 'width:100%');
+        console.log(current?.trackName, song.trackName, "newSong")
+      }
       setCurrentSong(song);
+      current = song;
     };
 
     // Call once immediately
@@ -153,10 +276,22 @@ function Navbar () {
                 <div className={`${flexBetween} gap-8`}>
                   {currentSong &&
                   <div className="nowPlayingWrapper">
-                    <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
-                    <div className="nowPlayingText">
-                      <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
-                      <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                    <img onClick={changeControlsAnimation} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="rightOfCover">
+                      {!areControlsDisplayed &&
+                      <div id="nowPlayingText" className="nowPlayingText">
+                        <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                        <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                      </div>
+                      }
+                      {areControlsDisplayed &&
+                      <div id="nowPlayingControls" className="nowPlayingControls">
+                        <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
+                        <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
+                        <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
+                        <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
+                      </div>
+                      }
                     </div>
                   </div>
                   }
@@ -248,11 +383,22 @@ function Navbar () {
           </div>
           {currentSong &&
           <div className="nowPlayingWrapper">
-            <img src={currentSong ? currentSong.trackCover : ''} className="nowPlayingAlbumArt" />
+            <img src={currentSong ? currentSong.trackCover : ''} onClick={() => setControlsDisplayed(!areControlsDisplayed)} className="nowPlayingAlbumArt" />
+
+            {!areControlsDisplayed &&
             <div className="nowPlayingText">
               <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
               <p>{currentSong ? currentSong.trackArtist : ''}</p>
             </div>
+            }
+            {areControlsDisplayed &&
+            <div className="nowPlayingControls">
+              <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
+              <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
+              <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
+              <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
+            </div>
+            }
           </div>
           }   
         </div>
