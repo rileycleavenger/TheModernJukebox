@@ -96,7 +96,6 @@ function Queue () {
                   key={index}
                   className={`item ${index === 0 ? 'firstItem' : ''}`}
                   style={{ marginLeft: index === 0 ? 0 : undefined }}
-                  onClick={() => addToPlaying(item)}
                 >
                   <div className="itemWrapper">
                     <div className="coverartContainer" >
