@@ -3,8 +3,9 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { loginURL } from "../../hooks/spotify";
 import { getPlaying } from "../../services/PlayingPostService";
-import { QueueObject } from "../../types";
-import { FaCompactDisc } from 'react-icons/fa';
+import { QueueObject, Controls } from "../../types";
+import { FaCompactDisc, FaPause, FaPlay, FaBackward, FaForward} from 'react-icons/fa';
+import { addToControls } from "../../services/ControlsPostService";
 import "./index.css";
 
 function Navbar () {
@@ -12,10 +13,57 @@ function Navbar () {
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const navbarBackground = "bg-primary-300 drop-shadow";
-
+  const [areControlsDisplayed, setControlsDisplayed] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<QueueObject | null>(null);
-
   const [buttonText, setButtonText] = useState('');
+
+  const playSong = async () => {
+    // new controls object where play is true
+    const controls: Controls = {
+      play: true,
+      pause: false,
+      next: false,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const pauseSong = async () => {
+    // new controls object where pause is true
+    const controls: Controls = {
+      play: false,
+      pause: true,
+      next: false,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const nextSong = async () => {
+    // new controls object where next is true
+    const controls: Controls = {
+      play: false,
+      pause: false,
+      next: true,
+      previous: false,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
+
+  const previousSong = async () => {
+    // new controls object where previous is true
+    const controls: Controls = {
+      play: false,
+      pause: false,
+      next: false,
+      previous: true,
+    };
+    // send the new controls object to the server
+    await addToControls(controls);
+  }
 
   const handleMouseEnter = (text: string) => {
     setButtonText(text);
@@ -153,11 +201,21 @@ function Navbar () {
                 <div className={`${flexBetween} gap-8`}>
                   {currentSong &&
                   <div className="nowPlayingWrapper">
-                    <img src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <img onClick={() => setControlsDisplayed(!areControlsDisplayed)} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    {!areControlsDisplayed &&
                     <div className="nowPlayingText">
                       <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
                       <p>{currentSong ? currentSong.trackArtist : ''}</p>
                     </div>
+                    }
+                    {areControlsDisplayed &&
+                    <div className="nowPlayingControls">
+                      <FaBackward className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
+                      <FaPause className=" transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginRight: '0'}}/>
+                      <FaPlay className="transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '2px'}}/>
+                      <FaForward className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
+                    </div>
+                    }
                   </div>
                   }
                 </div>

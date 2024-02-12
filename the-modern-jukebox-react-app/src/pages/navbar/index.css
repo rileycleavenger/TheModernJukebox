@@ -10,6 +10,24 @@
         animation: pop 0.9s infinite; /* Add this line */
 }
 
+.nowPlayingControls{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+}
+.pausePlayControls{
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+}
+
+.forwardBackwardControls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .sessionID{
     margin-right: 6vw;
     display: flex;

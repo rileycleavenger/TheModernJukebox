@@ -6,6 +6,7 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import locked from "../../assets/images/locked.png";
 import { FaTrash, FaSync, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { addToPlaying } from '../../services/PlayingPostService';
 
 function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:768px)");
@@ -95,9 +96,10 @@ function Queue () {
                   key={index}
                   className={`item ${index === 0 ? 'firstItem' : ''}`}
                   style={{ marginLeft: index === 0 ? 0 : undefined }}
+                  onClick={() => addToPlaying(item)}
                 >
                   <div className="itemWrapper">
-                    <div className="coverartContainer">
+                    <div className="coverartContainer" >
                       <FaTimes className="timesIcon" onClick={() => handleRemoveSong(item)} />
                       <img className="coverart" src={item.trackCover} alt="Cover" />
                     </div>
