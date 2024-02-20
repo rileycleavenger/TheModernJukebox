@@ -80,26 +80,27 @@ function Home () {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
-    <section id="home" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
+    <section id="home" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
       <div className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6">
         <div className="z-10 mt-32 md:basis-full">
-          <div className="container py-10 px-1 mx-0 min-w-full flex flex-col items-center">
+          <div className="container py-10 mx-0 min-w-full flex flex-col items-center">
             <div className="relative">
                 <img alt="title" src={jukeboxTitle} />
             </div>
             <p className="mt-8 text-md text-center">
               Our Web App allows you to connect to our Modern Jukebox device, where you and your friends
-              can select and queue songs to be played on the device. Explore our pages below, or login to get started.
+              can select and queue songs to be played on the device. Start a session with Spotify or 
+              join an existing session to get started.
             </p>
             {window.sessionStorage.getItem("loginType")===null &&
-              <div className="mt-8 items-center">
-                <button className="mr-16 rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700 items-center"
+              <div className="flex mt-8 justify-center">
+                <button className="mr-4 rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700 md:mr-16"
                   onClick={(event) => {
                   handleCreateSession();
                 }}>
                   Create session
                 </button>
-                <button className="mr-16 rounded-md bg-primary-500 px-4 py-2 hover:bg-primary-700 items-center"
+                <button className="rounded-md bg-primary-500 px-4 py-2 hover:bg-primary-700"
                 onClick={() => setIsPopupOpen(true)}>Join Session</button>
                 <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)} modal nested>
                     <div className="flex flex-col justify-center items-center" style={{

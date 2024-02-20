@@ -104,7 +104,7 @@ function MusicPlayer () {
   };
 
   return (
-    <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0">
+    <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
       <div className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6">
         <div>
           {!token && (
@@ -118,7 +118,7 @@ function MusicPlayer () {
             </div>
           )}
           {token && (
-            <div className="mt-16 px-40">
+            <div className="mt-16">
               <div className="flex items-center gap-2">
                 <SparklesIcon className="h-6 w-6 text-white" />
                 <p className="text-lg">Search and queue your favorite songs</p> 
@@ -190,11 +190,7 @@ function MusicPlayer () {
                   </div>
                 </form>
               </div>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="bg-primary-100 py-4 px-6 rounded-lg">
+              <div className="bg-primary-100 m-4 rounded-lg">
       <select
         value={selectedGenre}
         onChange={handleGenreChange}
@@ -269,6 +265,10 @@ function MusicPlayer () {
         </div>
       )}
     </div>
+            </div>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
