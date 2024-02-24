@@ -26,7 +26,11 @@ function Home () {
         setToken(token)
         console.log("id", id)
         console.log("token",token)
-        loginType = "spotify"
+        if (token != "") {
+          loginType= "spotify"
+          setLoginType(loginType)
+          sessionStorage.setItem("loginType",loginType)
+        }
         const sessionObject: Session = {
           session_id: id,
           token: token,
@@ -44,11 +48,7 @@ function Home () {
     const code = generateSessionCode();
     console.log(code);
     sessionStorage.setItem("code",code.toString());
-    loginType= "spotify";
-    setLoginType(loginType)
-    sessionStorage.setItem("loginType",loginType)
     window.location.href = loginURL;
-    console.log("login type", loginType)
   }
 
   const handleJoinSession = async () => {

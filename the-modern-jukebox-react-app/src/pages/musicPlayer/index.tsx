@@ -123,10 +123,11 @@ function MusicPlayer () {
             <div className="mt-8">
               <div className="">  
                 <form> 
+                
                   <div className="buttonsContainer m-4">
-                    <input className="rounded-md bg-gray-100 px-2 py-2 text-black m-1" type='text' ref={inputRef} />
+                    <input className="rounded-md bg-gray-100 px-2 py-2 text-black m-2" type='text' ref={inputRef} />
                     <button 
-                      className="rounded-md bg-primary-500 px-7 py-2 text-white hover:bg-primary-700 m-1" 
+                      className="rounded-md bg-primary-500 px-7 py-2 text-white hover:bg-primary-700 m-2 md:mr-8" 
                       type="submit" 
                       onClick={(event) => {
                         event.preventDefault();
@@ -135,12 +136,11 @@ function MusicPlayer () {
                     >
                       Search for a Song
                     </button>
-                    </div>
-                    <div className="buttonsContainer m-4">            
+                             
                     <select
                       value={selectedGenre}
                       onChange={handleGenreChange}
-                      className="rounded-md bg-gray-100 px-3 py-2 text-black m-1"
+                      className="rounded-md bg-gray-100 px-3 py-2 text-black m-2 md:ml-8"
                     >
                       <option value="">Select a genre</option>
                       {genres.map((genre, index) => (
@@ -149,7 +149,7 @@ function MusicPlayer () {
                     </select>
                     <button
                       onClick={handleGetRecommendations}
-                      className="rounded-md bg-primary-500 px-2 py-2 text-white hover:bg-primary-700 m-1"
+                      className="rounded-md bg-primary-500 px-2 py-2 text-white hover:bg-primary-700 m-2"
                     >
                       Get Recommendations
                     </button>
