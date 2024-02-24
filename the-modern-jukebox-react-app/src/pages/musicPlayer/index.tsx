@@ -148,7 +148,10 @@ function MusicPlayer () {
                       ))}
                     </select>
                     <button
-                      onClick={handleGetRecommendations}
+                      onClick={
+                        (event) => {
+                          event.preventDefault();
+                        handleGetRecommendations();}}
                       className="rounded-md bg-primary-500 px-2 py-2 text-white hover:bg-primary-700 m-2"
                     >
                       Get Recommendations
