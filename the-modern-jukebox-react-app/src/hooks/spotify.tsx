@@ -72,6 +72,7 @@ export const getTrackFromUri = async (uri: string) => {
       trackCover,
     };
   } catch (error) {
+    alert("Error during Spotify search, please create or join a new session");
     console.error('Error fetching track details:', error);
     return null;
   }
@@ -108,6 +109,7 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
     return track;
   } catch (error) {
     // log any errors
+    alert("Error during Spotify search, please create or join a new session");
     console.error('Error during Spotify search:', error);
     return [];
   }
@@ -139,6 +141,7 @@ export async function getSpotifyGenres(): Promise<string[]> {
     return responseData.genres || [];
   } catch (error) {
     // Log any errors
+    alert("Error loading generes from spotify:" + error);
     console.error('Error fetching Spotify genres:', error);
     return [];
   }
@@ -170,6 +173,7 @@ export async function getRecommendationsByGenres(seedGenres: string[]): Promise<
     return responseData.tracks || [];
   } catch (error) {
     // Log any errors
+    alert("Error with Spotify recommendations: " + error);
     console.error('Error fetching recommendations:', error);
     return [];
   }
