@@ -7,7 +7,7 @@ At the current present, we have the code we have been working on so far stored e
 
  Current, existing bugs deal with implementing our own images with the TFT display. 
 
-## Iteration 2: Raspberry Pi 4B (current) [Current RasberryPi code found at https://github.com/blake-budd1/pySetup]
+## Iteration 2: Raspberry Pi 4B (current) [Current RasberryPi code can also be found at https://github.com/blake-budd1/pySetup]
 In order to setup the raspberry pi 4b to run the script properly, the following commands must be ran to install the necessary libraries:
 - sudo apt-get update
 - sudo apt-get upgrade
@@ -16,6 +16,8 @@ In order to setup the raspberry pi 4b to run the script properly, the following 
 - sudo pip install spotipy
 - sudo pip install opencv-contrib-python
 - sudo pip install requests
+- sudo apt-get cec-utils
+- sudo apt-get xdotools
 
 Once this is done, run the following command:
 - sudo nano /home/{user}/.bashrc
