@@ -7,7 +7,7 @@ At the current present, we have the code we have been working on so far stored e
 
  Current, existing bugs deal with implementing our own images with the TFT display. 
 
-## Iteration 2: Raspberry Pi 4B (current)
+## Iteration 2: Raspberry Pi 4B (current) [Current RasberryPi code found at https://github.com/blake-budd1/pySetup]
 In order to setup the raspberry pi 4b to run the script properly, the following commands must be ran to install the necessary libraries:
 - sudo apt-get update
 - sudo apt-get upgrade
