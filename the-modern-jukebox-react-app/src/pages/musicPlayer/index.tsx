@@ -124,7 +124,7 @@ function MusicPlayer () {
               <div className="">  
                 <form> 
                 
-                  <div className="buttonsContainer m-4">
+                  <div className="buttonsSearchContainer m-4">
                     <input className="rounded-md bg-gray-100 px-2 py-2 text-black m-2" type='text' ref={inputRef} />
                     <button 
                       className="rounded-md bg-primary-500 px-7 py-2 text-white hover:bg-primary-700 m-2 md:mr-8" 
