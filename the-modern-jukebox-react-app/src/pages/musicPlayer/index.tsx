@@ -138,6 +138,7 @@ function MusicPlayer () {
                       onClick={(event) => {
                         event.preventDefault();
                         handleSearch();
+                        handleClick();
                       }}
                     >
                       Search for a Song
@@ -157,7 +158,9 @@ function MusicPlayer () {
                       onClick={
                         (event) => {
                           event.preventDefault();
-                        handleGetRecommendations();}}
+                          handleGetRecommendations();
+                          handleClick();
+                        }}
                       className="rounded-md bg-primary-500 px-2 py-2 text-white hover:bg-primary-700 m-2"
                     >
                       Get Recommendations
@@ -198,6 +201,7 @@ function MusicPlayer () {
                               alt={item.title}
                               onClick={(event) => {
                                 event.preventDefault();
+                                handleClick();
                                 FindSpotifyUriAndExport(item.title, item.subtitle);
                               }} 
                               />
@@ -249,6 +253,7 @@ function MusicPlayer () {
                               alt={item.name}
                               onClick={(event) => {
                                 event.preventDefault();
+                                handleClick();
                                 ExportToQueue(item.duration_ms, item.uri, item.name, item.artists[0].name, item.album.images[0].url)
                               }}
                               />
