@@ -9,6 +9,9 @@
     transform: scale(1);
   }
 }
+@keyframes check {
+  100% {background-color: green;}
+}
 .buttonsSearchContainer{
   display: flex;
   flex-direction: row;

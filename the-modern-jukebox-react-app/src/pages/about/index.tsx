@@ -7,7 +7,7 @@ import { SparklesIcon } from '@heroicons/react/24/solid';
 
 function About () {
   return (
-    <section id="about" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0"
+    <section id="about" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0"
     >
       <div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
@@ -32,8 +32,14 @@ function About () {
             >
               The purpose of this project is to give users the ability to collaboratively share music
               by providing access to their personal music libraries within the same device.
-              The Music Player page allows logged in users to search for songs and add them to the queue.
-              The Queue page allows logged in users to see the queue and clear it, if necessary.
+            </p>
+            <p className="mt-8 text-md">
+              The Search page allows logged in users to search for songs and add them to the queue.
+              Users can also discover songs of different genres with the get recommendations feature.
+            </p>
+            <p className="mt-8 text-md">
+              The Queue page allows logged in users to see the queue, remove songs from
+              the queue and clear it, if necessary.
             </p>
             <p className="mt-8 text-md">
               Developers: Blake Budd, Riley Cleavenger, Alexa Cole, Rafaela Ferreira, and Robert Noble

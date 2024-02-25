@@ -79,7 +79,7 @@ function MusicPlayer () {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [genres, setGenres] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<any[]>([]);
-
+  const [added, setAdded] = useState(false);
   useEffect(() => {
     // Fetch Spotify genres when the component mounts
     const fetchGenres = async () => {
@@ -88,6 +88,12 @@ function MusicPlayer () {
     };
     fetchGenres();
   }, []);
+
+  const handleClick = () => {
+    setTimeout(() => {
+        setAdded(false);
+    }, 2000);
+  };
 
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(e.target.value);
@@ -244,7 +250,7 @@ function MusicPlayer () {
                               onClick={(event) => {
                                 event.preventDefault();
                                 ExportToQueue(item.duration_ms, item.uri, item.name, item.artists[0].name, item.album.images[0].url)
-                              }} 
+                              }}
                               />
                             </div>
                             <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>

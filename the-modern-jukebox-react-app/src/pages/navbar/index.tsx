@@ -198,7 +198,7 @@ function Navbar () {
                 `}
                 href={`${window.location.origin}/musicplayer`}
                 >
-                  Music Player
+                  Search
                 </a> 
                 <a
                 className={`${"queue" ? "text-primary-400 font-bold" : ""}
