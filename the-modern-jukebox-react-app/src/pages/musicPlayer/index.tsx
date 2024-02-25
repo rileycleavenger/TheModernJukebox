@@ -43,10 +43,13 @@ function MusicPlayer () {
 
   // Function to call search
   const handleSearch = async () => {
-    if (inputRef.current && typeof inputRef.current !== "undefined") {
-      const results = await searchShazam(inputRef.current.value);
-      setShazamSearchResults(results);
-      setSearch(true);
+    const inputValueLength = inputRef.current?.value.length || 0;
+    if (inputValueLength <= 200){
+      if (inputRef.current && typeof inputRef.current !== "undefined") {
+        const results = await searchShazam(inputRef.current.value);
+        setShazamSearchResults(results);
+        setSearch(true);
+      }
     }
   };
 
