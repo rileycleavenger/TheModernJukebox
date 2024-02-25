@@ -92,7 +92,7 @@ function MusicPlayer () {
   const handleClick = () => {
     setTimeout(() => {
         setAdded(false);
-    }, 2000);
+    }, 500);
   };
 
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
