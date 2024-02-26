@@ -83,7 +83,7 @@ function MusicPlayer () {
   const [genres, setGenres] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [added, setAdded] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   // Mapping of Spotify's shorthand notation to full genre names
   const shorthandToFullName: { [key: string]: string } = {
@@ -236,8 +236,11 @@ function MusicPlayer () {
     }, 500);
   };
 
-  const handleImageClick = (imageSrc: string) => {
+  const handleImageClick = (imageSrc: number) => {
     setSelectedImage(imageSrc);
+    setTimeout(() => {
+      setSelectedImage(-1);
+  }, 1500);
   };
   
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -348,11 +351,11 @@ function MusicPlayer () {
                               onClick={(event) => {
                                 event.preventDefault();
                                 handleClick();
-                                handleImageClick(item.images.coverart);
+                                handleImageClick(index);
                                 FindSpotifyUriAndExport(item.title, item.subtitle);
                               }} 
                               />
-                              {selectedImage === item.images.coverart && <div className="checkmark-animation"></div>}
+                              {selectedImage === index && <div className="checkmark-animation"></div>}
                             </div>
                             <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                               <strong>{item.title}</strong>
@@ -402,11 +405,11 @@ function MusicPlayer () {
                               onClick={(event) => {
                                 event.preventDefault();
                                 handleClick();
-                                handleImageClick(item.album.images[0].url);
+                                handleImageClick(index);
                                 ExportToQueue(item.duration_ms, item.uri, item.name, item.artists[0].name, item.album.images[0].url)
                               }}
                               />
-                              {selectedImage === item.album.images[0].url && <div className="checkmark-animation"></div>}
+                              {selectedImage === index && <div className="checkmark-animation"></div>}
                             </div>
                             <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                               <strong>{item.name}</strong>
