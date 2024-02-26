@@ -60,20 +60,25 @@ export const clearQueue = async () => {
     }
 };
 
-// function to remove a song from the queue based on QueueObject.uri
+// function to remove the first instance of a song from the queue based on QueueObject.uri
 export const removeSong = async (item: QueueObject) => {
     try {
-        let newQueue: QueueObject[] = []
-    await getQueue().then((queue) => {
+        let newQueue: QueueObject[] = [];
+        let removed = false;
+
+        await getQueue().then((queue) => {
             queue.forEach((song) => {
-                if (song.uri != item.uri) {
-                    newQueue.push(song)
+                if (!removed && song.uri === item.uri) {
+                    removed = true;
+                } else {
+                    newQueue.push(song);
                 }
             });
         });
+
         await clearQueue();
         for (let i = 0; i < newQueue.length; i++) {
-            await addToQueue(newQueue[i])
+            await addToQueue(newQueue[i]);
         }
     } catch (error) {
         console.error('Error removing song:', error);
