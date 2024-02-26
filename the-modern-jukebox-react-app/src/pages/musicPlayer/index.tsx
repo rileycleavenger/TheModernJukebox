@@ -346,7 +346,7 @@ function MusicPlayer () {
                                 animation: isAudioPlaying && audio?.src === item.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
                                 margin: '10px',
                               }} />
-                              <img className="coverart" src={item.images.coverart}
+                              <img className="coverart clickableCover" src={item.images.coverart}
                               alt={item.title}
                               onClick={(event) => {
                                 event.preventDefault();

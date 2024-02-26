@@ -124,6 +124,10 @@
   box-shadow: 0 0 10px 0 rgba(0,0,0,0.99);
 }
 
+.clickableCover{
+  cursor: pointer;
+
+}
 .coverartContainer:hover{
   transform: translateY(-10px);
 }
