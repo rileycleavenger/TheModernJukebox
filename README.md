@@ -20,3 +20,4 @@ We also took this time to completelty redesign the software interface to not onl
 
 ## Design Prototype - Hardware
 See the [README.md file](https://github.com/rileycleavenger/TheModernJukebox/blob/main/hardware_src/README.md) in hardware_src
+To see the most updated code running on the Raspberry Pi, please see: https://github.com/blake-budd1/pySetup
