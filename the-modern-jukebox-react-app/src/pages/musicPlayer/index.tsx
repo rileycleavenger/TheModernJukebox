@@ -43,10 +43,13 @@ function MusicPlayer () {
 
   // Function to call search
   const handleSearch = async () => {
-    if (inputRef.current && typeof inputRef.current !== "undefined") {
-      const results = await searchShazam(inputRef.current.value);
-      setShazamSearchResults(results);
-      setSearch(true);
+    const inputValueLength = inputRef.current?.value.length || 0;
+    if (inputValueLength <= 200){
+      if (inputRef.current && typeof inputRef.current !== "undefined") {
+        const results = await searchShazam(inputRef.current.value);
+        setShazamSearchResults(results);
+        setSearch(true);
+      }
     }
   };
 
@@ -80,6 +83,7 @@ function MusicPlayer () {
   const [genres, setGenres] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [added, setAdded] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Mapping of Spotify's shorthand notation to full genre names
   const shorthandToFullName: { [key: string]: string } = {
@@ -229,9 +233,13 @@ function MusicPlayer () {
   const handleClick = () => {
     setTimeout(() => {
         setAdded(false);
-    }, 2000);
+    }, 500);
   };
 
+  const handleImageClick = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+  };
+  
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(e.target.value);
   };
@@ -276,6 +284,7 @@ function MusicPlayer () {
                       onClick={(event) => {
                         event.preventDefault();
                         handleSearch();
+                        handleClick();
                       }}
                     >
                       Search for a Song
@@ -295,7 +304,9 @@ function MusicPlayer () {
                       onClick={
                         (event) => {
                           event.preventDefault();
-                        handleGetRecommendations();}}
+                          handleGetRecommendations();
+                          handleClick();
+                        }}
                       className="rounded-md bg-primary-500 px-2 py-2 text-white hover:bg-primary-700 m-2"
                     >
                       Get Recommendations
@@ -336,9 +347,12 @@ function MusicPlayer () {
                               alt={item.title}
                               onClick={(event) => {
                                 event.preventDefault();
+                                handleClick();
+                                handleImageClick(item.images.coverart);
                                 FindSpotifyUriAndExport(item.title, item.subtitle);
                               }} 
                               />
+                              {selectedImage === item.images.coverart && <div className="checkmark-animation"></div>}
                             </div>
                             <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                               <strong>{item.title}</strong>
@@ -387,9 +401,12 @@ function MusicPlayer () {
                               alt={item.name}
                               onClick={(event) => {
                                 event.preventDefault();
+                                handleClick();
+                                handleImageClick(item.album.images[0].url);
                                 ExportToQueue(item.duration_ms, item.uri, item.name, item.artists[0].name, item.album.images[0].url)
                               }}
                               />
+                              {selectedImage === item.album.images[0].url && <div className="checkmark-animation"></div>}
                             </div>
                             <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                               <strong>{item.name}</strong>

@@ -9,8 +9,27 @@
     transform: scale(1);
   }
 }
-@keyframes check {
-  100% {background-color: green;}
+.checkmark-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 120px;
+  height: 120px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/2/24/Eo_circle_red_checkmark.svg') no-repeat center center; 
+  background-size: cover;
+  animation: showCheckmark 1.5s ease-out;
+}
+
+@keyframes showCheckmark {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
 .buttonsSearchContainer{
   display: flex;

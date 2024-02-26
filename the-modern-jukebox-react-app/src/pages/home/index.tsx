@@ -103,7 +103,7 @@ function Home () {
                 <button className="rounded-md bg-primary-500 px-4 py-2 hover:bg-primary-700"
                 onClick={() => setIsPopupOpen(true)}>Join Session</button>
                 <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)} modal nested>
-                    <div className="flex flex-col justify-center items-center" style={{
+                    <div className="popup-content flex flex-col justify-center items-center" style={{
                       background: 'white',
                       padding: '2rem',
                       borderRadius: '1rem',
@@ -116,6 +116,7 @@ function Home () {
                       </div>
                       <div className="py-8 px-0">
                         <input
+                          className="input-number text-center"
                           type='text'
                           maxLength={5}
                           value={sessionCode}
@@ -123,9 +124,7 @@ function Home () {
                           style={{
                             backgroundColor:'black',
                             color:'white',
-                            blockSize: '100px',
-                            textAlign: 'center',
-                            fontSize: 'xxx-large',
+                            fontSize:'x-large',
                           }}
                         />
                       </div>

@@ -1,6 +1,35 @@
 .modal-content {
     display: block;
     background-color: white;
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 1rem;
+    color:black;
+}
+
+.popup-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: black;
+}
+  
+.input-number {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: xxx-large;
+    block-size: '100px';
+}
+  
+  
+ /* Media query for smaller screens (adjust the max-width as needed) */
+@media screen and (max-width: 600px) {
+    .popup-content {
+      padding: 1rem; /* Adjust padding for smaller screens */
+    }
+  
+    .input-number {
+      font-size: large; /* Adjust font size for smaller screens */
+      block-size: '50px';
+    }
 }
