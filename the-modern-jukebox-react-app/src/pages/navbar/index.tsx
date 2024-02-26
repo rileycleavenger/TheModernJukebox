@@ -174,7 +174,7 @@ function Navbar () {
 
   return (
     <nav>
-      {window.sessionStorage.getItem("loginType") !== null &&
+      {window.sessionStorage.getItem("code") !== null &&
       <div>
       <div
         className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-4`}
@@ -361,7 +361,7 @@ function Navbar () {
                 `}
                 href="musicplayer"
                 >
-                  Music Player
+                  Search
                 </a> 
                 <a
                 className={`${"queue" ? "text-primary-400 font-bold" : ""}
