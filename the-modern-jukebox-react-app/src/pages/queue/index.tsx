@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { clearQueue, getQueue, removeSong } from '../../services/QueuePostService';
 import { QueueObject } from '../../types';
 import './index.css';
@@ -32,8 +32,19 @@ function Queue () {
     handleGetQueue(); // Call handleGetQueue to update the queue
   };
 
+  const queueRef = useRef(queue);
+  queueRef.current = queue;
+
   useEffect(() => {
-    handleGetQueue();
+    const intervalId = setInterval(() => {
+      if (queueRef.current.length <= 0) {
+        handleGetQueue();
+      }
+    }, 500); // 0.5 seconds
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   const [buttonText, setButtonText] = useState('');
