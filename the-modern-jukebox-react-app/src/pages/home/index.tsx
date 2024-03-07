@@ -70,6 +70,7 @@ function Home () {
       });
       if (isPopupOpen){
         console.log("unsuccessful");
+        alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
       }
     //loginType= "shazam";
     //setLoginType(loginType)
