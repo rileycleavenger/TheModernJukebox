@@ -39,18 +39,19 @@ function Home () {
     }
 },[])
 
-  function generateSessionCode(): number {
-    const min = 10000;
-    const max = 99999; 
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  function handleCreateSession() {
-    const code = generateSessionCode();
-    console.log(code);
-    sessionStorage.setItem("code",code.toString());
-    window.location.href = loginURL;
-  }
+  function handlePopupSubmit(hardware_id: string) {
+    // close the popup
+    setIsPopupOpen(false);
 
+    // if the user is creating a session, redirect them to the spotify login page
+    if (isCreateSession){
+      sessionStorage.setItem("code",hardware_id.toString());
+      window.location.href = loginURL;
+    }
+    else {
+      handleJoinSession();
+    }
+  }
   const handleJoinSession = async () => {
     if (sessionCode.length === 5) {
       const sessionData = await getSessions();
@@ -78,6 +79,7 @@ function Home () {
     }
   };
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isCreateSession, setIsCreateSession] = useState(false);
 
   return (
     <section id="home" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
@@ -95,13 +97,17 @@ function Home () {
             {window.sessionStorage.getItem("loginType")===null &&
               <div className="flex mt-8 justify-center">
                 <button className="mr-4 rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700 md:mr-16"
-                  onClick={(event) => {
-                  handleCreateSession();
-                }}>
+                  onClick={() => {
+                    setIsPopupOpen(true);
+                    setIsCreateSession(true);
+                  }}>
                   Create session
                 </button>
                 <button className="rounded-md bg-primary-500 px-4 py-2 hover:bg-primary-700"
-                onClick={() => setIsPopupOpen(true)}>Join Session</button>
+                onClick={() => {
+                  setIsPopupOpen(true);
+                  setIsCreateSession(false);
+                }}>Join Session</button>
                 <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)} modal nested>
                     <div className="popup-content flex flex-col justify-center items-center" style={{
                       background: 'white',
@@ -111,7 +117,7 @@ function Home () {
                     }}>
                       <div className="py-4 px-0">
                         <label>
-                          Enter 5-digit Session ID:
+                          Enter Hardware ID:
                         </label>
                       </div>
                       <div className="py-8 px-0">
@@ -129,7 +135,7 @@ function Home () {
                         />
                       </div>
                       <div className="py-4 px-0 justify-self-center">
-                        <button className=" rounded-md bg-primary-500 px-4 py-2 justify-self-center hover:bg-primary-700" onClick={handleJoinSession}>Submit</button>
+                        <button className=" rounded-md bg-primary-500 px-4 py-2 justify-self-center hover:bg-primary-700" onClick={() => handlePopupSubmit(sessionCode)}>Submit</button>
                       </div>
                     </div>
                 </Popup>
