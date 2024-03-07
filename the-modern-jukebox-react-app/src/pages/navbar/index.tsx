@@ -258,7 +258,7 @@ function Navbar () {
                       />
                     </div>
                     <p>
-                      <strong>Session ID: </strong> 
+                      <strong>Hardware ID: </strong> 
                       {window.sessionStorage.getItem("code")}
                     </p>
                   </div>
@@ -296,7 +296,7 @@ function Navbar () {
               </div>
               <p
               onClick={() => handleMouseEnter('tap the disc to create or join a new session')}>
-                <strong>Session ID: &nbsp;</strong> 
+                <strong>Hardware ID: &nbsp;</strong> 
                 {window.sessionStorage.getItem("code")}
               </p>
             </div>
