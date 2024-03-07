@@ -82,6 +82,7 @@
     width: 25px;
     height: 25px;
     border-radius: 15%;
+    margin: 0;
 }
 
 .timesIcon:hover{
@@ -112,20 +113,7 @@
     flex-shrink: 0;
     margin-left: 50px;
 }
-.loader-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.loader {
-    border: 16px solid #32100f;
-    border-top: 16px solid #F5F5F5;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 1s linear infinite;
-}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

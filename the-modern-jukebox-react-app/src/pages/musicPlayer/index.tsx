@@ -12,7 +12,7 @@ import { addToPlaying } from '../../services/PlayingPostService';
 import { getRecommendationsByGenres, getSpotifyGenres } from '../../hooks/spotify';
 
 function MusicPlayer () {
-  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   useEffect(() => {
     if (isAboveMediumScreens) {
       document.body.style.overflow = "hidden";
@@ -322,6 +322,11 @@ function MusicPlayer () {
                       Get Recommendations
                     </button>
                   </div>
+                  {isLoading && !isAboveMediumScreens && (
+                  <div className='loader-wrapper'>
+                    <div className="loader"></div>
+                  </div>
+                  )}
                   <div className="queueContainer">
                     <div className="itemContainerWrapper">
                     {search ? (
@@ -351,7 +356,7 @@ function MusicPlayer () {
                               style={{
                                 cursor: 'pointer',
                                 animation: isAudioPlaying && audio?.src === item.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
-                                margin: '10px',
+                                margin: '0',
                               }} />
                               <img className="coverart clickableCover" src={item.images.coverart}
                               alt={item.title}
@@ -405,7 +410,7 @@ function MusicPlayer () {
                               style={{
                                 cursor: 'pointer',
                                 animation: isAudioPlaying && audio?.src === item.preview_url ? 'pop 0.4s infinite alternate' : 'none',
-                                margin: '20px',
+                                margin: '0',
                               }} />
                               <img className="coverart" src={item.album.images[0].url}
                               alt={item.name}
@@ -437,10 +442,10 @@ function MusicPlayer () {
           )}
         </div>
       </div>
-      {isLoading && (
-      <div className='loader-wrapper'>
-        <div className="loader"></div>
-      </div>
+      {isLoading && isAboveMediumScreens && (
+        <div className='loader-wrapper'>
+          <div className="loader"></div>
+        </div>
       )}
     </section>
   );
