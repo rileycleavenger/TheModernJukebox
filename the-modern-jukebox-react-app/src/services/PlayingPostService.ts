@@ -1,28 +1,30 @@
 import { QueueObject } from '../types';
 
 
-let receieveUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    receieveUrl = 'http://localhost:8080/api/playing';
-} else {
-    // Production environment
-    receieveUrl = `${window.location.origin}/api/playing`;
+function getReceiveUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/playing`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/playing`;
+    }
 }
 
-let sendUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    sendUrl = 'http://localhost:8080/api/addPlaying';
-} else {
-    // Production environment
-    sendUrl = `${window.location.origin}/api/addPlaying`;
+function getSendUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/addPlaying`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/addPlaying`;
+    }
 }
 
 // function that returns QueueObject for the song now playing at the receieveUrl
-export const getPlaying = async (): Promise<QueueObject> => {
+export const getPlaying = async (sessionID: string): Promise<QueueObject> => {
     try {
-        const response = await fetch(receieveUrl);
+        const response = await fetch(getReceiveUrl(sessionID));
         const json = await response.json();
         // console.log('getPlaying response:', json)
         return json as QueueObject;
@@ -33,9 +35,9 @@ export const getPlaying = async (): Promise<QueueObject> => {
 };
 
 
-export const addToPlaying = async (spotifyObject: QueueObject) => {
+export const addToPlaying = async (spotifyObject: QueueObject, sessionID:string) => {
     try {
-        await fetch(sendUrl, {
+        await fetch(getSendUrl(sessionID), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -48,9 +50,9 @@ export const addToPlaying = async (spotifyObject: QueueObject) => {
 };
 
 // function to clear the currently playing song
-export const clearPlaying = async () => {
+export const clearPlaying = async (sessionID: string) => {
     try {
-        await fetch(receieveUrl, {
+        await fetch(getReceiveUrl(sessionID), {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

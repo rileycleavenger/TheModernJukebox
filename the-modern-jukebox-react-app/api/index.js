@@ -9,71 +9,105 @@ let queueMessages = [];
 let playingMessages = [];
 let controlsMessages = [];
 let activeSessions = [];
+let sessions = {};
 
 app.use(bodyParser.json());
 app.use(cors());
 
 // endpoint to get the queue
-app.get('/api/queue', (req, res) => {
+app.get('/api/:sessionId/queue', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.json(queueMessages);
+  res.json(sessions[sessionId].queueMessages);
 });
 
-app.delete('/api/queue', (req, res) => {
-  queueMessages = [];
+app.delete('/api/:sessionId/queue', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (sessions[sessionId]) {
+    sessions[sessionId].queueMessages = [];
+  }
   res.send('Queue cleared successfully!');
 });
 
-app.post('/api/addQueue', (req, res) => {
+app.post('/api/:sessionId/addQueue', (req, res) => {
+  const sessionId = req.params.sessionId;
   const { message } = req.body;
-  queueMessages.push(message);
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
+  sessions[sessionId].queueMessages.push(message);
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
 
 // endpoint to get the current playing song
-app.get('/api/playing', (req, res) => {
+app.get('/api/:sessionId/playing', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  if (playingMessages.length > 0) {
-    res.json(playingMessages[0]);
+  if (sessions[sessionId].playingMessages.length > 0) {
+    res.json(sessions[sessionId].playingMessages[0]);
   } else {
     res.json(null);
   }
 });
 
-app.delete('/api/playing', (req, res) => {
-  playingMessages = [];
+app.delete('/api/:sessionId/playing', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (sessions[sessionId]) {
+    sessions[sessionId].playingMessages = [];
+  }
   res.send('Playing cleared successfully!');
 });
 
-app.post('/api/addPlaying', (req, res) => {
+app.post('/api/:sessionId/addPlaying', (req, res) => {
+  const sessionId = req.params.sessionId;
   const { message } = req.body;
-  playingMessages = [message]; // Replace the existing playing message with the new one
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
+  sessions[sessionId].playingMessages = [message]; // Replace the existing playing message with the new one
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });
 
 // endpoint to get the control inputs
-app.get('/api/controls', (req, res) => {
+app.get('/api/:sessionId/controls', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  if (controlsMessages.length > 0) {
-    res.json(controlsMessages[0]);
+  if (sessions[sessionId].controlsMessages.length > 0) {
+    res.json(sessions[sessionId].controlsMessages[0]);
   } else {
     res.json(null);
   }
 });
 
-app.delete('/api/controls', (req, res) => {
-  controlsMessages = [];
+app.delete('/api/:sessionId/controls', (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (sessions[sessionId]) {
+    sessions[sessionId].controlsMessages = [];
+  }
   res.send('Controls cleared successfully!');
 });
 
-app.post('/api/addControls', (req, res) => {
+app.post('/api/:sessionId/addControls', (req, res) => {
+  const sessionId = req.params.sessionId;
   const { message } = req.body;
-  controlsMessages = [message]; // Replace the existing controls message with the new one
+  if (!sessions[sessionId]) {
+    sessions[sessionId] = { queueMessages: [], playingMessages: [], controlsMessages: [] };
+  }
+  sessions[sessionId].controlsMessages = [message]; // Replace the existing controls message with the new one
   res.header('Access-Control-Allow-Origin', '*');
   res.send('Message received successfully!');
 });

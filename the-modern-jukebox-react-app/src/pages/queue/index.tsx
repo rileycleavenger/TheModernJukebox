@@ -11,23 +11,24 @@ import { addToPlaying } from '../../services/PlayingPostService';
 function Queue () {
   const isAboveMediumScreens = useMediaQuery("(min-width:768px)");
   let token = (sessionStorage.getItem("token")|| "")
+  let sessionID = (sessionStorage.getItem("code")|| "")
   let psuedoQueue: QueueObject[] = [];
 
   const [queue, setQueue] = useState<QueueObject[]>([]);
 
   const handleClearQueue = () => {
-    clearQueue();
+    clearQueue(sessionID);
     setQueue([]); // Update the state variable using setQueue
   };
 
   const handleGetQueue = async () => {
-    const queueData = await getQueue(); // Await the getQueue function
+    const queueData = await getQueue(sessionID); // Await the getQueue function
     console.log("Returned From Queue", queueData);
     setQueue(queueData); // Update the state variable using setQueue
   };
 
   const handleRemoveSong = async (item: QueueObject) => {
-    await removeSong(item); // Call removeSong function with the item
+    await removeSong(item, sessionID); // Call removeSong function with the item
     handleGetQueue(); // Call handleGetQueue to update the queue
   };
 
@@ -100,7 +101,7 @@ function Queue () {
                   <div className="itemWrapper">
                     <div className="coverartContainer" >
                       <FaTimes className="timesIcon" onClick={() => handleRemoveSong(item)} />
-                      <img /*onClick={() => addToPlaying(item)}*/ className="coverart" src={item.trackCover} alt="Cover" />
+                      <img /*onClick={() => addToPlaying(item, sessionID)}*/ className="coverart" src={item.trackCover} alt="Cover" />
                     </div>
                     <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                       <strong>{item.trackName}</strong>
