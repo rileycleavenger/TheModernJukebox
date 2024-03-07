@@ -1,28 +1,30 @@
 import { get } from 'http';
 import { QueueObject } from '../types';
 
-let receieveUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    receieveUrl = 'http://localhost:8080/api/queue';
-} else {
-    // Production environment
-    receieveUrl = `${window.location.origin}/api/queue`;
+function getReceiveUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/queue`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/queue`;
+    }
 }
 
-let sendUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    sendUrl = 'http://localhost:8080/api/addQueue';
-} else {
-    // Production environment
-    sendUrl = `${window.location.origin}/api/addQueue`;
+function getSendUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/addQueue`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/addQueue`;
+    }
 }
 
 // function that returns QueueObject[] from the queue at the receieveUrl
-export const getQueue = async (): Promise<QueueObject[]> => {
+export const getQueue = async (sessionID:string): Promise<QueueObject[]> => {
     try {
-        const response = await fetch(receieveUrl);
+        const response = await fetch(getReceiveUrl(sessionID));
         const json = await response.json();
         return json as QueueObject[];
     } catch (error) {
@@ -32,9 +34,9 @@ export const getQueue = async (): Promise<QueueObject[]> => {
 };
 
 // function to add to the queue that sends a QueueObject to the sendUrl
-export const addToQueue = async (spotifyObject: QueueObject) => {
+export const addToQueue = async (spotifyObject: QueueObject, sessionID: string) => {
     try {
-        await fetch(sendUrl, {
+        await fetch(getSendUrl(sessionID), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,9 +49,9 @@ export const addToQueue = async (spotifyObject: QueueObject) => {
 };
 
 // function to clear the queue that clears all data stored at receieveUrl
-export const clearQueue = async () => {
+export const clearQueue = async (sessionID:string) => {
     try {
-        await fetch(receieveUrl, {
+        await fetch(getReceiveUrl(sessionID), {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,12 +63,12 @@ export const clearQueue = async () => {
 };
 
 // function to remove the first instance of a song from the queue based on QueueObject.uri
-export const removeSong = async (item: QueueObject) => {
+export const removeSong = async (item: QueueObject, sessionID: string) => {
     try {
         let newQueue: QueueObject[] = [];
         let removed = false;
 
-        await getQueue().then((queue) => {
+        await getQueue(sessionID).then((queue) => {
             queue.forEach((song) => {
                 if (!removed && song.uri === item.uri) {
                     removed = true;
@@ -76,9 +78,9 @@ export const removeSong = async (item: QueueObject) => {
             });
         });
 
-        await clearQueue();
+        await clearQueue(sessionID);
         for (let i = 0; i < newQueue.length; i++) {
-            await addToQueue(newQueue[i]);
+            await addToQueue(newQueue[i], sessionID);
         }
     } catch (error) {
         console.error('Error removing song:', error);

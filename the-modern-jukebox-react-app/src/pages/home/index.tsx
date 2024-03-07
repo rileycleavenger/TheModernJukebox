@@ -72,11 +72,6 @@ function Home () {
         console.log("unsuccessful");
         alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
       }
-    //loginType= "shazam";
-    //setLoginType(loginType)
-    //sessionStorage.setItem("loginType",loginType)
-    //window.location.href = `${window.location.origin}/home`;
-    //console.log("login type", loginType)
     }
   };
   const [isPopupOpen, setIsPopupOpen] = useState(false);

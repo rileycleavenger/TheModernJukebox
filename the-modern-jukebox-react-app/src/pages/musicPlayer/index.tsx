@@ -22,7 +22,9 @@ function MusicPlayer () {
     }
   }, []); 
 
+  // load from local storage
   let token = (sessionStorage.getItem("token") || "");
+  let sessionID = (sessionStorage.getItem("code") || "");
 
   // Function to export to queue for the hardware
   function ExportToQueue(duration_ms: string, trackUri: string, trackName: string, trackArtist: string, trackCover: string) {
@@ -34,7 +36,7 @@ function MusicPlayer () {
       trackArtist: trackArtist,
       trackCover: trackCover,
     };
-    addToQueue(queueObject);
+    addToQueue(queueObject, sessionID);
   }
 
   // State setup for the Shazam search
