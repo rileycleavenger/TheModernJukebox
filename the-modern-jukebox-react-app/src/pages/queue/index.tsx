@@ -101,7 +101,7 @@ function Queue () {
                   <div className="itemWrapper">
                     <div className="coverartContainer" >
                       <FaTimes className="timesIcon" onClick={() => handleRemoveSong(item)} />
-                      <img /*onClick={() => addToPlaying(item)}*/ className="coverart" src={item.trackCover} alt="Cover" />
+                      <img /*onClick={() => addToPlaying(item, sessionID)}*/ className="coverart" src={item.trackCover} alt="Cover" />
                     </div>
                     <div style={{ fontSize: '20px', textAlign: 'center', marginTop: '10px' }}>
                       <strong>{item.trackName}</strong>
