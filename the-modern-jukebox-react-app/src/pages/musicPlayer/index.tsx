@@ -42,13 +42,16 @@ function MusicPlayer () {
   // State setup for the Shazam search
   const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Function to call search
   const handleSearch = async () => {
     const inputValueLength = inputRef.current?.value.length || 0;
     if (inputValueLength <= 200){
       if (inputRef.current && typeof inputRef.current !== "undefined") {
+        setIsLoading(true);
         const results = await searchShazam(inputRef.current.value);
+        setIsLoading(false);
         setShazamSearchResults(results);
         setSearch(true);
       }
@@ -253,7 +256,9 @@ function MusicPlayer () {
     try {
       // Fetch recommendations based on the selected genre
       const shorthandGenre = fullNameToShorthand[selectedGenre.toLowerCase()];
+      setIsLoading(true);
       const shazamSearchResults = await getRecommendationsByGenres([shorthandGenre]);
+      setIsLoading(false);
       console.log('Recommendations:', shazamSearchResults);
       setShazamSearchResults(shazamSearchResults);
       setSearch(false);
@@ -432,6 +437,11 @@ function MusicPlayer () {
           )}
         </div>
       </div>
+      {isLoading && (
+      <div className='loader-wrapper'>
+        <div className="loader"></div>
+      </div>
+      )}
     </section>
   );
 }
