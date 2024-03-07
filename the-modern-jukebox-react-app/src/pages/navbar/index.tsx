@@ -221,7 +221,29 @@ function Navbar () {
                   About
                 </a> 
                 </div>
-                {currentSong && (
+                <div className={`${flexBetween} gap-8`}>
+                  {currentSong &&
+                  <div className="nowPlayingWrapper">
+                    <img onClick={changeControlsAnimation} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
+                    <div className="rightOfCover">
+                      {!areControlsDisplayed &&
+                      <div id="nowPlayingText" className="nowPlayingText">
+                        <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
+                        <p>{currentSong ? currentSong.trackArtist : ''}</p>
+                      </div>
+                      }
+                      {areControlsDisplayed &&
+                      <div id="nowPlayingControls" className="nowPlayingControls">
+                        <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
+                        <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
+                        <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
+                        <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  }
+                </div>
                 <div className={`${flexBetween} justify-center sessionID`}>
                   <div className="sessionIDTop">
                     <div
@@ -248,59 +270,9 @@ function Navbar () {
                       onMouseLeave={handleMouseLeave}>{buttonText}</p>
                   </div>
                 </div>
-                )}
-                {!currentSong && (
-                <div className={`${flexBetween} sessionIDNoSong`}>
-                  <div className="sessionIDTop">
-                    <div
-                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
-                      onMouseLeave={handleMouseLeave}
-                      style={{paddingBottom: '5px' }}
-                    >
-                      <FaCompactDisc
-                        style={{ margin: '4px', marginRight: '8px' }}
-                        className="text-primary-400 transition duration-500 hover:text-gray-200 hover:transform"
-                        onClick={sessionReset}
-                      />
-                    </div>
-                    <p>
-                      <strong>Session ID: </strong> 
-                      {window.sessionStorage.getItem("code")}
-                    </p>
-                  </div>
-                  <div className="sessionIDBottom">
-                    <p 
-                      className="sessionIDHoverText"
-                      style={{ fontSize: '12px'}}
-                      onMouseEnter={() => handleMouseEnter('click to create or join a new session')}
-                      onMouseLeave={handleMouseLeave}>{buttonText}</p>
-                  </div>
-                </div>
-                )}
-                <div className={`${flexBetween} gap-8`}>
-                  {currentSong &&
-                  <div className="nowPlayingWrapper">
-                    <img onClick={changeControlsAnimation} src={currentSong ? currentSong.trackCover : ''} alt="album art" className="nowPlayingAlbumArt" />
-                    <div className="rightOfCover">
-                      {!areControlsDisplayed &&
-                      <div id="nowPlayingText" className="nowPlayingText">
-                        <p><strong>{currentSong ? currentSong.trackName : ''}</strong></p>
-                        <p>{currentSong ? currentSong.trackArtist : ''}</p>
-                      </div>
-                      }
-                      {areControlsDisplayed &&
-                      <div id="nowPlayingControls" className="nowPlayingControls">
-                        <FaBackward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={previousSong} style={{margin: '4px'}}/>
-                        <FaPlay className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={playSong}  style={{margin: '4px', marginRight: '0'}}/>
-                        <FaPause className="controlsIcon transition duration-500 hover:text-gray-200 hover:transform" onClick={pauseSong} style={{margin: '4px', marginLeft: '1px'}}/>
-                        <FaForward className="controlsIcon text-primary-400 transition duration-500 hover:text-gray-200 hover:transform" onClick={nextSong}  style={{margin: '4px'}}/>
-                      </div>
-                      }
-                    </div>
-                  </div>
-                  }
-                </div>
+              
               </div>
+              
             ) : (
               <button
                 className="rounded-full bg-primary-100 p-2"

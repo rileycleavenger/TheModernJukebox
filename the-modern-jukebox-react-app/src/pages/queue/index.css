@@ -82,6 +82,7 @@
     width: 25px;
     height: 25px;
     border-radius: 15%;
+    margin: 0;
 }
 
 .timesIcon:hover{
@@ -111,6 +112,12 @@
     width: 400px;
     flex-shrink: 0;
     margin-left: 50px;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {

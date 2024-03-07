@@ -12,7 +12,7 @@ import { addToPlaying } from '../../services/PlayingPostService';
 import { getRecommendationsByGenres, getSpotifyGenres } from '../../hooks/spotify';
 
 function MusicPlayer () {
-  const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   useEffect(() => {
     if (isAboveMediumScreens) {
       document.body.style.overflow = "hidden";
@@ -42,13 +42,16 @@ function MusicPlayer () {
   // State setup for the Shazam search
   const [shazamSearchResults, setShazamSearchResults] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Function to call search
   const handleSearch = async () => {
     const inputValueLength = inputRef.current?.value.length || 0;
     if (inputValueLength <= 200){
       if (inputRef.current && typeof inputRef.current !== "undefined") {
+        setIsLoading(true);
         const results = await searchShazam(inputRef.current.value);
+        setIsLoading(false);
         setShazamSearchResults(results);
         setSearch(true);
       }
@@ -253,7 +256,9 @@ function MusicPlayer () {
     try {
       // Fetch recommendations based on the selected genre
       const shorthandGenre = fullNameToShorthand[selectedGenre.toLowerCase()];
+      setIsLoading(true);
       const shazamSearchResults = await getRecommendationsByGenres([shorthandGenre]);
+      setIsLoading(false);
       console.log('Recommendations:', shazamSearchResults);
       setShazamSearchResults(shazamSearchResults);
       setSearch(false);
@@ -317,6 +322,11 @@ function MusicPlayer () {
                       Get Recommendations
                     </button>
                   </div>
+                  {isLoading && !isAboveMediumScreens && (
+                  <div className='loader-wrapper'>
+                    <div className="loader"></div>
+                  </div>
+                  )}
                   <div className="queueContainer">
                     <div className="itemContainerWrapper">
                     {search ? (
@@ -346,7 +356,7 @@ function MusicPlayer () {
                               style={{
                                 cursor: 'pointer',
                                 animation: isAudioPlaying && audio?.src === item.hub.actions[1].uri ? 'pop 0.4s infinite alternate' : 'none',
-                                margin: '10px',
+                                margin: '0',
                               }} />
                               <img className="coverart clickableCover" src={item.images.coverart}
                               alt={item.title}
@@ -400,7 +410,7 @@ function MusicPlayer () {
                               style={{
                                 cursor: 'pointer',
                                 animation: isAudioPlaying && audio?.src === item.preview_url ? 'pop 0.4s infinite alternate' : 'none',
-                                margin: '20px',
+                                margin: '0',
                               }} />
                               <img className="coverart" src={item.album.images[0].url}
                               alt={item.name}
@@ -432,6 +442,11 @@ function MusicPlayer () {
           )}
         </div>
       </div>
+      {isLoading && isAboveMediumScreens && (
+        <div className='loader-wrapper'>
+          <div className="loader"></div>
+        </div>
+      )}
     </section>
   );
 }
