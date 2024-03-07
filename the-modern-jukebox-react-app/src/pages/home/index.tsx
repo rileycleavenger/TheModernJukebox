@@ -67,11 +67,10 @@ function Home () {
           console.log("successful");
           setIsPopupOpen(false);
         }
+        else{
+          alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
+        }
       });
-      if (isPopupOpen){
-        console.log("unsuccessful");
-        alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
-      }
     }
   };
   const [isPopupOpen, setIsPopupOpen] = useState(false);
