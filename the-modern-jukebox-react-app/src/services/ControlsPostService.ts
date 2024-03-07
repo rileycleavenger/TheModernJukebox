@@ -1,27 +1,29 @@
 import { Controls } from '../types';
 
-let receieveUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    receieveUrl = 'http://localhost:8080/api/controls';
-} else {
-    // Production environment
-    receieveUrl = `${window.location.origin}/api/controls`;
+function getReceiveUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/controls`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/controls`;
+    }
 }
 
-let sendUrl = '';
-if (window.location.origin.includes('localhost')) {
-    // Development environment
-    sendUrl = 'http://localhost:8080/api/addControls';
-} else {
-    // Production environment
-    sendUrl = `${window.location.origin}/api/addControls`;
+function getSendUrl(sessionID: string): string {
+    if (window.location.origin.includes('localhost')) {
+        // Development environment
+        return `http://localhost:8080/api/${sessionID}/addControls`;
+    } else {
+        // Production environment
+        return `${window.location.origin}/api/${sessionID}/addControls`;
+    }
 }
 
 // function that returns Controls for the controls at the receieveUrl
-export const getControls = async (): Promise<Controls> => {
+export const getControls = async (sessionID: string): Promise<Controls> => {
     try {
-        const response = await fetch(receieveUrl);
+        const response = await fetch(getReceiveUrl(sessionID));
         const json = await response.json();
         return json as Controls;
     } catch (error) { 
@@ -31,9 +33,9 @@ export const getControls = async (): Promise<Controls> => {
 };
 
 // function to make new control input
-export const addToControls = async (controlInput: Controls) => {
+export const addToControls = async (controlInput: Controls, sessionID: string) => {
     try {
-        await fetch(sendUrl, {
+        await fetch(getSendUrl(sessionID), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,9 +48,9 @@ export const addToControls = async (controlInput: Controls) => {
 };
 
 // function to clear the current control inpput
-export const clearControls = async () => {
+export const clearControls = async (sessionID: string) => {
     try {
-        await fetch(receieveUrl, {
+        await fetch(getReceiveUrl(sessionID), {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

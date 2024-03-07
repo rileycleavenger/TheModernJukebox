@@ -19,6 +19,10 @@ function Navbar () {
   let current: QueueObject | null = null;
   let nowPlayingTextWidth = 0.0;
 
+  // load token and sessionID from sessionStorage
+  let token = (window.sessionStorage.getItem("token")|| "")
+  let sessionID = (window.sessionStorage.getItem("code")|| "");
+
   const changeControlsAnimation = () => {
     if(areControlsDisplayed) {
       
@@ -82,7 +86,7 @@ function Navbar () {
       previous: false,
     };
     // send the new controls object to the server
-    await addToControls(controls);
+    await addToControls(controls, sessionID);
   }
 
   const pauseSong = async () => {
@@ -101,7 +105,7 @@ function Navbar () {
       previous: false,
     };
     // send the new controls object to the server
-    await addToControls(controls);
+    await addToControls(controls, sessionID);
   }
 
   const nextSong = async () => {
@@ -113,7 +117,7 @@ function Navbar () {
       previous: false,
     };
     // send the new controls object to the server
-    await addToControls(controls);
+    await addToControls(controls, sessionID);
   }
 
   const previousSong = async () => {
@@ -125,7 +129,7 @@ function Navbar () {
       previous: true,
     };
     // send the new controls object to the server
-    await addToControls(controls);
+    await addToControls(controls, sessionID);
   }
 
   const handleMouseEnter = (text: string) => {
@@ -146,7 +150,7 @@ function Navbar () {
 
   useEffect(() => {
     const fetchCurrentSong = async () => {
-      const song = await getPlaying();
+      const song = await getPlaying(sessionID);
 
       // set width of right of cover back to 100% if new song
       const rightOfCover = document.querySelector('.rightOfCover');
