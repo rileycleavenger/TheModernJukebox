@@ -54,6 +54,9 @@ function MusicPlayer () {
         setIsLoading(false);
         setShazamSearchResults(results);
         setSearch(true);
+        if(results.length === 0){
+          alert("Sorry, no search results found.");
+        }
       }
     }
   };
