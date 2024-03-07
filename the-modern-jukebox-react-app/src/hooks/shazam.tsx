@@ -3,13 +3,13 @@ export async function searchShazam(searchTerm: string): Promise<any[]> {
     if(!searchTerm) {
         return [];
     }
-    const url = `https://shazam.p.rapidapi.com/search?term=${encodeURIComponent(searchTerm)}&locale=en-US&offset=0&limit=5`;
+    const url = `https://shazam.p.rapidapi.com/search?term=${encodeURIComponent(searchTerm)}&locale=en-US&offset=0&limit=10`;
 
     // options for the fetch request
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '3c0b6b9b8dmshc2d7f9eb0f7b7c1p1e0c01jsn53bc70710e0c',
+            'X-RapidAPI-Key': '947bde9a0amsh09befba447e0849p1b12e2jsn2655254e4e5c',
             'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
         }
     };

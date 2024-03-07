@@ -105,7 +105,24 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
     // get the response data
     const responseData = await response.json();
     const track = responseData.tracks.items[0];
-    // console.log('Spotify search result:', track);
+    if(!track) {
+      console.log('No track found');
+
+      // try searching for the track without the feature in the title
+      const trackNameWithoutFeature = trackName.replace(/\(feat\. .+\)/i, '');
+      const urlWithoutFeature = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${trackNameWithoutFeature} artist:${trackArtist}`)}&type=track`;
+      const responseWithoutFeature = await fetch(urlWithoutFeature, options);
+      const responseDataWithoutFeature = await responseWithoutFeature.json();
+      const trackWithoutFeature = responseDataWithoutFeature.tracks.items[0];
+      if (trackWithoutFeature) {
+        console.log('Track found without feature:', trackWithoutFeature);
+        return trackWithoutFeature;
+      }
+      else{
+        alert("That song can't be found on Spotify, please try another song");
+      }
+
+    }
     return track;
   } catch (error) {
     // log any errors
