@@ -60,24 +60,7 @@ function Queue () {
   return (
     <section id="queue" className="gap-16 bg-primary-100 py-10 md:h-full md:pb-0 mobileContainer"
     >
-
-      {!token &&
-        <div className='px-40'>
-         <div>
-          <p className="text-lg mt-24">
-            The Queue page allows you to view your queued songs and clear the list.
-            To gain access to this page, please sign with Spotify.
-          </p>
-         </div>
-         <div
-          className="flex basis-full justify-center z-10
-              mt-32 justify-items-end"
-          >
-          <img alt="locked" src={locked} />
-         </div>
-        </div>
-      }
-      {token && queue.length > 0 &&
+      {queue.length > 0 &&
       <div className='py-16'> 
         <div 
         className="buttonsContainer"

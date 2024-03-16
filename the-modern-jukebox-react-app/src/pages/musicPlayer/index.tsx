@@ -6,10 +6,11 @@ import locked from "../../assets/images/locked.png";
 import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
 
 import { searchShazam } from '../../hooks/shazam';
-import { searchSpotify } from '../../hooks/spotify';
+import { loginURL, searchSpotify } from '../../hooks/spotify';
 import './index.css';
 import { addToPlaying } from '../../services/PlayingPostService';
 import { getRecommendationsByGenres, getSpotifyGenres } from '../../hooks/spotify';
+import { getSessions } from '../../services/SessionsPostService';
 
 function MusicPlayer () {
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
@@ -20,6 +21,7 @@ function MusicPlayer () {
         document.body.style.overflow = "auto";
       };
     }
+    console.log("music player",sessionStorage.getItem("token"));
   }, []); 
 
   // load from local storage
@@ -231,11 +233,17 @@ function MusicPlayer () {
 
   useEffect(() => {
     // Fetch Spotify genres when the component mounts
+    try{
     const fetchGenres = async () => {
       const fetchedGenres = await getSpotifyGenres();
       setGenres(fetchedGenres);
     };
     fetchGenres();
+    }
+    catch(error){
+      sessionStorage.setItem("token", "");
+      console.error('Error fetching genres:', error);
+    }
   }, []);
 
   const handleClick = () => {
@@ -266,21 +274,56 @@ function MusicPlayer () {
       setShazamSearchResults(shazamSearchResults);
       setSearch(false);
     } catch (error) {
+      sessionStorage.setItem("token","");
       console.error('Error fetching recommendations:', error);
     }
   };
+
+  async function getNewToken() {
+    const sessionData = await getSessions();
+      console.log("Returned From Session", sessionData);
+      sessionData.forEach((session) => {
+        console.log('Session ID:', session.session_id);
+        console.log('Start Time:', session.token);
+        if (session.session_id == sessionStorage.getItem("code")){
+          window.sessionStorage.setItem("token", session.token);
+          window.location.href = `${window.location.origin}/home`;
+          console.log("successful");
+        }
+      });
+  }
 
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
       <div className="">
         <div>
-          {!token && (
-            <div className='px-40'>
+          {!token && sessionStorage.getItem("loginType") == "spotify" && (
+            <div className='flex-col basis-full text-center p-2 align-center justify-center'>
               <p className="text-lg mt-28">
-                The Music Player page allows you to search for your favorite songs and queue them. To gain access to this page, please sign with Spotify.
+                The current Spotify token has expired. To gain access to this page, please sign in with Spotify.
               </p>
-              <div className="flex basis-full justify-center z-10 mt-32 justify-items-end">
-                <img alt="locked" src={locked} />
+              <div className="flex basis-full justify-center z-10 mt-16 justify-items-end">
+                <button className="mr-4 rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700 md:mr-16"
+                  onClick={() => {
+                    window.location.href = loginURL;
+                  }}>
+                  Renew Spotify Token
+                </button>
+              </div>
+            </div>
+          )}
+          {!token && sessionStorage.getItem("loginType") == "shazam" && (
+            <div className='flex-col basis-full text-center p-2 align-center justify-center'>
+              <p className="text-lg mt-28">
+                The current Spotify token has expired. Please ask the creator to renew the current session or create a new session. Click below to look for current tokens in this session. 
+              </p>
+              <div className="flex basis-full justify-center z-10 mt-16 justify-items-end">
+                <button className="mr-4 rounded-md bg-primary-500 px-2 py-2 hover:bg-primary-700 md:mr-16"
+                  onClick={() => {
+                    getNewToken();
+                  }}>
+                  Find New Token
+                </button>
               </div>
             </div>
           )}
