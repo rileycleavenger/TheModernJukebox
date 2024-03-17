@@ -68,6 +68,7 @@ function MusicPlayer () {
 
   // useEffect to format the track when spotifySearchResult changes
   useEffect(() => {
+    try{
     if (spotifySearchResult) {
       ExportToQueue(
         spotifySearchResult.duration_ms,
@@ -76,6 +77,9 @@ function MusicPlayer () {
         spotifySearchResult.artists[0].name,
         spotifySearchResult.album.images[0].url
       );
+    }
+    } catch(error){
+      sessionStorage.setItem("token","");
     }
   }, [spotifySearchResult]);
 
