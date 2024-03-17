@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect} from 'react';
 import { QueueObject } from '../../types';
 import { addToQueue } from '../../services/QueuePostService';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import locked from "../../assets/images/locked.png";
 import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
 
 import { searchShazam } from '../../hooks/shazam';
@@ -305,6 +304,34 @@ function MusicPlayer () {
       });
   }
 
+  async function tryShazamPreview(name: string, artist: string) {
+    const fullSongName = name + ' ' + artist;
+    const results = await searchShazam(fullSongName);
+    if(results.length === 0){
+      alert("Sorry, no song previews found.");
+    }
+    else{
+      const track = results[0];
+      if(track.preview_url === null){
+        alert("Sorry, no song previews found.");
+      }
+      else{
+        if (isAudioPlaying && audio?.src === track.preview_url) {
+          audio?.pause();
+          setIsAudioPlaying(false);
+        } else {
+          if (audio) {
+            audio.pause();
+          }
+          const newAudio = new Audio(track.preview_url);
+          newAudio.play();
+          setAudio(newAudio);
+          setIsAudioPlaying(true);
+        }
+      }
+    }
+  }
+
   return (
     <section id="musicplayer" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
       <div className="">
@@ -447,8 +474,9 @@ function MusicPlayer () {
                             <div className="coverartContainer" >
                               <SpeakerWaveIcon className="timesIcon" onClick={() => {
                                 if(item.preview_url === null){
-                                  alert("Sorry, this song does not have a preview available.");
-                                  return;
+                                  tryShazamPreview(item.name, item.artists[0].name);
+                                  //alert("Sorry, this song does not have a preview available.");
+                                  //return;
                                 }
                                 else{
                                   if (isAudioPlaying && audio?.src === item.preview_url) {
