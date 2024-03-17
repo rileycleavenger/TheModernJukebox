@@ -81,8 +81,14 @@ function MusicPlayer () {
 
   // Function to call spotify search
   const FindSpotifyUriAndExport = async (trackName: string, trackArtist: string) => {
+    try{
     const result = await searchSpotify(trackName, trackArtist);
     setSpotifySearchResult(result);
+    } catch(error){
+      sessionStorage.setItem("token","");
+      window.location.reload();
+      console.error(error);
+    }
   };
 
   // State setup for audio previews
@@ -241,7 +247,6 @@ function MusicPlayer () {
     fetchGenres();
     }
     catch(error){
-      sessionStorage.setItem("token", "");
       console.error('Error fetching genres:', error);
     }
   }, []);
@@ -265,7 +270,10 @@ function MusicPlayer () {
 
   const handleGetRecommendations = async () => {
     try {
-      // Fetch recommendations based on the selected genre
+        // Fetch recommendations based on the selected genre
+      if (selectedGenre.toLowerCase() == ""){
+        throw new Error('Not a genre');
+      }
       const shorthandGenre = fullNameToShorthand[selectedGenre.toLowerCase()];
       setIsLoading(true);
       const shazamSearchResults = await getRecommendationsByGenres([shorthandGenre]);
@@ -274,7 +282,7 @@ function MusicPlayer () {
       setShazamSearchResults(shazamSearchResults);
       setSearch(false);
     } catch (error) {
-      sessionStorage.setItem("token","");
+      console.log("Not a genre");
       console.error('Error fetching recommendations:', error);
     }
   };
