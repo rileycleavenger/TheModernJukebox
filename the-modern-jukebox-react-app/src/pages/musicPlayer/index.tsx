@@ -316,14 +316,14 @@ function MusicPlayer () {
         alert("Sorry, no song previews found.");
       }
       else{
-        if (isAudioPlaying && audio?.src === track.preview_url) {
+        if (isAudioPlaying && audio?.src === track.hub.actions[1].uri) {
           audio?.pause();
           setIsAudioPlaying(false);
         } else {
           if (audio) {
             audio.pause();
           }
-          const newAudio = new Audio(track.preview_url);
+          const newAudio = new Audio(track.hub.actions[1].uri);
           newAudio.play();
           setAudio(newAudio);
           setIsAudioPlaying(true);
@@ -475,6 +475,7 @@ function MusicPlayer () {
                               <SpeakerWaveIcon className="timesIcon" onClick={() => {
                                 if(item.preview_url === null){
                                   tryShazamPreview(item.name, item.artists[0].name);
+                                  console.log("be like that");
                                   //alert("Sorry, this song does not have a preview available.");
                                   //return;
                                 }
