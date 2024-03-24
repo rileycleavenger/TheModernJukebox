@@ -42,7 +42,7 @@ export const getTokenFromUrl = ()=>{
     return token
 }
 
-export const getTrackFromUri = async (uri: string) => {
+/* export const getTrackFromUri = async (uri: string) => {
   let token = sessionStorage.getItem("token");
 
   console.log("token", token)
@@ -57,7 +57,6 @@ export const getTrackFromUri = async (uri: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     console.log("response", response)
 
     // Extract the required track details from the API response
@@ -76,7 +75,7 @@ export const getTrackFromUri = async (uri: string) => {
     console.error('Error fetching track details:', error);
     return null;
   }
-};
+}; */
 
 // function used to make a GET req to spotify for searching
 export async function searchSpotify(trackName: string, trackArtist: string): Promise<any> {
@@ -101,7 +100,9 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
   try {
     // make the fetch request
     const response = await fetch(url, options);
-
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
     // get the response data
     const responseData = await response.json();
     const track = responseData.tracks.items[0];
@@ -112,6 +113,9 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
       const trackNameWithoutFeature = trackName.replace(/\(feat\. .+\)/i, '');
       const urlWithoutFeature = `https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${trackNameWithoutFeature} artist:${trackArtist}`)}&type=track`;
       const responseWithoutFeature = await fetch(urlWithoutFeature, options);
+      if (!responseWithoutFeature.ok) {
+        throw new Error('Failed to fetch data');
+      }
       const responseDataWithoutFeature = await responseWithoutFeature.json();
       const trackWithoutFeature = responseDataWithoutFeature.tracks.items[0];
       if (trackWithoutFeature) {
@@ -126,6 +130,8 @@ export async function searchSpotify(trackName: string, trackArtist: string): Pro
     return track;
   } catch (error) {
     // log any errors
+    console.log("searchSpotify");
+    sessionStorage.setItem("token","");
     alert("Error during Spotify search, please create or join a new session");
     console.error('Error during Spotify search:', error);
     return [];
@@ -150,7 +156,9 @@ export async function getSpotifyGenres(): Promise<string[]> {
   try {
     // Make the fetch request
     const response = await fetch(url, options);
-
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
     // Parse the response JSON
     const responseData = await response.json();
 
@@ -158,7 +166,8 @@ export async function getSpotifyGenres(): Promise<string[]> {
     return responseData.genres || [];
   } catch (error) {
     // Log any errors
-    alert("Error loading generes from spotify:" + error);
+    console.log("getSpotifyGenres");
+    sessionStorage.setItem("token","");
     console.error('Error fetching Spotify genres:', error);
     return [];
   }
@@ -182,14 +191,18 @@ export async function getRecommendationsByGenres(seedGenres: string[]): Promise<
   try {
     // Make the fetch request
     const response = await fetch(url, options);
-
+    if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
     // Parse the response JSON
     const responseData = await response.json();
 
     // Extract and return recommendations
     return responseData.tracks || [];
   } catch (error) {
+    sessionStorage.setItem("token","");
     // Log any errors
+    console.log("getRecommendationsByGenres");
     alert("Error with Spotify recommendations: " + error);
     console.error('Error fetching recommendations:', error);
     return [];
