@@ -9,8 +9,4 @@ When at a get together with friends there is no way for individuals with differe
 ### Project Overview: 
 The Modern Jukebox is a Raspberry Pi controlled by a React webapp. This application allows one user to “Create a Session” by signing into Spotify, then other users to “Join a Session” to queue songs to the device. Users joining the session don’t need a Spotify login, effectively allowing anyone with the session ID to queue songs and control the playback. 
 
-## Beta Build
-### Known Bugs
-- Ocassionally two separate queues are generated in the hosted version
-- Spamming API requests can cause the Spotify API to lock
-- The Spotify token will expire after an hour
+### Current Build: Release Candidate
