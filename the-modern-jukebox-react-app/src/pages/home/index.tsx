@@ -83,7 +83,8 @@ function Home () {
           console.log('Start Time:', sessionObject.token);
           let sessionToStore = sessionData.find(session => session.session_id === sessionObject.session_id);
           if (sessionToStore) {
-              localStorage.setItem('token', sessionToStore.token);
+              window.sessionStorage.setItem('token', sessionToStore.token);
+              console.log("Token", sessionToStore.token);
           }
           window.sessionStorage.setItem("loginType", "shazam");
           window.sessionStorage.setItem("code", sessionCode);
