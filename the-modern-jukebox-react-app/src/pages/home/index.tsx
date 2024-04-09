@@ -39,7 +39,11 @@ function Home () {
         addNewSession(sessionObject);
     }
     const fetchCurrentSessionIDs = async () => {
-      const sessionsReturned = await getSessions();
+      
+      let sessionsReturned = await getSessions();
+      while(sessionsReturned.length === 0){
+        sessionsReturned = await getSessions();
+      }
       setSessions(sessionsReturned);
       console.log("Session Data", sessionsReturned)
     };
