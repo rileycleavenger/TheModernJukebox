@@ -74,7 +74,6 @@ function Home () {
   }
   const handleJoinSession = () => {
     if (sessionCode.length === 5) {
-      console.log("Returned From Session", sessionData);
       const sessionObject: Session = {
         session_id: sessionCode,
         token: "",
@@ -103,12 +102,15 @@ function Home () {
         }
 
       }
+      else {
+        alert("No sessions currently exist. Please create a session.");
+      }
 
       
     }
     else{
       // case where length of input < 5
-      alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
+      alert("Invalid Hardware ID. Please enter a 5 digit ID.");
     }
 
   };
