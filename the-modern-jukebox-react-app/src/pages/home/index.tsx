@@ -39,9 +39,9 @@ function Home () {
         addNewSession(sessionObject);
     }
     const fetchCurrentSessionIDs = async () => {
-      const song = await getSessions();
-
-      setSessions(song);
+      const sessionsReturned = await getSessions();
+      setSessions(sessionsReturned);
+      console.log("Session Data", sessionsReturned)
     };
 
     // Call once immediately
