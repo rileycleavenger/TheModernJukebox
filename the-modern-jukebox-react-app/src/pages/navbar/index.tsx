@@ -169,8 +169,8 @@ function Navbar () {
     // Call once immediately
     fetchCurrentSong();
 
-    // Then set up interval to poll every 10 seconds
-    const intervalId = setInterval(fetchCurrentSong, 10000);
+    // Then set up interval to poll every 3 seconds
+    const intervalId = setInterval(fetchCurrentSong, 3000);
 
     // Clean up interval on unmount
     return () => clearInterval(intervalId);

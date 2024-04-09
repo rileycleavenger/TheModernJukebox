@@ -14,6 +14,7 @@ function Home () {
   const [token, setToken] = useState("");
   const [sessionCode, setSessionCode] = useState(''); 
   let [loginType, setLoginType] = useState("");
+  const [sessionData, setSessions] = useState<Session[] | null>(null);
   useEffect(()=>{
     const hash:string = window.location.hash
     let loginType = window.sessionStorage.getItem("loginType")
@@ -37,6 +38,20 @@ function Home () {
         }
         addNewSession(sessionObject);
     }
+    const fetchCurrentSessionIDs = async () => {
+      const song = await getSessions();
+
+      setSessions(song);
+    };
+
+    // Call once immediately
+    fetchCurrentSessionIDs();
+
+    // Then set up interval to poll every 3 seconds
+    const intervalId = setInterval(fetchCurrentSessionIDs, 3000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
 },[])
 
   function handlePopupSubmit(hardware_id: string) {
@@ -50,31 +65,56 @@ function Home () {
     }
     else {
       handleJoinSession();
+      checkIfAlertRequired();
     }
   }
-  const handleJoinSession = async () => {
+  const handleJoinSession = () => {
     if (sessionCode.length === 5) {
-      const sessionData = await getSessions();
       console.log("Returned From Session", sessionData);
-      sessionData.forEach((session) => {
-        console.log('Session ID:', session.session_id);
-        console.log('Start Time:', session.token);
-        if (session.session_id == sessionCode){
-          window.sessionStorage.setItem("token", session.token);
+      const sessionObject: Session = {
+        session_id: sessionCode,
+        token: "",
+      };
+      
+
+      if (sessionData) {
+        if (sessionData.some(session => session.session_id === sessionObject.session_id)) {
+          console.log('Session ID:', sessionObject.session_id);
+          console.log('Start Time:', sessionObject.token);
+          let sessionToStore = sessionData.find(session => session.session_id === sessionObject.session_id);
+          if (sessionToStore) {
+              localStorage.setItem('token', sessionToStore.token);
+          }
           window.sessionStorage.setItem("loginType", "shazam");
           window.sessionStorage.setItem("code", sessionCode);
           window.location.href = `${window.location.origin}/home`;
           console.log("successful");
           setIsPopupOpen(false);
+          setIsIDFound(true);
+          
         }
         else{
           alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
         }
-      });
+
+      }
+
+      
     }
+    else{
+      // case where length of input < 5
+      alert("Invalid Hardware ID. Please make sure a session has been created with the given Hardware.");
+    }
+
   };
+
+  const checkIfAlertRequired = () => { 
+    // case where no hw ID matches
+    
+  }
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isCreateSession, setIsCreateSession] = useState(false);
+  const [isIDFound, setIsIDFound] = useState(false);
 
   return (
     <section id="home" className="gap-16 bg-primary-100 py-10 md:h-full md:w-full md:pb-0">
