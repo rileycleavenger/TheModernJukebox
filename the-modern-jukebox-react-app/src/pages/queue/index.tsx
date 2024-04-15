@@ -110,10 +110,13 @@ function Queue () {
       </div>
       }
       {token && queue.length === 0 &&
-        <div className='px-40'>
+        <div className='px-40 no-data'>
           <p className="text-lg mt-24">
-            Nothing is in the queue at this time, add some songs to the queue from the <Link to="/MusicPlayer"><strong className="text-blue-500">Search</strong></Link> page!
+            If you haven't queued any songs, vist the <Link to="/MusicPlayer"><strong className="text-blue-500">Search</strong></Link> page! Otherwise, please wait for the updated queue to load.
           </p>
+          <div className='loader-wrapper'>
+            <div className="loader"></div>
+          </div>
         </div>
       }
     </section>
